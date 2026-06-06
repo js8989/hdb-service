@@ -16,7 +16,7 @@ SCREENS = [
     ("RG-03", "Date of birth",                FULL_JOURNEY, "page-dob",            None),
     ("RG-04", "NI number",                    FULL_JOURNEY, "page-ni",             None),
     ("RG-04a","No NI – 6 month rule",         FULL_JOURNEY, "page-ni-sixmonth",    None),
-    ("RG-04b","No NI – apply for one?",       FULL_JOURNEY, "page-ni-apply",       None),
+    ("RG-04b","No NI – apply for one",        FULL_JOURNEY, "page-ni-apply",       None),
     ("RG-04c","NI application placeholder",   FULL_JOURNEY, "page-ni-placeholder", None),
     ("RG-04d","No NI – confirm understanding",FULL_JOURNEY, "page-ni-confirm",     None),
     ("RG-05", "Home address",                 FULL_JOURNEY, "page-address",        None),
