@@ -81,7 +81,7 @@ def take_screenshot(page, code, label, file_url, page_id, js_setup):
         page.evaluate(js_setup)
     page.wait_for_timeout(300)
     filename = OUT / f"{code} – {label}.png"
-    page.screenshot(path=str(filename), full_page=False)
+    page.screenshot(path=str(filename), full_page=True)
     print(f"  ✓  {code}  {label}")
 
 with sync_playwright() as p:
