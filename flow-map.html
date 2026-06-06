@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HDB Service – Screen Flow Map</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #e8edf2; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; height: 100vh; }
+
+#toolbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: #003078; color: white; padding: 8px 20px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4); height: 52px;
+}
+#toolbar h1 { font-size: 15px; font-weight: 700; color: white; margin-right: 8px; white-space: nowrap; }
+.tb-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.25); flex-shrink: 0; }
+.tb-btn {
+  background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3);
+  padding: 5px 14px; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 3px;
+  white-space: nowrap;
+}
+.tb-btn:hover { background: rgba(255,255,255,0.28); }
+#zoom-level { font-size: 13px; color: #bfd7ff; min-width: 44px; text-align: center; }
+.tb-hint { font-size: 12px; color: rgba(255,255,255,0.5); white-space: nowrap; }
+#legend { display: flex; align-items: center; gap: 18px; margin-left: auto; flex-shrink: 0; }
+.leg { display: flex; align-items: center; gap: 7px; font-size: 12px; color: rgba(255,255,255,0.75); white-space: nowrap; }
+.leg-line { width: 28px; height: 3px; border-radius: 2px; }
+
+#viewport {
+  position: fixed; top: 52px; left: 0; right: 0; bottom: 0;
+  overflow: hidden; cursor: grab; user-select: none;
+}
+#viewport.dragging { cursor: grabbing; }
+#canvas { position: absolute; transform-origin: 0 0; }
+
+.section-bg {
+  position: absolute; border-radius: 12px;
+}
+.section-label {
+  position: absolute; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: white; padding: 4px 12px; border-radius: 3px;
+}
+
+.card {
+  position: absolute; width: 210px;
+  background: white; border: 2px solid #c8cdd0; border-radius: 6px;
+  overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.card:hover { border-color: #1d70b8; box-shadow: 0 4px 20px rgba(29,112,184,0.3); z-index: 20; }
+.card img {
+  width: 100%; height: 134px;
+  object-fit: cover; object-position: top; display: block;
+  border-bottom: 1px solid #e8e8e8; background: #f3f2f1;
+}
+.card-label { padding: 7px 9px; }
+.card-code { font-size: 10px; font-weight: 700; color: #1d70b8; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 2px; }
+.card-name { font-size: 11px; color: #0b0c0c; line-height: 1.35; }
+
+.arrow-tag {
+  position: absolute; font-size: 10px; font-weight: 700; color: white;
+  padding: 2px 7px; border-radius: 10px; white-space: nowrap;
+  pointer-events: none; transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <h1>HDB Service – Screen Flow Map</h1>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" onclick="adjustZoom(0.12)">＋ Zoom in</button>
+  <button class="tb-btn" onclick="adjustZoom(-0.12)">－ Zoom out</button>
+  <button class="tb-btn" onclick="resetView()">↺ Reset</button>
+  <span id="zoom-level">50%</span>
+  <div class="tb-sep"></div>
+  <span class="tb-hint">Scroll to zoom &nbsp;·&nbsp; Drag to pan</span>
+  <div id="legend">
+    <div class="leg"><div class="leg-line" style="background:#1d70b8"></div> Main flow</div>
+    <div class="leg"><div class="leg-line" style="background:#f47738"></div> Branch / alternate</div>
+    <div class="leg"><div class="leg-line" style="border-top:3px dashed #6f777b; height:0; width:28px"></div> Optional</div>
+  </div>
+</div>
+
+<div id="viewport">
+  <div id="canvas">
+    <svg id="svg" style="position:absolute;top:0;left:0;overflow:visible;pointer-events:none;">
+      <defs>
+        <marker id="m-blue"   markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5 z" fill="#1d70b8"/></marker>
+        <marker id="m-orange" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5 z" fill="#f47738"/></marker>
+        <marker id="m-grey"   markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5 z" fill="#6f777b"/></marker>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<script>
+// ── Card dimensions ───────────────────────────────────────────────
+const CW = 210, CH = 172;
+
+// ── Screen definitions ────────────────────────────────────────────
+// file: exact filename stem (code + ' – ' + label)
+const S = {
+  'RG-01':  { x:60,   y:100,  file:'RG-01 – Start',                          code:'RG-01',  name:'Start' },
+  'RG-02':  { x:340,  y:100,  file:'RG-02 – Your name',                      code:'RG-02',  name:'Your name' },
+  'RG-03':  { x:620,  y:100,  file:'RG-03 – Date of birth',                  code:'RG-03',  name:'Date of birth' },
+  'RG-04':  { x:900,  y:100,  file:'RG-04 – NI number',                      code:'RG-04',  name:'NI number' },
+  'RG-05':  { x:1460, y:100,  file:'RG-05 – Home address',                   code:'RG-05',  name:'Home address' },
+  'RG-06':  { x:1740, y:100,  file:'RG-06 – Check your answers',             code:'RG-06',  name:'Check your answers' },
+  'RG-07':  { x:2020, y:100,  file:'RG-07 – Application submitted',          code:'RG-07',  name:'Application submitted' },
+  'RG-08':  { x:2300, y:100,  file:'RG-08 – Create account – prompt',        code:'RG-08',  name:'Create account – prompt' },
+  'RG-09':  { x:2580, y:100,  file:'RG-09 – Create account – email',         code:'RG-09',  name:'Create account – email' },
+  'RG-10':  { x:2860, y:100,  file:'RG-10 – Create account – password',      code:'RG-10',  name:'Create account – password' },
+  'RG-11':  { x:3140, y:100,  file:'RG-11 – Create account – passkey',       code:'RG-11',  name:'Create account – passkey' },
+  'RG-12':  { x:3420, y:100,  file:'RG-12 – Account created',                code:'RG-12',  name:'Account created' },
+  // No NI branch
+  'RG-04a': { x:900,  y:390,  file:'RG-04a – No NI – 6 month rule',          code:'RG-04a', name:'No NI – 6 month rule' },
+  'RG-04b': { x:1180, y:390,  file:'RG-04b – No NI – apply for one?',        code:'RG-04b', name:'No NI – apply for one?' },
+  'RG-04c': { x:1020, y:670,  file:'RG-04c – NI application placeholder',    code:'RG-04c', name:'NI application placeholder' },
+  'RG-04d': { x:1300, y:670,  file:'RG-04d – No NI – confirm understanding', code:'RG-04d', name:'No NI – confirm understanding' },
+  // Agent tool
+  'AT-01':  { x:60,   y:1080, file:'AT-01 – Agent login',                    code:'AT-01',  name:'Agent login' },
+  'AT-02':  { x:340,  y:1080, file:'AT-02 – Agent home',                     code:'AT-02',  name:'Agent home' },
+  'AT-03':  { x:620,  y:1080, file:'AT-03 – Search for citizen',             code:'AT-03',  name:'Search for citizen' },
+  'AT-04':  { x:900,  y:1080, file:'AT-04 – Claimant record',                code:'AT-04',  name:'Claimant record' },
+};
+
+// ── Arrows [from, to, type, label] ────────────────────────────────
+// type: 'main' | 'branch' | 'optional'
+const ARROWS = [
+  ['RG-01','RG-02','main'],
+  ['RG-02','RG-03','main'],
+  ['RG-03','RG-04','main'],
+  ['RG-04','RG-05','main','NI provided'],
+  ['RG-05','RG-06','main'],
+  ['RG-06','RG-07','main'],
+  ['RG-07','RG-08','optional','Optional'],
+  ['RG-08','RG-09','main'],
+  ['RG-09','RG-10','main'],
+  ['RG-10','RG-11','main'],
+  ['RG-11','RG-12','main'],
+  ['RG-11','RG-12','optional','Skip passkey'],
+  // No NI branch
+  ['RG-04','RG-04a','branch','No NI'],
+  ['RG-04a','RG-04b','branch'],
+  ['RG-04b','RG-04c','branch','Yes – apply for NI'],
+  ['RG-04b','RG-04d','branch','No – get NI separately'],
+  ['RG-04c','RG-05','branch','Continue'],
+  ['RG-04d','RG-05','branch','Continue'],
+  // Agent tool
+  ['AT-01','AT-02','main'],
+  ['AT-02','AT-03','main'],
+  ['AT-03','AT-04','main'],
+];
+
+// ── Build canvas ──────────────────────────────────────────────────
+const canvas = document.getElementById('canvas');
+const svg    = document.getElementById('svg');
+
+// Section backgrounds
+function sectionBg(x, y, w, h, col, opacity) {
+  const d = document.createElement('div');
+  d.className = 'section-bg';
+  d.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${col};opacity:${opacity}`;
+  canvas.appendChild(d);
+}
+sectionBg(30, 60, 3660, 920, '#dde7f5', 1);
+sectionBg(30, 1040, 1150, 230, '#d8e0f0', 1);
+
+// Section labels
+function sectionLabel(x, y, text, bg) {
+  const d = document.createElement('div');
+  d.className = 'section-label';
+  d.style.cssText = `left:${x}px;top:${y}px;background:${bg}`;
+  d.textContent = text;
+  canvas.appendChild(d);
+}
+sectionLabel(30, 28, 'Registration Journey', '#003078');
+sectionLabel(30, 1008, 'Agent Tool', '#1d70b8');
+
+// Screen cards
+Object.values(S).forEach(s => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.cssText = `left:${s.x}px;top:${s.y}px`;
+  card.innerHTML = `
+    <img src="screens/${s.file}.png" alt="${s.code}"
+         onerror="this.style.cssText='height:134px;background:#f3f2f1;display:flex;align-items:center;justify-content:center';this.alt='No image'">
+    <div class="card-label">
+      <span class="card-code">${s.code}</span>
+      <span class="card-name">${s.name}</span>
+    </div>`;
+  canvas.appendChild(card);
+});
+
+// ── Arrows ────────────────────────────────────────────────────────
+function edge(id, side) {
+  const s = S[id];
+  switch(side) {
+    case 'r': return [s.x + CW,     s.y + CH/2];
+    case 'l': return [s.x,          s.y + CH/2];
+    case 'b': return [s.x + CW/2,   s.y + CH  ];
+    case 't': return [s.x + CW/2,   s.y       ];
+  }
+}
+
+function bestEdges(a, b) {
+  const sa = S[a], sb = S[b];
+  const dx = (sb.x + CW/2) - (sa.x + CW/2);
+  const dy = (sb.y + CH/2) - (sa.y + CH/2);
+  if (Math.abs(dx) >= Math.abs(dy)) {
+    return dx >= 0 ? [edge(a,'r'), edge(b,'l')] : [edge(a,'l'), edge(b,'r')];
+  } else {
+    return dy >= 0 ? [edge(a,'b'), edge(b,'t')] : [edge(a,'t'), edge(b,'b')];
+  }
+}
+
+function drawArrow(fromId, toId, type, label) {
+  const col    = type === 'main' ? '#1d70b8' : type === 'branch' ? '#f47738' : '#6f777b';
+  const marker = type === 'main' ? 'm-blue'  : type === 'branch' ? 'm-orange' : 'm-grey';
+  const dash   = type === 'main' ? 'none' : '7,4';
+  const sw     = type === 'main' ? 2.5 : 2;
+
+  const [[x1,y1],[x2,y2]] = bestEdges(fromId, toId);
+  const adx = x2-x1, ady = y2-y1;
+  let cpx1,cpy1,cpx2,cpy2;
+  if (Math.abs(adx) >= Math.abs(ady)) {
+    const off = Math.abs(adx)*0.45;
+    cpx1=x1+(adx>0?off:-off); cpy1=y1;
+    cpx2=x2-(adx>0?off:-off); cpy2=y2;
+  } else {
+    const off = Math.abs(ady)*0.45;
+    cpx1=x1; cpy1=y1+(ady>0?off:-off);
+    cpx2=x2; cpy2=y2-(ady>0?off:-off);
+  }
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',`M${x1},${y1} C${cpx1},${cpy1} ${cpx2},${cpy2} ${x2},${y2}`);
+  path.setAttribute('stroke', col);
+  path.setAttribute('stroke-width', sw);
+  path.setAttribute('stroke-dasharray', dash);
+  path.setAttribute('fill','none');
+  path.setAttribute('marker-end',`url(#${marker})`);
+  svg.appendChild(path);
+
+  if (label) {
+    const mx = (x1+x2)/2 + (cpx1+cpx2)/2;
+    const my = (y1+y2)/2 + (cpy1+cpy2)/2;
+    const tag = document.createElement('div');
+    tag.className = 'arrow-tag';
+    tag.style.cssText = `left:${mx/2}px;top:${my/2}px;background:${col}`;
+    tag.textContent = label;
+    canvas.appendChild(tag);
+  }
+}
+
+ARROWS.forEach(([f,t,type,lbl]) => drawArrow(f,t,type,lbl));
+
+// Size the SVG
+const maxX = Math.max(...Object.values(S).map(s => s.x + CW)) + 80;
+const maxY = Math.max(...Object.values(S).map(s => s.y + CH)) + 80;
+svg.setAttribute('width', maxX); svg.setAttribute('height', maxY);
+canvas.style.width  = maxX + 'px';
+canvas.style.height = maxY + 'px';
+
+// ── Pan & Zoom ────────────────────────────────────────────────────
+const vp = document.getElementById('viewport');
+let scale=0.5, tx=60, ty=30, dragging=false, lx=0, ly=0;
+
+function applyT() {
+  canvas.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+  document.getElementById('zoom-level').textContent = Math.round(scale*100)+'%';
+}
+function adjustZoom(d) {
+  scale = Math.min(2.5, Math.max(0.1, scale+d));
+  applyT();
+}
+function resetView() { scale=0.5; tx=60; ty=30; applyT(); }
+
+vp.addEventListener('wheel', e => {
+  e.preventDefault();
+  const d = e.deltaY > 0 ? -0.1 : 0.1;
+  const r = vp.getBoundingClientRect();
+  const mx = e.clientX-r.left, my = e.clientY-r.top;
+  const ns = Math.min(2.5, Math.max(0.1, scale+d));
+  tx = mx - (mx-tx)*(ns/scale);
+  ty = my - (my-ty)*(ns/scale);
+  scale = ns; applyT();
+}, {passive:false});
+
+vp.addEventListener('mousedown', e => { dragging=true; lx=e.clientX; ly=e.clientY; vp.classList.add('dragging'); });
+window.addEventListener('mousemove', e => { if(!dragging) return; tx+=e.clientX-lx; ty+=e.clientY-ly; lx=e.clientX; ly=e.clientY; applyT(); });
+window.addEventListener('mouseup', () => { dragging=false; vp.classList.remove('dragging'); });
+
+applyT();
+</script>
+</body>
+</html>
