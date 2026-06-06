@@ -81,12 +81,12 @@ def take_screenshot(page, code, label, file_url, page_id, js_setup):
         page.evaluate(js_setup)
     page.wait_for_timeout(300)
     filename = OUT / f"{code} – {label}.png"
-    page.screenshot(path=str(filename), full_page=True)
+    page.screenshot(path=str(filename), full_page=False)
     print(f"  ✓  {code}  {label}")
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
-    context = browser.new_context(viewport={"width": 1280, "height": 900})
+    context = browser.new_context(viewport={"width": 1280, "height": 800})
     pg = context.new_page()
     print(f"\nSaving screenshots to: {OUT}\n")
     for (code, label, url, page_id, js) in SCREENS:
