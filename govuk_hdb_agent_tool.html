@@ -1,0 +1,273 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans', sans-serif; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .agent-header { background: #003078; padding: 10px 0; border-bottom: 10px solid #1d70b8; }
+  .agent-header__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; display: flex; align-items: center; justify-content: space-between; }
+  .agent-header__logo { display: flex; align-items: center; }
+  .govuk-crown { width: 36px; height: 28px; fill: white; }
+  .agent-header__logotype-text { color: white; font-size: 30px; font-weight: 700; letter-spacing: -1px; margin-left: 10px; }
+  .agent-header__service { color: #bfd7ff; font-size: 14px; margin-left: 16px; padding-left: 16px; border-left: 1px solid #4a7fb5; }
+  .agent-header__user { color: #bfd7ff; font-size: 14px; display: flex; align-items: center; gap: 16px; }
+  .agent-header__user a { color: #bfd7ff; text-decoration: underline; cursor: pointer; }
+  .agent-staff-banner { background: #1d70b8; padding: 6px 0; }
+  .agent-staff-banner__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; font-size: 14px; color: white; display: flex; align-items: center; gap: 8px; }
+  .agent-staff-tag { background: white; color: #1d70b8; font-weight: 700; font-size: 12px; padding: 2px 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .govuk-main { max-width: 960px; margin: 0 auto; padding: 30px 15px 60px; }
+  .govuk-main-narrow { max-width: 640px; margin: 0 auto; padding: 30px 15px 60px; }
+  .govuk-back { display: inline-block; font-size: 14px; color: #0b0c0c; margin-bottom: 24px; text-decoration: none; cursor: pointer; }
+  .govuk-back:hover { text-decoration: underline; }
+  .govuk-caption { font-size: 18px; color: #505a5f; margin-bottom: 6px; }
+  .govuk-h1 { font-size: 36px; font-weight: 700; color: #0b0c0c; margin-bottom: 24px; line-height: 1.1; }
+  .govuk-h2 { font-size: 24px; font-weight: 700; color: #0b0c0c; margin-bottom: 16px; }
+  .govuk-h3 { font-size: 20px; font-weight: 700; color: #0b0c0c; margin-bottom: 12px; }
+  .govuk-body { font-size: 17px; color: #0b0c0c; line-height: 1.6; margin-bottom: 16px; }
+  .govuk-label { display: block; font-size: 19px; font-weight: 700; color: #0b0c0c; margin-bottom: 6px; }
+  .govuk-label-hint { display: block; font-size: 16px; color: #505a5f; margin-bottom: 8px; }
+  .govuk-input { display: block; width: 100%; max-width: 400px; padding: 8px; font-size: 19px; border: 2px solid #0b0c0c; border-radius: 0; outline: none; margin-bottom: 24px; }
+  .govuk-input:focus { outline: 3px solid #ffdd00; outline-offset: 0; box-shadow: inset 0 0 0 2px #0b0c0c; }
+  .govuk-button { display: inline-block; background: #00703c; color: white; font-size: 19px; font-weight: 700; padding: 10px 22px; border: none; box-shadow: 0 2px 0 #002d18; cursor: pointer; margin-top: 8px; text-decoration: none; }
+  .govuk-button:hover { background: #005a30; color: white; }
+  .govuk-button-secondary { background: #f3f2f1; color: #0b0c0c; box-shadow: 0 2px 0 #929191; }
+  .govuk-button-secondary:hover { background: #dbdad9; }
+  .govuk-error { color: #d4351c; font-size: 16px; font-weight: 700; margin-bottom: 8px; display: none; border-left: 4px solid #d4351c; padding-left: 12px; }
+  .govuk-error.visible { display: block; }
+  .govuk-error-border { border-color: #d4351c !important; }
+  .govuk-section-break { border: 0; border-top: 1px solid #b1b4b6; margin: 24px 0; }
+  .govuk-inset { border-left: 6px solid #b1b4b6; padding: 16px; margin: 24px 0; background: #f3f2f1; font-size: 17px; color: #0b0c0c; line-height: 1.6; }
+  .govuk-summary-list { border-top: 1px solid #b1b4b6; margin-bottom: 30px; }
+  .govuk-summary-row { display: grid; grid-template-columns: 1fr 2fr; border-bottom: 1px solid #b1b4b6; padding: 12px 0; gap: 16px; }
+  .govuk-summary-key { font-size: 17px; font-weight: 700; color: #0b0c0c; }
+  .govuk-summary-value { font-size: 17px; color: #0b0c0c; }
+  .govuk-footer { background: #f3f2f1; border-top: 1px solid #b1b4b6; padding: 25px 0; margin-top: 40px; }
+  .govuk-footer__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; font-size: 14px; color: #505a5f; }
+  .govuk-ni-boxes { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .govuk-ni-box { width: 64px; padding: 8px 4px; font-size: 22px; font-weight: 700; border: 2px solid #0b0c0c; border-radius: 0; outline: none; text-align: center; text-transform: uppercase; letter-spacing: 2px; color: #0b0c0c; }
+  .govuk-ni-box:focus { outline: 3px solid #ffdd00; outline-offset: 0; box-shadow: inset 0 0 0 2px #0b0c0c; }
+  .govuk-ni-separator { font-size: 24px; color: #505a5f; font-weight: 700; }
+  .agent-card { background: white; border: 1px solid #b1b4b6; padding: 24px; margin-bottom: 24px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+  .agent-card:hover { border-color: #0b0c0c; background: #f8f8f8; }
+  .agent-card__title { font-size: 20px; font-weight: 700; color: #1d70b8; margin-bottom: 4px; }
+  .agent-card__desc { font-size: 16px; color: #505a5f; }
+  .agent-card__arrow { font-size: 24px; color: #505a5f; }
+  .agent-card.disabled { opacity: 0.5; cursor: not-allowed; }
+  .agent-card.disabled:hover { border-color: #b1b4b6; background: white; }
+  .agent-card.disabled .agent-card__title { color: #505a5f; }
+  .govuk-tag-grey { background: #f3f2f1; color: #505a5f; font-size: 14px; font-weight: 700; padding: 2px 8px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-left: 8px; vertical-align: middle; }
+  .status-badge { display: inline-block; font-size: 14px; font-weight: 700; padding: 4px 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .status-submitted { background: #d4e8ff; color: #003078; }
+  .status-inprogress { background: #fff7bf; color: #594d00; }
+  .agent-record-header { background: #f3f2f1; border: 1px solid #b1b4b6; padding: 20px; margin-bottom: 24px; display: flex; align-items: flex-start; justify-content: space-between; }
+  .agent-record-header__name { font-size: 28px; font-weight: 700; color: #0b0c0c; margin-bottom: 4px; }
+  .agent-record-header__ni { font-size: 17px; color: #505a5f; }
+  .loading { font-size: 17px; color: #505a5f; padding: 24px 0; }
+  .govuk-list { font-size: 17px; color: #0b0c0c; padding-left: 20px; margin-bottom: 20px; line-height: 1.6; }
+  .govuk-list li { margin-bottom: 8px; }
+</style>
+
+<!-- PAGE: Login -->
+<div class="page active" id="agent-login">
+  <header class="agent-header">
+    <div class="agent-header__inner">
+      <div class="agent-header__logo">
+        <svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+        <span class="agent-header__logotype-text">GOV.UK</span>
+        <span class="agent-header__service">HDB Case Management</span>
+      </div>
+    </div>
+  </header>
+  <main class="govuk-main-narrow">
+    <br>
+    <p class="govuk-caption">Department for Work and Pensions</p>
+    <h1 class="govuk-h1">Sign in to HDB Case Management</h1>
+    <p class="govuk-body">This system is for authorised DWP staff only. Unauthorised access is a criminal offence.</p>
+    <span class="govuk-error" id="err-login">Enter a valid username and password</span>
+    <label class="govuk-label" for="username">Username</label>
+    <input class="govuk-input" type="text" id="username" autocomplete="username" placeholder="e.g. j.smith">
+    <label class="govuk-label" for="password">Password</label>
+    <input class="govuk-input" type="password" id="password" autocomplete="current-password">
+    <button class="govuk-button" onclick="submitLogin()">Sign in</button>
+    <hr class="govuk-section-break">
+    <p class="govuk-body" style="font-size:15px; color:#505a5f;">Having trouble signing in? Contact the DWP IT helpdesk on <strong>0800 555 0120</strong></p>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Department for Work and Pensions &nbsp;·&nbsp; For internal use only</p></div></footer>
+</div>
+
+<!-- PAGE: Home -->
+<div class="page" id="agent-home">
+  <header class="agent-header">
+    <div class="agent-header__inner">
+      <div class="agent-header__logo">
+        <svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+        <span class="agent-header__logotype-text">GOV.UK</span>
+        <span class="agent-header__service">HDB Case Management</span>
+      </div>
+      <div class="agent-header__user">
+        <span id="header-username"></span>
+        <a onclick="goTo('agent-login')">Sign out</a>
+      </div>
+    </div>
+  </header>
+  <div class="agent-staff-banner"><div class="agent-staff-banner__inner"><span class="agent-staff-tag">Staff</span><span id="banner-username"></span></div></div>
+  <main class="govuk-main">
+    <h1 class="govuk-h1">Welcome, <span id="home-username"></span></h1>
+    <p class="govuk-body">What would you like to do?</p>
+    <div class="agent-card" onclick="goTo('agent-search')">
+      <div>
+        <div class="agent-card__title">Search for a citizen</div>
+        <div class="agent-card__desc">Find a claimant record using their National Insurance number</div>
+      </div>
+      <div class="agent-card__arrow">→</div>
+    </div>
+    <div class="agent-card disabled">
+      <div>
+        <div class="agent-card__title">My tasks <span class="govuk-tag-grey">Coming soon</span></div>
+        <div class="agent-card__desc">View and manage tasks assigned to you</div>
+      </div>
+      <div class="agent-card__arrow">→</div>
+    </div>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Department for Work and Pensions &nbsp;·&nbsp; For internal use only</p></div></footer>
+</div>
+
+<!-- PAGE: Search -->
+<div class="page" id="agent-search">
+  <header class="agent-header">
+    <div class="agent-header__inner">
+      <div class="agent-header__logo">
+        <svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+        <span class="agent-header__logotype-text">GOV.UK</span>
+        <span class="agent-header__service">HDB Case Management</span>
+      </div>
+      <div class="agent-header__user">
+        <span id="header-username-2"></span>
+        <a onclick="goTo('agent-login')">Sign out</a>
+      </div>
+    </div>
+  </header>
+  <div class="agent-staff-banner"><div class="agent-staff-banner__inner"><span class="agent-staff-tag">Staff</span><span id="banner-username-2"></span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('agent-home')">← Back</a>
+    <h1 class="govuk-h1">Search for a citizen</h1>
+    <p class="govuk-body">Enter the claimant's National Insurance number to find their record.</p>
+    <label class="govuk-label">National Insurance number</label>
+    <span class="govuk-label-hint">For example, QQ 12 34 56 C</span>
+    <span class="govuk-error" id="err-search">Enter a valid National Insurance number</span>
+    <input class="govuk-input" type="text" id="s-ni-single" placeholder="e.g. QQ 12 34 56 A" style="max-width:280px; text-transform:uppercase;">
+    <br>
+    <button class="govuk-button" onclick="searchCitizen()">Search</button>
+    <div id="search-loading" class="loading" style="display:none;">Searching records...</div>
+    <div id="search-noresult" style="display:none; margin-top:24px;">
+      <div class="govuk-inset">No records found for that National Insurance number. Check the number and try again.</div>
+    </div>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Department for Work and Pensions &nbsp;·&nbsp; For internal use only</p></div></footer>
+</div>
+
+<!-- PAGE: Claimant Record -->
+<div class="page" id="agent-record">
+  <header class="agent-header">
+    <div class="agent-header__inner">
+      <div class="agent-header__logo">
+        <svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+        <span class="agent-header__logotype-text">GOV.UK</span>
+        <span class="agent-header__service">HDB Case Management</span>
+      </div>
+      <div class="agent-header__user">
+        <span id="header-username-3"></span>
+        <a onclick="goTo('agent-login')">Sign out</a>
+      </div>
+    </div>
+  </header>
+  <div class="agent-staff-banner"><div class="agent-staff-banner__inner"><span class="agent-staff-tag">Staff</span><span id="banner-username-3"></span></div></div>
+  <main class="govuk-main">
+    <a class="govuk-back" onclick="goTo('agent-search')">← Back to search</a>
+    <div class="agent-record-header">
+      <div>
+        <div class="agent-record-header__name" id="record-name"></div>
+        <div class="agent-record-header__ni" id="record-ni-display"></div>
+      </div>
+      <div><span class="status-badge status-submitted">Application submitted</span></div>
+    </div>
+    <h2 class="govuk-h2">Personal details</h2>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">First name</dt><dd class="govuk-summary-value" id="r-firstname"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Last name</dt><dd class="govuk-summary-value" id="r-surname"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Date of birth</dt><dd class="govuk-summary-value" id="r-dob"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Age</dt><dd class="govuk-summary-value" id="r-age"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">National Insurance number</dt><dd class="govuk-summary-value" id="r-ni"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">NI status</dt><dd class="govuk-summary-value" id="r-ni-status"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Address</dt><dd class="govuk-summary-value" id="r-address" style="white-space:pre-line;"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Application received</dt><dd class="govuk-summary-value" id="r-timestamp"></dd></div>
+    </dl>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Department for Work and Pensions &nbsp;·&nbsp; For internal use only</p></div></footer>
+</div>
+
+<script>
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOroR51JdU_Gpz6nYuEIUMnzElp9q7UeOA9BcCW4fWTXh0bldxObR_XjQWI6_FfZX95g/exec';
+  var agentName = '';
+
+  function goTo(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function submitLogin() {
+    var u = document.getElementById('username').value.trim();
+    var p = document.getElementById('password').value.trim();
+    var errEl = document.getElementById('err-login');
+    errEl.classList.remove('visible');
+    if (!u || !p) { errEl.classList.add('visible'); return; }
+    agentName = u;
+    var displayName = u.charAt(0).toUpperCase() + u.slice(1);
+    document.getElementById('home-username').textContent = displayName;
+    document.getElementById('header-username').textContent = displayName;
+    document.getElementById('header-username-2').textContent = displayName;
+    document.getElementById('header-username-3').textContent = displayName;
+    document.getElementById('banner-username').textContent = 'Signed in as: ' + u + ' — DWP HDB Case Management';
+    document.getElementById('banner-username-2').textContent = 'Signed in as: ' + u + ' — DWP HDB Case Management';
+    document.getElementById('banner-username-3').textContent = 'Signed in as: ' + u + ' — DWP HDB Case Management';
+    goTo('agent-home');
+  }
+
+  function searchCitizen() {
+  var niVal = document.getElementById('s-ni-single').value.trim().toUpperCase().replace(/\s/g,'');
+  var errEl = document.getElementById('err-search');
+errEl.classList.remove('visible');
+document.getElementById('search-noresult').style.display = 'none';
+  var niRegex = /^[A-Z]{2}[0-9]{6}[A-Z]$/;
+    if (!niRegex.test(niVal)) { errEl.textContent = 'Enter a valid National Insurance number'; errEl.classList.add('visible'); return; }
+  var searchNI = niVal;
+    document.getElementById('search-loading').style.display = 'block';
+    fetch(SCRIPT_URL + '?ni=' + encodeURIComponent(niVal))
+      .then(function(r){ return r.json(); })
+      .then(function(data) {
+        document.getElementById('search-loading').style.display = 'none';
+        if (!data || data.length === 0) {
+          document.getElementById('search-noresult').style.display = 'block';
+          return;
+        }
+        var record = data[data.length - 1];
+        document.getElementById('record-name').textContent = record['First name'] + ' ' + record['Last name'];
+        document.getElementById('record-ni-display').textContent = 'NI: ' + record['NI number'];
+        document.getElementById('r-firstname').textContent = record['First name'];
+        document.getElementById('r-surname').textContent = record['Last name'];
+        document.getElementById('r-dob').textContent = record['Date of birth'];
+        document.getElementById('r-age').textContent = record['Age'] + ' years old';
+        document.getElementById('r-ni').textContent = record['NI number'];
+        document.getElementById('r-ni-status').textContent = record['NI status'];
+        document.getElementById('r-address').textContent = record['Address'];
+        var ts = new Date(record['Timestamp']);
+        document.getElementById('r-timestamp').textContent = ts.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'});
+        goTo('agent-record');
+      })
+      .catch(function() {
+        document.getElementById('search-loading').style.display = 'none';
+        errEl.textContent = 'Could not connect to the database. Please try again.';
+        errEl.classList.add('visible');
+      });
+  }
+</script>
