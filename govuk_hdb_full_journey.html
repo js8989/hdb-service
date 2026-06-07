@@ -286,6 +286,9 @@
     <!-- Step 1: Postcode entry -->
     <div id="address-step-postcode">
       <span class="govuk-error" id="err-postcode" style="display:none;">Enter a valid English postcode</span>
+      <label class="govuk-label" for="house-number">House number or name</label>
+      <span class="govuk-label-hint">For example: 14, Flat 2/1, Rose Cottage, Ground Floor Flat</span>
+      <input class="govuk-input" type="text" id="house-number" style="max-width:260px;" autocomplete="off">
       <label class="govuk-label" for="postcode">Postcode</label>
       <span class="govuk-label-hint">Enter an English postcode, for example SW1A 1AA</span>
       <input class="govuk-input" type="text" id="postcode" placeholder="e.g. SW1A 1AA" style="max-width:200px; text-transform:uppercase;">
@@ -667,10 +670,15 @@
   }
 
   function lookupPostcode() {
-    var pc = document.getElementById('postcode').value.trim();
-    var errEl = document.getElementById('err-postcode');
-    errEl.style.display = 'none';
-    errEl.classList.remove('visible');
+    var pc      = document.getElementById('postcode').value.trim();
+    var houseRaw = document.getElementById('house-number').value.trim();
+    var errEl   = document.getElementById('err-postcode');
+    errEl.style.display = 'none'; errEl.classList.remove('visible');
+
+    if (!houseRaw) {
+      errEl.textContent = 'Enter a house number or name';
+      errEl.style.display = 'block'; errEl.classList.add('visible'); return;
+    }
     if (!isValidPostcode(pc)) {
       errEl.textContent = 'Enter a valid English postcode, for example SW1A 1AA';
       errEl.style.display = 'block'; errEl.classList.add('visible'); return;
@@ -679,24 +687,48 @@
       errEl.textContent = 'This service is only available to people who reside in England. Your postcode appears to be outside England.';
       errEl.style.display = 'block'; errEl.classList.add('visible'); return;
     }
+
     var key = pc.toUpperCase().replace(/\s/g,'');
-    var addresses = postcodeDB[key] || null;
-    if (!addresses) {
-      // Postcode valid but not in our demo DB — go to manual
-      showManualEntry(pc);
+    var allAddresses = postcodeDB[key] || null;
+
+    if (!allAddresses) {
+      // Valid postcode but not in demo DB — go straight to manual with fields pre-filled
+      showManualEntry(pc, houseRaw);
       return;
     }
-    // Show address selection
+
+    // Fuzzy match: trim + lowercase + partial match on house number/name
+    var house = houseRaw.trim().toLowerCase();
+    var matched = allAddresses.filter(function(addr) {
+      return addr.toLowerCase().indexOf(house) !== -1;
+    });
+
+    if (matched.length === 0) {
+      // No match found — friendly message + manual entry option
+      errEl.textContent = 'We could not find that address. Check your house number or name and postcode, or enter your address manually below.';
+      errEl.style.display = 'block'; errEl.classList.add('visible'); return;
+    }
+
+    // Show address selection list
     document.getElementById('postcode-display').textContent = pc.toUpperCase();
-    document.getElementById('address-count').textContent = addresses.length + ' addresses found';
+    document.getElementById('address-count').textContent = matched.length === 1
+      ? '1 address found'
+      : matched.length + ' addresses found';
     var list = document.getElementById('address-radio-list');
     list.innerHTML = '';
-    addresses.forEach(function(addr, i) {
+    matched.forEach(function(addr, i) {
       var div = document.createElement('div');
       div.className = 'govuk-radio';
-      div.innerHTML = '<input type="radio" name="addr-select" id="addr-'+i+'" value="'+addr+'"><label for="addr-'+i+'">'+addr+'</label>';
+      div.innerHTML = '<input type="radio" name="addr-select" id="addr-'+i+'" value="'+addr+'">'
+        + '<label for="addr-'+i+'">'+addr+'</label>';
       list.appendChild(div);
     });
+
+    // If only one result, pre-select it for convenience
+    if (matched.length === 1) {
+      document.querySelector('input[name="addr-select"]').checked = true;
+    }
+
     document.getElementById('address-step-postcode').style.display = 'none';
     document.getElementById('address-step-select').style.display = 'block';
   }
@@ -711,12 +743,14 @@
     proceedFromAddress();
   }
 
-  function showManualEntry(pc) {
+  function showManualEntry(pc, house) {
     document.getElementById('address-step-postcode').style.display = 'none';
     document.getElementById('address-step-select').style.display = 'none';
     document.getElementById('address-step-manual').style.display = 'block';
     var pcVal = pc ? pc.toUpperCase() : '';
     document.getElementById('manual-postcode').value = pcVal;
+    // Pre-fill house number/name if we have it
+    if (house) document.getElementById('manual-line1').value = house;
     document.getElementById('manual-postcode-display').innerHTML = pcVal
       ? 'Postcode: <strong>' + pcVal + '</strong>'
       : '';
