@@ -63,6 +63,11 @@
   .govuk-fieldset-hint { font-size: 16px; color: #505a5f; margin-bottom: 16px; }
   .govuk-footer { background: #f3f2f1; border-top: 1px solid #b1b4b6; padding: 25px 0; margin-top: 40px; }
   .govuk-footer__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; font-size: 14px; color: #505a5f; }
+  .proto-bar { background: #00703c; padding: 10px 0; }
+  .proto-bar__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; font-size: 13px; color: white; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .proto-bar__label { font-weight: 700; white-space: nowrap; }
+  .proto-bar__examples { display: flex; gap: 20px; flex-wrap: wrap; }
+  .proto-bar__example { background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 3px; white-space: nowrap; }
   .govuk-radio { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; cursor: pointer; }
   .govuk-radio input { width: 40px; height: 40px; margin-top: 0; flex-shrink: 0; cursor: pointer; accent-color: #0b0c0c; }
   .govuk-radio label { font-size: 19px; color: #0b0c0c; cursor: pointer; padding-top: 8px; }
@@ -114,6 +119,7 @@
     </div>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions &nbsp;·&nbsp; <a href="#">Accessibility statement</a> &nbsp;·&nbsp; <a href="#">Cookies</a></p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 1: Name -->
@@ -134,6 +140,7 @@
     <button class="govuk-button" onclick="submitName()">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 2: DOB -->
@@ -154,6 +161,7 @@
     <button class="govuk-button" onclick="submitDob()">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 3: NI Number -->
@@ -193,6 +201,7 @@
     <button class="govuk-button" onclick="submitNI()">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 3A: No NI — 6 month rule explanation -->
@@ -213,6 +222,7 @@
     <button class="govuk-button" onclick="goTo('page-ni-apply')">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 3B: No NI — do you want to apply for one? -->
@@ -230,6 +240,7 @@
     <button class="govuk-button" onclick="submitNIApply()">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 3C: NI application placeholder -->
@@ -248,6 +259,7 @@
     <button class="govuk-button" onclick="data.niStatus = 'application-in-progress'; goTo('page-address');">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 3D: No NI — confirm understanding -->
@@ -271,6 +283,7 @@
     <button class="govuk-button" onclick="submitNIConfirm()">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 4: Address -->
@@ -344,6 +357,7 @@
 
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 <!-- PAGE: Confirmation -->
 <div class="page" id="page-confirmation">
@@ -373,6 +387,7 @@
     <p class="govuk-body" style="margin-top:12px;"><a class="govuk-link" href="#" onclick="return false;">I do not want to create an account</a></p>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE: Account prompt -->
@@ -400,6 +415,7 @@
     </div>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE: Account email -->
@@ -421,6 +437,7 @@
     <button class="govuk-button" onclick="submitAccountEmail()">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE: Account password -->
@@ -450,6 +467,7 @@
     <button class="govuk-button" onclick="submitAccountPassword()">Continue</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE: Account passkey -->
@@ -476,6 +494,7 @@
     </div>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE: Account created -->
@@ -500,6 +519,7 @@
     <a class="govuk-button" href="#" onclick="return false;">Go to your account</a>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <!-- PAGE 5: Check your answers -->
@@ -526,6 +546,7 @@
     <button class="govuk-button" onclick="submitApplication()">Accept and send</button>
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
+  <div class="proto-bar"><div class="proto-bar__inner"><span class="proto-bar__label">🔧 Prototype only — address lookup test data:</span><div class="proto-bar__examples"><span class="proto-bar__example">SW1A 1AA + house no. 14</span><span class="proto-bar__example">E1 6AN + house no. Flat 2/1</span><span class="proto-bar__example">M1 1AE + house no. 1</span></div></div></div>
 </div>
 
 <script>
