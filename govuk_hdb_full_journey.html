@@ -282,30 +282,63 @@
     <p class="govuk-caption">Apply for Health and Disability Benefit</p>
     <h1 class="govuk-h1">What is your home address?</h1>
     <p class="govuk-body">This service is only available to people who reside in England.</p>
-    <span class="govuk-error" id="err-address">Enter a valid English postcode</span>
-    <div id="address-form">
+
+    <!-- Step 1: Postcode entry -->
+    <div id="address-step-postcode">
+      <span class="govuk-error" id="err-postcode" style="display:none;">Enter a valid English postcode</span>
       <label class="govuk-label" for="postcode">Postcode</label>
       <span class="govuk-label-hint">Enter an English postcode, for example SW1A 1AA</span>
-      <input class="govuk-input input-small" type="text" id="postcode" placeholder="e.g. SW1A 1AA" style="max-width:180px; text-transform:uppercase; margin-bottom:16px;">
-      <br>
-      <label class="govuk-label" for="address-line1">Address line 1</label>
-      <input class="govuk-input" type="text" id="address-line1" placeholder="House number and street name">
-      <label class="govuk-label" for="address-line2">Address line 2 (optional)</label>
-      <input class="govuk-input" type="text" id="address-line2" placeholder="Flat, building, estate (optional)">
-      <label class="govuk-label" for="address-town">Town or city</label>
-      <input class="govuk-input" type="text" id="address-town">
-    </div>
-    <hr class="govuk-section-break">
-    <div class="govuk-radio" style="margin-top:16px;"><input type="checkbox" id="no-fixed-address" onchange="toggleNoFixedAddress(this)"><label for="no-fixed-address" style="font-size:17px;">I reside in England but I do not have a fixed address</label></div>
-    <div id="no-fixed-address-info" style="display:none;">
-      <div class="govuk-inset" style="margin-top:16px;">
-        <p>You can still apply. Please provide a contact address where we can reach you, such as a shelter, support worker, friend or family member's address.</p>
+      <input class="govuk-input" type="text" id="postcode" placeholder="e.g. SW1A 1AA" style="max-width:200px; text-transform:uppercase;">
+      <div style="margin-top:16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+        <button class="govuk-button" onclick="lookupPostcode()" style="margin-top:0;">Find address</button>
+        <a class="govuk-link" style="font-size:17px; cursor:pointer;" onclick="showManualEntry(null)">Enter address manually</a>
       </div>
-      <label class="govuk-label" for="contact-address">Contact address</label>
-      <span class="govuk-label-hint">This could be a shelter, hostel, or a friend or family member's address in England</span>
-      <input class="govuk-input" type="text" id="contact-address" placeholder="Enter a contact address">
+      <hr class="govuk-section-break" style="margin-top:24px;">
+      <div class="govuk-radio" style="margin-top:16px;">
+        <input type="checkbox" id="no-fixed-address" onchange="toggleNoFixedAddress(this)">
+        <label for="no-fixed-address" style="font-size:17px;">I reside in England but I do not have a fixed address</label>
+      </div>
+      <div id="no-fixed-address-info" style="display:none;">
+        <div class="govuk-inset" style="margin-top:16px;">
+          <p>You can still apply. Please provide a contact address where we can reach you, such as a shelter, support worker, friend or family member's address.</p>
+        </div>
+        <label class="govuk-label" for="contact-address">Contact address</label>
+        <span class="govuk-label-hint">This could be a shelter, hostel, or a friend or family member's address in England</span>
+        <input class="govuk-input" type="text" id="contact-address" placeholder="Enter a contact address">
+        <button class="govuk-button" onclick="submitNoFixedAddress()" style="margin-top:8px;">Continue</button>
+      </div>
     </div>
-    <button class="govuk-button" onclick="submitAddress()" style="margin-top:24px;">Continue</button>
+
+    <!-- Step 2: Address selection -->
+    <div id="address-step-select" style="display:none;">
+      <span class="govuk-error" id="err-select" style="display:none;">Select an address</span>
+      <p class="govuk-body"><strong id="postcode-display"></strong> &nbsp;<a class="govuk-link" style="font-size:17px; cursor:pointer;" onclick="resetPostcode()">Change postcode</a></p>
+      <p class="govuk-body" id="address-count"></p>
+      <fieldset style="border:0; padding:0; margin:0;">
+        <legend class="govuk-label" style="margin-bottom:12px;">Select your address</legend>
+        <div id="address-radio-list"></div>
+      </fieldset>
+      <p style="margin-top:16px;"><a class="govuk-link" style="font-size:17px; cursor:pointer;" onclick="showManualEntry(document.getElementById('postcode').value)">I cannot find my address in the list</a></p>
+      <button class="govuk-button" onclick="submitSelectedAddress()" style="margin-top:24px;">Continue</button>
+    </div>
+
+    <!-- Step 3: Manual entry (fallback) -->
+    <div id="address-step-manual" style="display:none;">
+      <span class="govuk-error" id="err-manual" style="display:none;">Enter your full address</span>
+      <p class="govuk-body" id="manual-postcode-display"></p>
+      <label class="govuk-label" for="manual-line1">Address line 1</label>
+      <span class="govuk-label-hint">For example: Flat 2/1, 14 Example Street or Ground Floor, Seaview House</span>
+      <input class="govuk-input" type="text" id="manual-line1" autocomplete="address-line1">
+      <label class="govuk-label" for="manual-line2">Address line 2 (optional)</label>
+      <input class="govuk-input" type="text" id="manual-line2" autocomplete="address-line2">
+      <label class="govuk-label" for="manual-town">Town or city</label>
+      <input class="govuk-input" type="text" id="manual-town" autocomplete="address-level2">
+      <label class="govuk-label" for="manual-postcode">Postcode</label>
+      <input class="govuk-input" type="text" id="manual-postcode" style="max-width:200px; text-transform:uppercase;" autocomplete="postal-code">
+      <p style="margin-top:8px;"><a class="govuk-link" style="font-size:17px; cursor:pointer;" onclick="resetPostcode()">← Back to postcode lookup</a></p>
+      <button class="govuk-button" onclick="submitManualAddress()" style="margin-top:16px;">Continue</button>
+    </div>
+
   </main>
   <footer class="govuk-footer"><div class="govuk-footer__inner"><p>Built by the Department for Work &amp; Pensions</p></div></footer>
 </div>
@@ -573,13 +606,52 @@
     goTo('page-address');
   }
 
-  function toggleNoFixedAddress(el) {
-    var addressForm = document.getElementById('address-form');
-    var nfaInfo = document.getElementById('no-fixed-address-info');
-    data.noFixedAddress = el.checked;
-    addressForm.style.display = el.checked ? 'none' : 'block';
-    nfaInfo.style.display = el.checked ? 'block' : 'none';
-  }
+  // Simulated postcode database — realistic English addresses inc. unusual formats
+  var postcodeDB = {
+    'SW1A1AA': [
+      '1 Downing Street, London',
+      '2 Downing Street, London',
+      'Flat 1/1, 10 Whitehall, London',
+      'Ground Floor Flat, 12 Whitehall, London',
+      '14 Whitehall, London',
+    ],
+    'E16AN': [
+      'Flat A, 1 Whitechapel High Street, London',
+      'Flat 2/1, 3 Whitechapel High Street, London',
+      '5 Whitechapel High Street, London',
+      'Unit 4, Whitechapel High Street, London',
+      '7 Whitechapel High Street, London',
+      'Ground Floor, 9 Whitechapel High Street, London',
+    ],
+    'M11AE': [
+      '1 Market Street, Manchester',
+      'Flat 3, 2 Market Street, Manchester',
+      '4 Market Street, Manchester',
+      'Suite 1, 6 Market Street, Manchester',
+      '8 Market Street, Manchester',
+    ],
+    'B11BB': [
+      '1 New Street, Birmingham',
+      'Flat 1/2, 3 New Street, Birmingham',
+      '5 New Street, Birmingham',
+      'Apartment 6, New Street House, Birmingham',
+      '7 New Street, Birmingham',
+    ],
+    'LS11BA': [
+      '1 Briggate, Leeds',
+      'Flat 2/3, 3 Briggate, Leeds',
+      '5 Briggate, Leeds',
+      'Ground Floor Flat, 7 Briggate, Leeds',
+      '9 Briggate, Leeds',
+    ],
+    'BS11TR': [
+      '1 Broadmead, Bristol',
+      'Flat A, 3 Broadmead, Bristol',
+      'Flat 1/1, 5 Broadmead, Bristol',
+      '7 Broadmead, Bristol',
+      'Upper Flat, 9 Broadmead, Bristol',
+    ],
+  };
 
   function isNonEnglandPostcode(pc) {
     var upper = pc.toUpperCase().replace(/\s/g,'');
@@ -589,22 +661,114 @@
     return false;
   }
 
-  function submitAddress() {
-    var errEl = document.getElementById('err-address');
+  function isValidPostcode(pc) {
+    var upper = pc.toUpperCase().replace(/\s/g,'');
+    return /^[A-Z]{1,2}[0-9][0-9A-Z]?[0-9][A-Z]{2}$/.test(upper);
+  }
+
+  function lookupPostcode() {
+    var pc = document.getElementById('postcode').value.trim();
+    var errEl = document.getElementById('err-postcode');
+    errEl.style.display = 'none';
     errEl.classList.remove('visible');
-    if (data.noFixedAddress) {
-      var contact = document.getElementById('contact-address').value.trim();
-      if (!contact) { errEl.textContent='Enter a contact address'; errEl.classList.add('visible'); return; }
-      data.address = 'No fixed address\nContact: '+contact;
-    } else {
-      var pc = document.getElementById('postcode').value.trim();
-      var line1 = document.getElementById('address-line1').value.trim();
-      var town = document.getElementById('address-town').value.trim();
-      if (!pc || !line1 || !town) { errEl.textContent='Enter your full address including postcode, address line 1 and town'; errEl.classList.add('visible'); return; }
-      if (isNonEnglandPostcode(pc)) { errEl.textContent='This service is only available to people who reside in England. Your postcode appears to be outside England.'; errEl.classList.add('visible'); return; }
-      var line2 = document.getElementById('address-line2').value.trim();
-      data.address = line1 + (line2?'\n'+line2:'') + '\n' + town + '\n' + pc.toUpperCase();
+    if (!isValidPostcode(pc)) {
+      errEl.textContent = 'Enter a valid English postcode, for example SW1A 1AA';
+      errEl.style.display = 'block'; errEl.classList.add('visible'); return;
     }
+    if (isNonEnglandPostcode(pc)) {
+      errEl.textContent = 'This service is only available to people who reside in England. Your postcode appears to be outside England.';
+      errEl.style.display = 'block'; errEl.classList.add('visible'); return;
+    }
+    var key = pc.toUpperCase().replace(/\s/g,'');
+    var addresses = postcodeDB[key] || null;
+    if (!addresses) {
+      // Postcode valid but not in our demo DB — go to manual
+      showManualEntry(pc);
+      return;
+    }
+    // Show address selection
+    document.getElementById('postcode-display').textContent = pc.toUpperCase();
+    document.getElementById('address-count').textContent = addresses.length + ' addresses found';
+    var list = document.getElementById('address-radio-list');
+    list.innerHTML = '';
+    addresses.forEach(function(addr, i) {
+      var div = document.createElement('div');
+      div.className = 'govuk-radio';
+      div.innerHTML = '<input type="radio" name="addr-select" id="addr-'+i+'" value="'+addr+'"><label for="addr-'+i+'">'+addr+'</label>';
+      list.appendChild(div);
+    });
+    document.getElementById('address-step-postcode').style.display = 'none';
+    document.getElementById('address-step-select').style.display = 'block';
+  }
+
+  function submitSelectedAddress() {
+    var selected = document.querySelector('input[name="addr-select"]:checked');
+    var errEl = document.getElementById('err-select');
+    errEl.style.display = 'none';
+    if (!selected) { errEl.textContent = 'Select an address'; errEl.style.display = 'block'; return; }
+    var pc = document.getElementById('postcode').value.trim().toUpperCase();
+    data.address = selected.value + '\n' + pc;
+    proceedFromAddress();
+  }
+
+  function showManualEntry(pc) {
+    document.getElementById('address-step-postcode').style.display = 'none';
+    document.getElementById('address-step-select').style.display = 'none';
+    document.getElementById('address-step-manual').style.display = 'block';
+    var pcVal = pc ? pc.toUpperCase() : '';
+    document.getElementById('manual-postcode').value = pcVal;
+    document.getElementById('manual-postcode-display').innerHTML = pcVal
+      ? 'Postcode: <strong>' + pcVal + '</strong>'
+      : '';
+  }
+
+  function submitManualAddress() {
+    var line1 = document.getElementById('manual-line1').value.trim();
+    var line2 = document.getElementById('manual-line2').value.trim();
+    var town  = document.getElementById('manual-town').value.trim();
+    var pc    = document.getElementById('manual-postcode').value.trim();
+    var errEl = document.getElementById('err-manual');
+    errEl.style.display = 'none';
+    if (!line1 || !town || !pc) {
+      errEl.textContent = 'Enter your address line 1, town or city, and postcode';
+      errEl.style.display = 'block'; return;
+    }
+    if (!isValidPostcode(pc)) {
+      errEl.textContent = 'Enter a valid postcode';
+      errEl.style.display = 'block'; return;
+    }
+    if (isNonEnglandPostcode(pc)) {
+      errEl.textContent = 'This service is only available to people who reside in England. Your postcode appears to be outside England.';
+      errEl.style.display = 'block'; return;
+    }
+    data.address = line1 + (line2 ? '\n' + line2 : '') + '\n' + town + '\n' + pc.toUpperCase();
+    proceedFromAddress();
+  }
+
+  function submitNoFixedAddress() {
+    var contact = document.getElementById('contact-address').value.trim();
+    var errEl = document.getElementById('err-postcode');
+    if (!contact) {
+      errEl.textContent = 'Enter a contact address';
+      errEl.style.display = 'block'; errEl.classList.add('visible'); return;
+    }
+    data.address = 'No fixed address\nContact: ' + contact;
+    data.noFixedAddress = true;
+    proceedFromAddress();
+  }
+
+  function resetPostcode() {
+    document.getElementById('address-step-select').style.display = 'none';
+    document.getElementById('address-step-manual').style.display = 'none';
+    document.getElementById('address-step-postcode').style.display = 'block';
+  }
+
+  function toggleNoFixedAddress(el) {
+    data.noFixedAddress = el.checked;
+    document.getElementById('no-fixed-address-info').style.display = el.checked ? 'block' : 'none';
+  }
+
+  function proceedFromAddress() {
     var dobFormatted = data.day+' '+months[data.month-1]+' '+data.year;
     document.getElementById('s-firstname').textContent = data.firstname;
     document.getElementById('s-surname').textContent = data.surname;
