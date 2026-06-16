@@ -31,11 +31,15 @@ The project has two audiences:
 
 ## File structure
 
-All files are in `/Users/home/Desktop/HDB Service/`
+### HDB Service — `/Users/home/Desktop/HDB Service/`
+GitHub repo: https://github.com/js8989/hdb-service
+Live site: https://jacksdevdiary-hdbservice.netlify.app
 
+- `index.html` — prototypes landing page (links to all 4 prototypes)
 - `govuk_hdb_full_journey.html` — citizen-facing registration and application journey
 - `govuk_hdb_agent_tool.html` — agent-facing case management tool
 - `flow-map.html` — interactive visual flow map of all screens (zoom/pan)
+- `govuk_component_showcase.html` — all 34 GOV.UK components for reference
 - `screenshot_screens.py` — Python script to auto-generate PNG screenshots of every screen
 - `screens/` — folder containing all PNG screenshots (auto-generated)
 - `mockups/pip_mockups.html` — standalone HTML mockups for PIP case record and timeline designs
@@ -44,9 +48,16 @@ All files are in `/Users/home/Desktop/HDB Service/`
 - `mockups/PIP-Mockup-2-Timeline-Overview.png` — mockup: full case timeline (collapsed)
 - `mockups/PIP-Mockup-3-Timeline-Drilled-In.png` — mockup: timeline with application journey expanded
 - `Update Screens.command` — double-clickable file on Desktop to regenerate all screenshots
-- `mockups/devlog_mockup.html` — mockup for Jack's Dev Diary website (black background, burger menu, timeline feed)
+- `mockups/devlog_mockup.html` — original mockup for Jack's Dev Diary website
 
-GitHub repo: https://github.com/js8989/hdb-service
+### My Website — `/Users/home/Desktop/My Website/`
+GitHub repo: https://github.com/js8989/jacks-dev-diary
+Live site: https://jacksdevdiary.netlify.app
+
+- `index.html` — the live dev diary site
+
+### Prototype password
+All four HDB prototype pages are password protected. Password: `wijrebfgwirbgfirw!@£&£&^`
 
 ---
 
@@ -251,6 +262,18 @@ Key decisions:
 - v0.4 = v0.2 design language + proper markup where possible
 
 <!-- END OF SESSION 2 — do not edit above this line -->
+
+---
+
+**Session 3** — *16 June 2026, ~9pm–11pm*
+Big session — took the dev diary from a mockup file to a real live website. Created a new GitHub repo (`jacks-dev-diary`) and a separate one for the HDB prototypes. Set up two Netlify sites: jacksdevdiary.netlify.app for the diary and jacksdevdiary-hdbservice.netlify.app for the prototypes. Built a prototypes landing page for the HDB site in the same dark style as the diary. Set up GitHub authentication so Claude can push directly from the Mac without any manual uploading. Tidied the diary entries — condensed 5 days down to 3, fixed all dates, removed the burger menu then brought it back properly with a working Prototypes link. Added password protection to all four prototype pages. Added a JDD favicon in the site colours to both sites. Also tidied NOTES.md to cover both repos in one place.
+
+Key decisions:
+- NOTES.md stays in the HDB Service folder and covers both projects
+- jacks-dev-diary repo = the website; hdb-service repo = the prototypes
+- Prototype password stored in NOTES.md (see File structure section above)
+
+<!-- END OF SESSION 3 — do not edit above this line -->
 
 ---
 
