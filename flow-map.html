@@ -78,6 +78,14 @@ body { background: #dde3ea; font-family: 'Segoe UI', Arial, sans-serif; overflow
 </style>
 </head>
 <body>
+<script>
+  (function() {
+    var pwd = prompt("Enter password to access this prototype:");
+    if (pwd !== "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
+      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password.</p></div>";
+    }
+  })();
+</script>
 
 <div id="toolbar">
   <h1>HDB Service – Screen Flow Map</h1>

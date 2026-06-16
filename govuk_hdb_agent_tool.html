@@ -65,6 +65,14 @@
   .govuk-list { font-size: 17px; color: #0b0c0c; padding-left: 20px; margin-bottom: 20px; line-height: 1.6; }
   .govuk-list li { margin-bottom: 8px; }
 </style>
+<script>
+  (function() {
+    var pwd = prompt("Enter password to access this prototype:");
+    if (pwd !== "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
+      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password.</p></div>";
+    }
+  })();
+</script>
 
 <!-- PAGE: Login -->
 <div class="page active" id="agent-login">
