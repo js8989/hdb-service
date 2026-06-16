@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HDB Service – Screen Flow Map</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #dde3ea; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; height: 100vh; }
+
+#toolbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: #003078; color: white; padding: 8px 20px;
+  display: flex; align-items: center; gap: 12px; height: 52px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+#toolbar h1 { font-size: 15px; font-weight: 700; color: white; margin-right: 8px; white-space: nowrap; }
+.tb-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.25); flex-shrink: 0; }
+.tb-btn {
+  background: rgba(255,255,255,0.15); color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 5px 14px; font-size: 14px; font-weight: 700;
+  cursor: pointer; border-radius: 3px; white-space: nowrap;
+}
+.tb-btn:hover { background: rgba(255,255,255,0.28); }
+#zoom-level { font-size: 13px; color: #bfd7ff; min-width: 44px; text-align:center; }
+.tb-hint { font-size: 12px; color: rgba(255,255,255,0.5); white-space: nowrap; }
+
+#legend { display: flex; align-items: center; gap: 18px; margin-left: auto; flex-shrink: 0; }
+.leg { display: flex; align-items: center; gap: 7px; font-size: 12px; color: rgba(255,255,255,0.8); white-space: nowrap; }
+.leg-line { width: 30px; height: 3px; border-radius: 2px; }
+
+#viewport {
+  position: fixed; top: 52px; left: 0; right: 0; bottom: 0;
+  overflow: hidden; cursor: grab; user-select: none;
+}
+#viewport.dragging { cursor: grabbing; }
+#canvas { position: absolute; transform-origin: 0 0; }
+
+/* SVG arrows sit behind screens */
+#svg-arrows { position: absolute; top: 0; left: 0; pointer-events: none; overflow: visible; }
+
+/* Section labels */
+.section-label {
+  position: absolute; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: white; padding: 5px 14px; border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* Screen: just label + image, no border */
+.screen-wrap { position: absolute; }
+
+.screen-label {
+  margin-bottom: 8px;
+}
+.screen-code {
+  display: block; font-size: 12px; font-weight: 700;
+  color: #1d70b8; text-transform: uppercase; letter-spacing: 1.5px;
+  font-family: 'Courier New', monospace; line-height: 1.3;
+}
+.screen-name {
+  display: block; font-size: 12px; color: #0b0c0c; line-height: 1.3;
+}
+
+.screen-wrap img {
+  width: 300px; height: auto; display: block;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.22);
+}
+
+/* Arrow label tags */
+.arrow-tag {
+  position: absolute;
+  font-size: 10px; font-weight: 700; color: white;
+  padding: 2px 8px; border-radius: 10px;
+  white-space: nowrap; pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <h1>HDB Service – Screen Flow Map</h1>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" onclick="adjustZoom(0.12)">＋ Zoom in</button>
+  <button class="tb-btn" onclick="adjustZoom(-0.12)">－ Zoom out</button>
+  <button class="tb-btn" onclick="resetView()">↺ Reset</button>
+  <span id="zoom-level">50%</span>
+  <div class="tb-sep"></div>
+  <span class="tb-hint">Scroll to zoom &nbsp;·&nbsp; Drag to pan</span>
+  <div id="legend">
+    <div class="leg"><div class="leg-line" style="background:#1d70b8"></div>Main flow</div>
+    <div class="leg"><div class="leg-line" style="background:#f47738"></div>Branch</div>
+    <div class="leg"><div class="leg-line" style="border-top:3px dashed #6f777b;height:0;width:30px"></div>Optional</div>
+  </div>
+</div>
+
+<div id="viewport">
+  <div id="canvas">
+    <svg id="svg-arrows"><defs>
+      <marker id="m-blue"   markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L0,8 L10,4 z" fill="#1d70b8"/></marker>
+      <marker id="m-orange" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L0,8 L10,4 z" fill="#f47738"/></marker>
+      <marker id="m-grey"   markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L0,8 L10,4 z" fill="#6f777b"/></marker>
+    </defs></svg>
+  </div>
+</div>
+
+<script>
+const IMG_W = 300; // display width of every image
+
+// ── Screen definitions ──────────────────────────────────────────
+// x, y = top-left of the label (image starts below label)
+// file = filename stem inside /screens/
+const SCREENS = [
+  // Registration – main flow
+  { id:'RG-01',  code:'RG-01',  name:'Start',                        file:'RG-01 – Start',                          x:60,   y:80   },
+  { id:'RG-02',  code:'RG-02',  name:'Your name',                    file:'RG-02 – Your name',                      x:440,  y:80   },
+  { id:'RG-03',  code:'RG-03',  name:'Date of birth',                file:'RG-03 – Date of birth',                  x:820,  y:80   },
+  { id:'RG-04',  code:'RG-04',  name:'NI number',                    file:'RG-04 – NI number',                      x:1200, y:80   },
+  { id:'RG-05',  code:'RG-05',  name:'Home address',                 file:'RG-05 – Home address',                   x:1960, y:80   },
+  { id:'RG-06',  code:'RG-06',  name:'Check your answers',           file:'RG-06 – Check your answers',             x:2340, y:80   },
+  { id:'RG-07',  code:'RG-07',  name:'Application submitted',        file:'RG-07 – Application submitted',          x:2720, y:80   },
+  { id:'RG-08',  code:'RG-08',  name:'Create account – prompt',      file:'RG-08 – Create account – prompt',        x:3100, y:80   },
+  { id:'RG-09',  code:'RG-09',  name:'Create account – email',       file:'RG-09 – Create account – email',         x:3480, y:80   },
+  { id:'RG-10',  code:'RG-10',  name:'Create account – password',    file:'RG-10 – Create account – password',      x:3860, y:80   },
+  { id:'RG-11',  code:'RG-11',  name:'Create account – passkey',     file:'RG-11 – Create account – passkey',       x:4240, y:80   },
+  { id:'RG-12',  code:'RG-12',  name:'Account created',              file:'RG-12 – Account created',                x:4620, y:80   },
+  // No NI branch – row 1
+  { id:'RG-04a', code:'RG-04a', name:'No NI – 6 month rule',         file:'RG-04a – No NI – 6 month rule',          x:1200, y:700  },
+  { id:'RG-04b', code:'RG-04b', name:'No NI – apply for one?',       file:'RG-04b – No NI – apply for one',         x:1580, y:700  },
+  // No NI branch – row 2
+  { id:'RG-04c', code:'RG-04c', name:'NI application placeholder',   file:'RG-04c – NI application placeholder',    x:1390, y:1300 },
+  { id:'RG-04d', code:'RG-04d', name:'No NI – confirm understanding',file:'RG-04d – No NI – confirm understanding', x:1770, y:1300 },
+  // Agent tool
+  { id:'AT-01',  code:'AT-01',  name:'Agent login',                  file:'AT-01 – Agent login',                    x:60,   y:2000 },
+  { id:'AT-02',  code:'AT-02',  name:'Agent home',                   file:'AT-02 – Agent home',                     x:440,  y:2000 },
+  { id:'AT-03',  code:'AT-03',  name:'Search for citizen',           file:'AT-03 – Search for citizen',             x:820,  y:2000 },
+  { id:'AT-04',  code:'AT-04',  name:'Claimant record',              file:'AT-04 – Claimant record',                x:1200, y:2000 },
+];
+
+// ── Arrow definitions ───────────────────────────────────────────
+// [fromId, toId, type, label, fromEdge, toEdge]
+// fromEdge/toEdge: 'l','r','t','b' — omit to auto-pick
+const ARROWS = [
+  // Main registration flow
+  ['RG-01','RG-02','main'],
+  ['RG-02','RG-03','main'],
+  ['RG-03','RG-04','main'],
+  ['RG-04','RG-05','main','NI provided'],
+  ['RG-05','RG-06','main'],
+  ['RG-06','RG-07','main'],
+  ['RG-07','RG-08','optional','Optional'],
+  ['RG-08','RG-09','main'],
+  ['RG-09','RG-10','main'],
+  ['RG-10','RG-11','main'],
+  ['RG-11','RG-12','main'],
+  ['RG-11','RG-12','optional','Skip passkey'],
+  // No NI branch
+  ['RG-04','RG-04a','branch','No NI','b','t'],
+  ['RG-04a','RG-04b','branch'],
+  ['RG-04b','RG-04c','branch','Yes – apply for NI','b','t'],
+  ['RG-04b','RG-04d','branch','No – get NI separately','b','t'],
+  ['RG-04c','RG-05','branch','Continue','r','b'],
+  ['RG-04d','RG-05','branch','Continue','r','b'],
+  // Agent tool
+  ['AT-01','AT-02','main'],
+  ['AT-02','AT-03','main'],
+  ['AT-03','AT-04','main'],
+];
+
+// ── Build DOM ───────────────────────────────────────────────────
+const canvas = document.getElementById('canvas');
+const svgEl  = document.getElementById('svg-arrows');
+
+// Section backgrounds + labels
+function addBg(x, y, w, h, col) {
+  const d = document.createElement('div');
+  d.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${col};border-radius:12px;`;
+  canvas.insertBefore(d, canvas.firstChild);
+}
+function addLabel(x, y, text, bg) {
+  const d = document.createElement('div');
+  d.className = 'section-label';
+  d.style.cssText = `left:${x}px;top:${y}px;background:${bg}`;
+  d.textContent = text;
+  canvas.appendChild(d);
+}
+
+// Screen wraps
+const screenMap = {};
+SCREENS.forEach(s => {
+  const wrap = document.createElement('div');
+  wrap.className = 'screen-wrap';
+  wrap.id = 'wrap-' + s.id;
+  wrap.style.cssText = `left:${s.x}px;top:${s.y}px`;
+  wrap.innerHTML = `
+    <div class="screen-label">
+      <span class="screen-code">${s.code}</span>
+      <span class="screen-name">${s.name}</span>
+    </div>
+    <img src="screens/${s.file}.png" alt="${s.code}" loading="lazy">`;
+  canvas.appendChild(wrap);
+  screenMap[s.id] = s;
+});
+
+// ── Draw arrows after images load ───────────────────────────────
+function getLabelH(id) {
+  const el = document.getElementById('wrap-' + id);
+  return el.querySelector('.screen-label').offsetHeight;
+}
+function getImgH(id) {
+  const img = document.getElementById('wrap-' + id).querySelector('img');
+  if (img.naturalHeight && img.naturalWidth) {
+    return img.naturalHeight * (IMG_W / img.naturalWidth);
+  }
+  return img.offsetHeight || 400;
+}
+
+function getEdge(id, side) {
+  const s = screenMap[id];
+  const labelH = getLabelH(id);
+  const imgH   = getImgH(id);
+  const ix = s.x;            // image left
+  const iy = s.y + labelH;  // image top
+  switch(side) {
+    case 'l': return [ix,           iy + imgH/2];
+    case 'r': return [ix + IMG_W,   iy + imgH/2];
+    case 't': return [ix + IMG_W/2, iy];
+    case 'b': return [ix + IMG_W/2, iy + imgH];
+    default:  return [ix + IMG_W/2, iy + imgH/2];
+  }
+}
+
+function autoSides(fromId, toId) {
+  const f = screenMap[fromId], t = screenMap[toId];
+  const dx = (t.x + IMG_W/2) - (f.x + IMG_W/2);
+  const dy = (t.y) - (f.y);
+  if (Math.abs(dx) >= Math.abs(dy)) return dx >= 0 ? ['r','l'] : ['l','r'];
+  return dy >= 0 ? ['b','t'] : ['t','b'];
+}
+
+function drawArrow(fromId, toId, type, label, fromSide, toSide) {
+  const col    = type==='main' ? '#1d70b8' : type==='branch' ? '#f47738' : '#6f777b';
+  const marker = type==='main' ? 'm-blue'  : type==='branch' ? 'm-orange' : 'm-grey';
+  const dash   = type==='main' ? 'none' : '8,5';
+  const sw     = type==='main' ? 3.5 : 2.5;
+
+  const [fs, ts] = (fromSide && toSide) ? [fromSide, toSide] : autoSides(fromId, toId);
+  const [x1,y1] = getEdge(fromId, fs);
+  const [x2,y2] = getEdge(toId,   ts);
+
+  const adx = x2-x1, ady = y2-y1;
+  let cpx1,cpy1,cpx2,cpy2;
+  if (Math.abs(adx) >= Math.abs(ady)) {
+    const off = Math.abs(adx)*0.45;
+    cpx1=x1+(adx>=0?off:-off); cpy1=y1;
+    cpx2=x2-(adx>=0?off:-off); cpy2=y2;
+  } else {
+    const off = Math.abs(ady)*0.45;
+    cpx1=x1; cpy1=y1+(ady>=0?off:-off);
+    cpx2=x2; cpy2=y2-(ady>=0?off:-off);
+  }
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',`M${x1},${y1} C${cpx1},${cpy1} ${cpx2},${cpy2} ${x2},${y2}`);
+  path.setAttribute('stroke',col);
+  path.setAttribute('stroke-width',sw);
+  path.setAttribute('stroke-dasharray',dash);
+  path.setAttribute('fill','none');
+  path.setAttribute('marker-end',`url(#${marker})`);
+  svgEl.appendChild(path);
+
+  if (label) {
+    const mx = (x1+cpx1+cpx2+x2)/4;
+    const my = (y1+cpy1+cpy2+y2)/4;
+    const tag = document.createElement('div');
+    tag.className = 'arrow-tag';
+    tag.style.cssText = `left:${mx}px;top:${my}px;background:${col}`;
+    tag.textContent = label;
+    canvas.appendChild(tag);
+  }
+}
+
+function addSections() {
+  // Work out extents from screen positions
+  const rgScreens = SCREENS.filter(s => s.id.startsWith('RG'));
+  const atScreens = SCREENS.filter(s => s.id.startsWith('AT'));
+  const pad = 40;
+
+  const rgMaxX = Math.max(...rgScreens.map(s => s.x)) + IMG_W + pad;
+  const rgMaxY = Math.max(...rgScreens.map(s => s.y + getLabelH(s.id) + getImgH(s.id))) + pad;
+  addBg(60-pad, 80-pad-30, rgMaxX-60+pad, rgMaxY-80+pad+30, 'rgba(29,112,184,0.06)');
+  addLabel(60-pad, 80-pad-30-32, 'Registration Journey', '#003078');
+
+  const atMaxX = Math.max(...atScreens.map(s => s.x)) + IMG_W + pad;
+  const atMaxY = Math.max(...atScreens.map(s => s.y + getLabelH(s.id) + getImgH(s.id))) + pad;
+  addBg(60-pad, atScreens[0].y-pad-30, atMaxX-60+pad, atMaxY-atScreens[0].y+pad+30, 'rgba(0,48,120,0.06)');
+  addLabel(60-pad, atScreens[0].y-pad-30-32, 'Agent Tool', '#1d70b8');
+
+  // SVG size
+  const maxX = Math.max(rgMaxX, atMaxX) + 100;
+  const maxY = atMaxY + 100;
+  svgEl.setAttribute('width', maxX);
+  svgEl.setAttribute('height', maxY);
+  canvas.style.width  = maxX + 'px';
+  canvas.style.height = maxY + 'px';
+}
+
+// Wait for all images to load, then draw
+window.addEventListener('load', () => {
+  const imgs = canvas.querySelectorAll('img');
+  let loaded = 0;
+  function onLoad() {
+    loaded++;
+    if (loaded >= imgs.length) {
+      addSections();
+      ARROWS.forEach(([f,t,type,lbl,fs,ts]) => drawArrow(f,t,type,lbl,fs,ts));
+    }
+  }
+  imgs.forEach(img => {
+    if (img.complete) onLoad();
+    else { img.addEventListener('load', onLoad); img.addEventListener('error', onLoad); }
+  });
+  if (imgs.length === 0) { addSections(); ARROWS.forEach(([f,t,type,lbl,fs,ts]) => drawArrow(f,t,type,lbl,fs,ts)); }
+});
+
+// ── Pan & Zoom ──────────────────────────────────────────────────
+const vp = document.getElementById('viewport');
+let scale=0.35, tx=60, ty=30, dragging=false, lx=0, ly=0;
+
+function applyT() {
+  canvas.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+  document.getElementById('zoom-level').textContent = Math.round(scale*100)+'%';
+}
+function adjustZoom(d) {
+  scale = Math.min(3, Math.max(0.08, scale+d));
+  applyT();
+}
+function resetView() { scale=0.35; tx=60; ty=30; applyT(); }
+
+vp.addEventListener('wheel', e => {
+  e.preventDefault();
+  const d = e.deltaY > 0 ? -0.06 : 0.06;
+  const r = vp.getBoundingClientRect();
+  const mx=e.clientX-r.left, my=e.clientY-r.top;
+  const ns = Math.min(3, Math.max(0.08, scale+d));
+  tx = mx-(mx-tx)*(ns/scale);
+  ty = my-(my-ty)*(ns/scale);
+  scale=ns; applyT();
+}, {passive:false});
+
+vp.addEventListener('mousedown', e => {
+  dragging=true; lx=e.clientX; ly=e.clientY;
+  vp.classList.add('dragging');
+});
+window.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  tx+=e.clientX-lx; ty+=e.clientY-ly;
+  lx=e.clientX; ly=e.clientY; applyT();
+});
+window.addEventListener('mouseup', () => { dragging=false; vp.classList.remove('dragging'); });
+
+applyT();
+</script>
+</body>
+</html>
