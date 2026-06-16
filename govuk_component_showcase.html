@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GOV.UK Design System — All 34 Components</title>
+<link rel="stylesheet" href="https://unpkg.com/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.css">
+<style>
+  body { background: #f3f2f1; font-family: 'GDS Transport', Arial, sans-serif; }
+  .showcase-header {
+    background: #0b0c0c; color: white; padding: 20px 40px;
+    font-size: 22px; font-weight: 700;
+  }
+  .showcase-header p { font-size: 14px; font-weight: 400; color: #bfc1c3; margin-top: 4px; }
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 24px;
+    padding: 32px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .component-card {
+    background: white;
+    border: 1px solid #b1b4b6;
+    overflow: hidden;
+  }
+  .component-card__label {
+    background: #0b0c0c; color: white;
+    padding: 10px 16px;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .component-card__number {
+    font-size: 11px; font-weight: 700; color: #aeb0b2;
+    text-transform: uppercase; letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+  .component-card__name {
+    font-size: 16px; font-weight: 700; color: white;
+  }
+  .component-card__body {
+    padding: 24px;
+    min-height: 80px;
+  }
+  /* suppress some govuk defaults that don't suit the card context */
+  .component-card__body .govuk-header,
+  .component-card__body .govuk-footer { margin: -24px; }
+  .component-card__body .govuk-skip-link { position: static; display: inline-block; }
+  .component-card__body .govuk-cookie-banner { margin: -24px; }
+  .component-card__body .govuk-exit-this-page { position: static; }
+</style>
+</head>
+<body class="govuk-template__body">
+
+<div class="showcase-header">
+  GOV.UK Design System — All 34 Components
+  <p>Every component from design-system.service.gov.uk/components — rendered using real GOV.UK Frontend CSS · Hover over the orange ★ markers in v0.2 to see which of these could replace custom elements</p>
+</div>
+
+<div class="showcase-grid">
+
+  <!-- 1. Accordion -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">01</span>
+      <span class="component-card__name">Accordion</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-showcase">
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-showcase-heading-1">Section one</span>
+            </h2>
+          </div>
+          <div id="accordion-showcase-content-1" class="govuk-accordion__section-content">
+            <p class="govuk-body">Content for section one.</p>
+          </div>
+        </div>
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-showcase-heading-2">Section two</span>
+            </h2>
+          </div>
+          <div id="accordion-showcase-content-2" class="govuk-accordion__section-content">
+            <p class="govuk-body">Content for section two.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Back link -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">02</span>
+      <span class="component-card__name">Back link</span>
+    </div>
+    <div class="component-card__body">
+      <a href="#" class="govuk-back-link">Back</a>
+    </div>
+  </div>
+
+  <!-- 3. Breadcrumbs -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">03</span>
+      <span class="component-card__name">Breadcrumbs</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Home</a></li>
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Search results</a></li>
+          <li class="govuk-breadcrumbs__list-item">Claimant record</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 4. Button -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">04</span>
+      <span class="component-card__name">Button</span>
+    </div>
+    <div class="component-card__body" style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start;">
+      <button class="govuk-button" data-module="govuk-button">Primary</button>
+      <button class="govuk-button govuk-button--secondary" data-module="govuk-button">Secondary</button>
+      <button class="govuk-button govuk-button--warning" data-module="govuk-button">Warning</button>
+    </div>
+  </div>
+
+  <!-- 5. Character count -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">05</span>
+      <span class="component-card__name">Character count</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="character-count-showcase">Description</label>
+        <div id="character-count-showcase-hint" class="govuk-hint">You can enter up to 200 characters</div>
+        <textarea class="govuk-textarea" id="character-count-showcase" name="character-count-showcase" rows="3" aria-describedby="character-count-showcase-hint"></textarea>
+        <div id="character-count-showcase-info" class="govuk-hint govuk-character-count__message">You have 200 characters remaining</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Checkboxes -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">06</span>
+      <span class="component-card__name">Checkboxes</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend">Which journeys apply?</legend>
+          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="cb1" name="journeys" type="checkbox" value="application" checked>
+              <label class="govuk-label govuk-checkboxes__label" for="cb1">Application</label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="cb2" name="journeys" type="checkbox" value="mr">
+              <label class="govuk-label govuk-checkboxes__label" for="cb2">Mandatory Reconsideration</label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="cb3" name="journeys" type="checkbox" value="appeal">
+              <label class="govuk-label govuk-checkboxes__label" for="cb3">Appeal</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Cookie banner -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">07</span>
+      <span class="component-card__name">Cookie banner</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on this service">
+        <div class="govuk-cookie-banner__message govuk-width-container">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on this service</h2>
+              <div class="govuk-cookie-banner__content">
+                <p class="govuk-body">We use some essential cookies to make this service work.</p>
+              </div>
+            </div>
+          </div>
+          <div class="govuk-button-group">
+            <button class="govuk-button" type="button">Accept analytics cookies</button>
+            <button class="govuk-button" type="button">Reject analytics cookies</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Date input -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">08</span>
+      <span class="component-card__name">Date input</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+          <legend class="govuk-fieldset__legend">Date of birth</legend>
+          <div id="date-hint" class="govuk-hint">For example, 27 3 1980</div>
+          <div class="govuk-date-input" id="date-input">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-day" name="date-day" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-month" name="date-month" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-year" name="date-year" type="text" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Details -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">09</span>
+      <span class="component-card__name">Details</span>
+    </div>
+    <div class="component-card__body">
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">What is a Mandatory Reconsideration?</span>
+        </summary>
+        <div class="govuk-details__text">
+          A Mandatory Reconsideration is a request for DWP to look at a decision again before you can appeal to a tribunal.
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- 10. Error message -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">10</span>
+      <span class="component-card__name">Error message</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group govuk-form-group--error">
+        <label class="govuk-label" for="ni-error">National Insurance number</label>
+        <p id="ni-error-message" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> Enter a National Insurance number in the correct format
+        </p>
+        <input class="govuk-input govuk-input--error" id="ni-error" name="ni-error" type="text" aria-describedby="ni-error-message">
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Error summary -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">11</span>
+      <span class="component-card__name">Error summary</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">There is a problem</h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li><a href="#">Enter a date of birth</a></li>
+              <li><a href="#">Enter a National Insurance number</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. Exit this page -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">12</span>
+      <span class="component-card__name">Exit this page</span>
+    </div>
+    <div class="component-card__body">
+      <a href="#" class="govuk-skip-link govuk-exit-this-page" data-module="govuk-exit-this-page" rel="nofollow noreferrer" style="position:static;display:inline-block;">
+        <span class="govuk-visually-hidden">Emergency</span>Exit this page
+      </a>
+      <p class="govuk-body govuk-!-margin-top-3" style="font-size:14px;color:#505a5f;">Used in services where users may need to quickly leave (e.g. domestic abuse support).</p>
+    </div>
+  </div>
+
+  <!-- 13. Fieldset -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">13</span>
+      <span class="component-card__name">Fieldset</span>
+    </div>
+    <div class="component-card__body">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">Contact details</h2>
+        </legend>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="fs-phone">Phone number</label>
+          <input class="govuk-input" id="fs-phone" name="fs-phone" type="tel">
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- 14. File upload -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">14</span>
+      <span class="component-card__name">File upload</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="file-upload">Upload supporting evidence</label>
+        <input class="govuk-file-upload" id="file-upload" name="file-upload" type="file">
+      </div>
+    </div>
+  </div>
+
+  <!-- 15. GOV.UK footer -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">15</span>
+      <span class="component-card__name">GOV.UK footer</span>
+    </div>
+    <div class="component-card__body" style="padding:0; background:#f3f2f1;">
+      <footer class="govuk-footer">
+        <div class="govuk-width-container">
+          <div class="govuk-footer__meta">
+            <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+              <ul class="govuk-footer__inline-list">
+                <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Help</a></li>
+                <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Privacy</a></li>
+                <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Cookies</a></li>
+              </ul>
+            </div>
+            <div class="govuk-footer__meta-item">
+              <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- 16. GOV.UK header -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">16</span>
+      <span class="component-card__name">GOV.UK header</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <header class="govuk-header" role="banner" data-module="govuk-header">
+        <div class="govuk-header__container govuk-width-container">
+          <div class="govuk-header__logo">
+            <a href="#" class="govuk-header__link govuk-header__link--homepage">
+              <span class="govuk-header__logotype">
+                <svg aria-hidden="true" focusable="false" class="govuk-header__logotype-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" height="30" width="36"><path fill="currentColor" fill-rule="evenodd" d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+                <span class="govuk-header__logotype-text">GOV.UK</span>
+              </span>
+            </a>
+          </div>
+          <div class="govuk-header__content">
+            <a href="#" class="govuk-header__link govuk-header__service-name">Health and Disability Benefit</a>
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <!-- 17. Inset text -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">17</span>
+      <span class="component-card__name">Inset text</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-inset-text">
+        If appeal is successful, increased payments will be backdated to the original decision date. Current payments continue at the existing rate.
+      </div>
+    </div>
+  </div>
+
+  <!-- 18. Notification banner -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">18</span>
+      <span class="component-card__name">Notification banner</span>
+    </div>
+    <div class="component-card__body" style="display:flex;flex-direction:column;gap:16px;">
+      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title-1" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title-1">Important</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-notification-banner__heading">Award in payment since 15 January 2024 — continuing during MR and appeal</p>
+        </div>
+      </div>
+      <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title-2" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title-2">Success</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <h3 class="govuk-notification-banner__heading">Decision recorded</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 19. Pagination -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">19</span>
+      <span class="component-card__name">Pagination</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="govuk-pagination" aria-label="Pagination">
+        <div class="govuk-pagination__prev">
+          <a class="govuk-link govuk-pagination__link" href="#" rel="prev"><svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" focusable="false" aria-hidden="true" viewBox="0 0 15 13"><path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"/></svg><span class="govuk-pagination__link-title">Previous<span class="govuk-visually-hidden"> page</span></span></a>
+        </div>
+        <ul class="govuk-pagination__list">
+          <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1">1</a></li>
+          <li class="govuk-pagination__item govuk-pagination__item--current"><a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2" aria-current="page">2</a></li>
+          <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">3</a></li>
+        </ul>
+        <div class="govuk-pagination__next">
+          <a class="govuk-link govuk-pagination__link" href="#" rel="next"><span class="govuk-pagination__link-title">Next<span class="govuk-visually-hidden"> page</span></span><svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" focusable="false" aria-hidden="true" viewBox="0 0 15 13"><path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7246z"/></svg></a>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 20. Panel -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">20</span>
+      <span class="component-card__name">Panel</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Application submitted</h1>
+        <div class="govuk-panel__body">Your reference number is <strong>HDB-2024-004821</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 21. Password input -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">21</span>
+      <span class="component-card__name">Password input</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="password-showcase">Password</label>
+        <div class="govuk-input__wrapper govuk-password-input" id="password-showcase-wrapper" data-module="govuk-password-input">
+          <input class="govuk-input govuk-password-input__input govuk-js-password-input-input" id="password-showcase" name="password" type="password" spellcheck="false" autocomplete="current-password" autocapitalize="none">
+          <button type="button" class="govuk-link govuk-password-input__toggle govuk-js-password-input-toggle" aria-controls="password-showcase" aria-label="Show password">Show</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 22. Phase banner -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">22</span>
+      <span class="component-card__name">Phase banner</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+          <strong class="govuk-tag govuk-phase-banner__content__tag">Beta</strong>
+          <span class="govuk-phase-banner__text">This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us improve it.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 23. Radios -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">23</span>
+      <span class="component-card__name">Radios</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend">MR type</legend>
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="mr-1" name="mr-type" type="radio" value="eligibility">
+              <label class="govuk-label govuk-radios__label" for="mr-1">Eligibility</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="mr-2" name="mr-type" type="radio" value="entitlement" checked>
+              <label class="govuk-label govuk-radios__label" for="mr-2">Entitlement</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="mr-3" name="mr-type" type="radio" value="non-compliance">
+              <label class="govuk-label govuk-radios__label" for="mr-3">Non-compliance</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <!-- 24. Select -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">24</span>
+      <span class="component-card__name">Select</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="select-showcase">Case status</label>
+        <select class="govuk-select" id="select-showcase" name="select-showcase">
+          <option value="">Select a status</option>
+          <option value="in-progress" selected>In progress</option>
+          <option value="awaiting-decision">Awaiting decision</option>
+          <option value="closed">Closed</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 25. Service navigation -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">25</span>
+      <span class="component-card__name">Service navigation</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <nav class="govuk-service-navigation" aria-label="Service menu" data-module="govuk-service-navigation">
+        <div class="govuk-width-container">
+          <ul class="govuk-service-navigation__list">
+            <li class="govuk-service-navigation__item govuk-service-navigation__item--active">
+              <a class="govuk-service-navigation__link" href="#" aria-current="page">Case record</a>
+            </li>
+            <li class="govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="#">Timeline</a>
+            </li>
+            <li class="govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="#">Documents</a>
+            </li>
+            <li class="govuk-service-navigation__item">
+              <a class="govuk-service-navigation__link" href="#">Notes</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 26. Skip link -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">26</span>
+      <span class="component-card__name">Skip link</span>
+    </div>
+    <div class="component-card__body">
+      <a href="#main-content" class="govuk-skip-link" style="position:static;display:inline-block;">Skip to main content</a>
+      <p class="govuk-body govuk-!-margin-top-3" style="font-size:14px;color:#505a5f;">Normally only visible on keyboard focus (tab key). Shown here statically for reference.</p>
+    </div>
+  </div>
+
+  <!-- 27. Summary list -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">27</span>
+      <span class="component-card__name">Summary list</span>
+    </div>
+    <div class="component-card__body">
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Full name</dt>
+          <dd class="govuk-summary-list__value">Jeff Bridges</dd>
+          <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> name</span></a></dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Date of birth</dt>
+          <dd class="govuk-summary-list__value">14 August 1996</dd>
+          <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a></dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">NI number</dt>
+          <dd class="govuk-summary-list__value">NA 11 22 33 C</dd>
+          <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> NI number</span></a></dd>
+        </div>
+      </dl>
+      <p class="govuk-body" style="font-size:13px;color:#505a5f;margin-top:16px;">Also available: Summary card variant (wraps a summary list in a titled card with actions)</p>
+      <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+          <h2 class="govuk-summary-card__title">Linked Journey 1</h2>
+          <ul class="govuk-summary-card__actions">
+            <li class="govuk-summary-card__action"><a class="govuk-link" href="#">View timeline<span class="govuk-visually-hidden"> for Linked Journey 1</span></a></li>
+          </ul>
+        </div>
+        <div class="govuk-summary-card__content">
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Status</dt>
+              <dd class="govuk-summary-list__value">Appeal in progress</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Award in payment</dt>
+              <dd class="govuk-summary-list__value">Yes — since 15 Jan 2024</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 28. Table -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">28</span>
+      <span class="component-card__name">Table</span>
+    </div>
+    <div class="component-card__body">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--s">Recent events</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Date</th>
+            <th scope="col" class="govuk-table__header">Type</th>
+            <th scope="col" class="govuk-table__header">Description</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">15 Jan 2024</td>
+            <td class="govuk-table__cell">Decision</td>
+            <td class="govuk-table__cell">Awarded — Standard / Enhanced</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">2 Feb 2024</td>
+            <td class="govuk-table__cell">MR requested</td>
+            <td class="govuk-table__cell">Entitlement dispute</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 29. Tabs -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">29</span>
+      <span class="component-card__name">Tabs</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-tabs" data-module="govuk-tabs">
+        <h2 class="govuk-tabs__title">Contents</h2>
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="govuk-tabs__tab" href="#tabs-case-record">Case record</a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#tabs-timeline">Timeline</a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#tabs-documents">Documents</a>
+          </li>
+        </ul>
+        <div class="govuk-tabs__panel" id="tabs-case-record">
+          <p class="govuk-body">Case record content appears here.</p>
+        </div>
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tabs-timeline">
+          <p class="govuk-body">Timeline content appears here.</p>
+        </div>
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tabs-documents">
+          <p class="govuk-body">Documents appear here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 30. Tag -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">30</span>
+      <span class="component-card__name">Tag</span>
+    </div>
+    <div class="component-card__body" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;">
+      <strong class="govuk-tag">Default (blue)</strong>
+      <strong class="govuk-tag govuk-tag--grey">Grey</strong>
+      <strong class="govuk-tag govuk-tag--green">Green</strong>
+      <strong class="govuk-tag govuk-tag--teal">Teal</strong>
+      <strong class="govuk-tag govuk-tag--blue">Blue</strong>
+      <strong class="govuk-tag govuk-tag--purple">Purple</strong>
+      <strong class="govuk-tag govuk-tag--pink">Pink</strong>
+      <strong class="govuk-tag govuk-tag--red">Red</strong>
+      <strong class="govuk-tag govuk-tag--orange">Orange</strong>
+      <strong class="govuk-tag govuk-tag--yellow">Yellow</strong>
+    </div>
+  </div>
+
+  <!-- 31. Task list -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">31</span>
+      <span class="component-card__name">Task list</span>
+    </div>
+    <div class="component-card__body">
+      <ul class="govuk-task-list">
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-1-status">Registration</a>
+          </div>
+          <div class="govuk-task-list__status" id="task-1-status">
+            <strong class="govuk-tag govuk-tag--green">Completed</strong>
+          </div>
+        </li>
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-2-status">Evidence submission</a>
+          </div>
+          <div class="govuk-task-list__status" id="task-2-status">
+            <strong class="govuk-tag govuk-tag--blue">In progress</strong>
+          </div>
+        </li>
+        <li class="govuk-task-list__item">
+          <div class="govuk-task-list__name-and-hint">
+            <span>Assessment</span>
+          </div>
+          <div class="govuk-task-list__status govuk-task-list__status--cannot-start-yet" id="task-3-status">
+            <span class="govuk-task-list__tag">Cannot start yet</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 32. Text input -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">32</span>
+      <span class="component-card__name">Text input</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="text-input-showcase">Search by National Insurance number</label>
+        <input class="govuk-input govuk-input--width-10" id="text-input-showcase" name="ni-search" type="text">
+      </div>
+    </div>
+  </div>
+
+  <!-- 33. Textarea -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">33</span>
+      <span class="component-card__name">Textarea</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="textarea-showcase">Case note</label>
+        <div id="textarea-hint" class="govuk-hint">Add any relevant notes about this case.</div>
+        <textarea class="govuk-textarea" id="textarea-showcase" name="textarea-showcase" rows="4" aria-describedby="textarea-hint"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 34. Warning text -->
+  <div class="component-card">
+    <div class="component-card__label">
+      <span class="component-card__number">34</span>
+      <span class="component-card__name">Warning text</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          Award payments will stop if the claimant does not respond within 14 days.
+        </strong>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.js"></script>
+<script>
+  window.GOVUKFrontend.initAll()
+</script>
+</body>
+</html>

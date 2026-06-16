@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIP Mockups v0.3</title>
+<link rel="stylesheet" href="https://unpkg.com/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.css">
+<style>
+
+/* ═══════════════════════════════════════════════
+   DWP FRONTEND COMPONENTS
+   CSS implemented from DWP Design System markup
+   dwp-header, dwp-quick-reference, dwp-timeline
+═══════════════════════════════════════════════ */
+
+/* DWP Internal service header */
+.dwp-header {
+  background: #003078;
+  border-bottom: 5px solid #1d70b8;
+}
+.dwp-header__content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dwp-header__service-name {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+.dwp-header__link {
+  color: white;
+  text-decoration: none;
+}
+.dwp-header__link:hover { text-decoration: underline; }
+.dwp-header__nav {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  font-size: 14px;
+  color: #bfd7ff;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.dwp-header__nav a { color: #bfd7ff; text-decoration: underline; }
+.dwp-header__user-tag {
+  background: #1d70b8;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  margin-right: 4px;
+}
+
+/* DWP Quick reference */
+.dwp-quick-reference {
+  background: #f3f2f1;
+  border-bottom: 1px solid #b1b4b6;
+  padding: 14px 0;
+}
+.dwp-quick-reference__block {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.dwp-quick-reference__primary {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0b0c0c;
+  margin: 0;
+  padding-right: 24px;
+  border-right: 1px solid #b1b4b6;
+  margin-right: 24px;
+}
+.dwp-quick-reference__secondary {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  font-size: 16px;
+  color: #505a5f;
+  margin: 0;
+  padding-right: 24px;
+  border-right: 1px solid #b1b4b6;
+  margin-right: 24px;
+}
+.dwp-quick-reference__secondary:last-child {
+  border-right: none;
+  padding-right: 0;
+  margin-right: 0;
+}
+.dwp-quick-reference__label { display: none; }
+
+/* DWP Timeline */
+.dwp-timeline {
+  margin: 0;
+}
+.dwp-timeline__items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 20px;
+  border-left: 4px solid #b1b4b6;
+}
+.dwp-timeline__item {
+  padding: 0 0 20px 20px;
+  position: relative;
+}
+.dwp-timeline__item:last-child { padding-bottom: 0; }
+.dwp-timeline__item::before {
+  content: '';
+  width: 14px; height: 14px;
+  background: white;
+  border: 3px solid #505a5f;
+  border-radius: 50%;
+  position: absolute;
+  left: -29px; top: 3px;
+}
+.dwp-timeline__datetime {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  color: #505a5f;
+  font-size: 14px;
+  margin: 0 0 2px;
+}
+.dwp-timeline__heading {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  color: #0b0c0c;
+}
+.dwp-timeline__by-line {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  color: #505a5f;
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+.dwp-timeline__content {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  font-size: 16px;
+  color: #0b0c0c;
+  margin: 6px 0 4px;
+}
+.dwp-timeline__link {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  color: #1d70b8;
+  font-size: 14px;
+  display: block;
+  margin-top: 4px;
+}
+.dwp-timeline__event-type {
+  margin: 4px 0 2px;
+}
+
+/* Sub-journey divider inside timeline */
+.dwp-timeline__sub-heading {
+  font-family: 'GDS Transport', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1d70b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 0 8px 20px;
+  margin-left: -20px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 12px;
+}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT HELPERS
+═══════════════════════════════════════════════ */
+.app-width-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+.app-main {
+  padding: 28px 0 80px;
+}
+
+/* Journey stage pills using govuk-tag */
+.app-journey-stages {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.app-journey-stages__arrow {
+  color: #b1b4b6;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* LJ section heading in timeline */
+.app-lj-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e0e0e0;
+}
+.app-lj-section:first-of-type { margin-top: 0; }
+.app-lj-section__title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0b0c0c;
+  margin: 0;
+  flex: 1;
+}
+
+/* Version badge */
+.app-version-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #003078;
+  background: #d4e8ff;
+  padding: 2px 10px;
+  border: 1px solid #9ec8f0;
+}
+
+/* Page switcher */
+.app-page-nav {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  z-index: 9999;
+}
+.app-page-nav button {
+  background: #003078;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'GDS Transport', Arial, sans-serif;
+}
+.app-page-nav button.active { background: #1d70b8; }
+.app-page-nav button:hover { background: #1d70b8; }
+
+/* Hide pages by default */
+.app-page { display: none; }
+.app-page.active { display: block; }
+
+/* Tighten accordion for timeline use */
+.app-timeline-accordion .govuk-accordion__section-summary {
+  margin-bottom: 0;
+}
+.app-timeline-accordion .govuk-accordion__section-content {
+  padding-top: 20px;
+}
+
+/* Footer */
+.app-footer {
+  background: #f3f2f1;
+  border-top: 1px solid #b1b4b6;
+  padding: 16px 0;
+  margin-top: 60px;
+}
+.app-footer__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 30px;
+  font-size: 13px;
+  color: #505a5f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'GDS Transport', Arial, sans-serif;
+}
+
+</style>
+</head>
+<body class="govuk-template__body">
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MOCKUP 1 — Case Record
+════════════════════════════════════════════════════════ -->
+<div class="app-page active" id="page-record">
+
+  <!-- DWP Internal service header -->
+  <header class="dwp-header">
+    <div class="dwp-header__content">
+      <div class="dwp-header__service-name">
+        <a href="#" class="dwp-header__link">PIP Case Management</a>
+      </div>
+      <div class="dwp-header__nav">
+        <span><span class="dwp-header__user-tag">Staff</span> S.Patel</span>
+        <a href="#">Sign out</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- DWP Quick reference -->
+  <section class="dwp-quick-reference" aria-label="Case information">
+    <dl class="dwp-quick-reference__block">
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+      <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">National Insurance number:</dt>
+      <dd class="dwp-quick-reference__secondary">NI: <strong>NA 11 22 33 C</strong></dd>
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">Date of birth:</dt>
+      <dd class="dwp-quick-reference__secondary">DOB: <strong>14 Aug 1996</strong> (age 29)</dd>
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">Case reference:</dt>
+      <dd class="dwp-quick-reference__secondary">Case ref: <strong>PIP-2023-004821</strong></dd>
+    </dl>
+  </section>
+
+  <div class="app-width-container">
+    <div class="app-main">
+
+      <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Home</a></li>
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Search</a></li>
+          <li class="govuk-breadcrumbs__list-item">Jeff Bridges</li>
+        </ol>
+      </nav>
+
+      <!-- Award in payment — Notification banner -->
+      <div class="govuk-notification-banner" role="region" aria-labelledby="nb-award-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="nb-award-title">Award in payment</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-notification-banner__heading">Payments have been made since 15 January 2024 and continue throughout MR and appeal. If appeal is successful, increased payments will be backdated to 15 January 2024.</p>
+        </div>
+      </div>
+
+      <!-- GOV.UK Tabs -->
+      <div class="govuk-tabs" data-module="govuk-tabs">
+        <h2 class="govuk-tabs__title">Case sections</h2>
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="govuk-tabs__tab" href="#tab-case-status">Case status</a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#tab-personal">Personal details</a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#tab-eligibility">Eligibility information</a>
+          </li>
+        </ul>
+
+        <!-- Tab: Case status -->
+        <div class="govuk-tabs__panel" id="tab-case-status">
+
+          <!-- Linked Journey 1 — Summary card -->
+          <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">Linked Journey 1</h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a class="govuk-link" href="#">View full timeline<span class="govuk-visually-hidden"> for Linked Journey 1</span></a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <!-- Status and journey stages -->
+              <div style="padding: 10px 0 14px; border-bottom: 1px solid #b1b4b6; margin-bottom: 4px;">
+                <div class="app-journey-stages">
+                  <strong class="govuk-tag govuk-tag--green">✓ Application</strong>
+                  <span class="app-journey-stages__arrow">›</span>
+                  <strong class="govuk-tag govuk-tag--green">✓ Mandatory Reconsideration</strong>
+                  <span class="app-journey-stages__arrow">›</span>
+                  <strong class="govuk-tag govuk-tag--orange">Appeal — in progress</strong>
+                </div>
+              </div>
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Application decision</dt>
+                  <dd class="govuk-summary-list__value">15 January 2024 — Awarded. Daily living: Standard. Mobility: Enhanced.</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">MR type and decision</dt>
+                  <dd class="govuk-summary-list__value">Entitlement MR — requested 2 Feb 2024. Decision 18 Mar 2024: Upheld, no change.</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Appeal</dt>
+                  <dd class="govuk-summary-list__value">Lodged 8 April 2024. Tribunal date not yet scheduled.</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Award in payment</dt>
+                  <dd class="govuk-summary-list__value">Yes — since 15 January 2024</dd>
+                </div>
+              </dl>
+              <div class="govuk-inset-text">If appeal is successful, increased payments will be backdated to 15 January 2024. Payments continue at current rate until tribunal decision.</div>
+            </div>
+          </div>
+
+          <!-- Linked Journey 2 — Summary card -->
+          <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">Linked Journey 2 <strong class="govuk-tag govuk-tag--grey" style="font-size:13px; vertical-align:middle; margin-left:6px;">Started during appeal</strong></h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a class="govuk-link" href="#">View full timeline<span class="govuk-visually-hidden"> for Linked Journey 2</span></a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              <div style="padding: 10px 0 14px; border-bottom: 1px solid #b1b4b6; margin-bottom: 4px;">
+                <div class="app-journey-stages">
+                  <strong class="govuk-tag govuk-tag--green">✓ Application</strong>
+                  <span class="app-journey-stages__arrow">›</span>
+                  <strong class="govuk-tag govuk-tag--blue">Awaiting decision</strong>
+                  <span class="app-journey-stages__arrow">›</span>
+                  <strong class="govuk-tag govuk-tag--grey">Outcome</strong>
+                </div>
+              </div>
+              <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Application started</dt>
+                  <dd class="govuk-summary-list__value">14 April 2026</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Assessment completed</dt>
+                  <dd class="govuk-summary-list__value">19 May 2026</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Decision expected</dt>
+                  <dd class="govuk-summary-list__value">By 14 July 2026</dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Award in payment</dt>
+                  <dd class="govuk-summary-list__value">N/A — awaiting outcome</dd>
+                </div>
+              </dl>
+              <div class="govuk-inset-text">If this application is successful, payments will not be backdated while Linked Journey 1 appeal is ongoing.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab: Personal details -->
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tab-personal">
+          <h2 class="govuk-heading-m">Personal details</h2>
+          <dl class="govuk-summary-list" style="max-width:700px;">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Full name</dt>
+              <dd class="govuk-summary-list__value">Jeffrey Thomas Bridges</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> name</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Date of birth</dt>
+              <dd class="govuk-summary-list__value">14 August 1996</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">National Insurance number</dt>
+              <dd class="govuk-summary-list__value">NA 11 22 33 C</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> NI number</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Home address</dt>
+              <dd class="govuk-summary-list__value">14 St James Road, Barrack Park, Newcastle upon Tyne, NE1 4ST</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> address</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Mobile</dt>
+              <dd class="govuk-summary-list__value">07889 121 219</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> mobile</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Email</dt>
+              <dd class="govuk-summary-list__value">jeff@email.com</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> email</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Communication needs</dt>
+              <dd class="govuk-summary-list__value">None recorded</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> communication needs</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Appointee / representative</dt>
+              <dd class="govuk-summary-list__value">None</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> appointee</span></a></dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Tab: Eligibility information -->
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tab-eligibility">
+          <h2 class="govuk-heading-m">Eligibility-relevant information</h2>
+          <dl class="govuk-summary-list" style="max-width:700px;">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Primary condition</dt>
+              <dd class="govuk-summary-list__value">Fibromyalgia</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> primary condition</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Secondary conditions</dt>
+              <dd class="govuk-summary-list__value">Chronic fatigue syndrome, Anxiety</dd>
+              <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> secondary conditions</span></a></dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Daily living component</dt>
+              <dd class="govuk-summary-list__value">Standard rate</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Mobility component</dt>
+              <dd class="govuk-summary-list__value">Enhanced rate</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Employment status</dt>
+              <dd class="govuk-summary-list__value">Not in employment</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Residency</dt>
+              <dd class="govuk-summary-list__value">England — verified</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Health professionals</dt>
+              <dd class="govuk-summary-list__value">Dr A. Khan (GP) — Newcastle upon Tyne</dd>
+            </div>
+          </dl>
+        </div>
+
+      </div><!-- end govuk-tabs -->
+
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="app-footer__inner">
+      <span>Department for Work and Pensions · PIP Case Management · For internal use only</span>
+      <span class="app-version-badge">v0.3</span>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MOCKUP 2 — Full case timeline (all collapsed)
+════════════════════════════════════════════════════════ -->
+<div class="app-page" id="page-timeline">
+
+  <header class="dwp-header">
+    <div class="dwp-header__content">
+      <div class="dwp-header__service-name">
+        <a href="#" class="dwp-header__link">PIP Case Management</a>
+      </div>
+      <div class="dwp-header__nav">
+        <span><span class="dwp-header__user-tag">Staff</span> S.Patel</span>
+        <a href="#">Sign out</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="dwp-quick-reference" aria-label="Case information">
+    <dl class="dwp-quick-reference__block">
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+      <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">National Insurance number:</dt>
+      <dd class="dwp-quick-reference__secondary">NI: <strong>NA 11 22 33 C</strong></dd>
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">Case reference:</dt>
+      <dd class="dwp-quick-reference__secondary">Case ref: <strong>PIP-2023-004821</strong></dd>
+    </dl>
+  </section>
+
+  <div class="app-width-container">
+    <div class="app-main">
+
+      <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Home</a></li>
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Jeff Bridges — Case record</a></li>
+          <li class="govuk-breadcrumbs__list-item">Full case timeline</li>
+        </ol>
+      </nav>
+
+      <h1 class="govuk-heading-l">Full case timeline</h1>
+
+      <!-- Linked Journey 1 -->
+      <div class="app-lj-section">
+        <h2 class="app-lj-section__title">Linked Journey 1 — Original application</h2>
+        <strong class="govuk-tag govuk-tag--orange">Appeal in progress</strong>
+      </div>
+
+      <div class="govuk-notification-banner" role="region" aria-labelledby="nb-tl-award" data-module="govuk-notification-banner" style="margin-bottom:20px;">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="nb-tl-award">Award in payment</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-body">Payments have been made since 15 January 2024 and continue throughout MR and appeal.</p>
+        </div>
+      </div>
+
+      <!-- GOV.UK Accordion — each Journey is a section -->
+      <div class="govuk-accordion app-timeline-accordion" data-module="govuk-accordion" id="accordion-lj1">
+
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj1-heading-1">
+                Journey: Application
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              1 December 2023 – 15 January 2024 &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--green" style="font-size:12px;">Awarded</strong>
+            </div>
+          </div>
+          <div id="accordion-lj1-content-1" class="govuk-accordion__section-content">
+            <div class="dwp-timeline">
+              <ol class="dwp-timeline__items">
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">1 December 2023</p>
+                  <h3 class="dwp-timeline__heading">Registration completed</h3>
+                  <p class="dwp-timeline__by-line">by System</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <p class="dwp-timeline__content">Claimant registration completed online. Name, DOB, NI number and address collected.</p>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">4 December 2023</p>
+                  <h3 class="dwp-timeline__heading">PIP2 form sent to claimant</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+                  <p class="dwp-timeline__content">Health information form sent. Return deadline: 18 December 2023.</p>
+                  <a href="#" class="dwp-timeline__link">View letter<span class="govuk-visually-hidden"> sent 4 December 2023</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">12 December 2023</p>
+                  <h3 class="dwp-timeline__heading">Inbound call — PIP2 form query</h3>
+                  <p class="dwp-timeline__by-line">by S.Patel</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Contact</strong></div>
+                  <p class="dwp-timeline__content">Claimant called with query about PIP2 form. Advised on completion. Duration: 8 mins.</p>
+                  <a href="#" class="dwp-timeline__link">View call transcript<span class="govuk-visually-hidden"> 12 December 2023</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">17 December 2023</p>
+                  <h3 class="dwp-timeline__heading">PIP2 form returned</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+                  <p class="dwp-timeline__content">Form returned by post. Scanned and uploaded.</p>
+                  <a href="#" class="dwp-timeline__link">View document<span class="govuk-visually-hidden"> received 17 December 2023</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">2 January 2024</p>
+                  <h3 class="dwp-timeline__heading">Referred to assessment provider</h3>
+                  <p class="dwp-timeline__by-line">by System</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <p class="dwp-timeline__content">Referred to Capita. Assessment pack sent.</p>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">10 January 2024</p>
+                  <h3 class="dwp-timeline__heading">Face-to-face assessment completed</h3>
+                  <p class="dwp-timeline__by-line">by Capita</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <a href="#" class="dwp-timeline__link">View assessment report<span class="govuk-visually-hidden"> 10 January 2024</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">15 January 2024</p>
+                  <h3 class="dwp-timeline__heading">Decision — Awarded</h3>
+                  <p class="dwp-timeline__by-line">by M.Jones</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--blue">Decision</strong></div>
+                  <p class="dwp-timeline__content">Daily living: Standard rate. Mobility: Enhanced rate. Award period: 15 Jan 2024 – 15 Jan 2029.</p>
+                  <a href="#" class="dwp-timeline__link">View decision letter<span class="govuk-visually-hidden"> 15 January 2024</span></a>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj1-heading-2">
+                Journey: Mandatory Reconsideration
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              2 February 2024 – 18 March 2024 &nbsp;·&nbsp; Entitlement MR &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--yellow" style="font-size:12px;">Upheld</strong>
+            </div>
+          </div>
+          <div id="accordion-lj1-content-2" class="govuk-accordion__section-content">
+            <div class="dwp-timeline">
+              <ol class="dwp-timeline__items">
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">2 February 2024</p>
+                  <h3 class="dwp-timeline__heading">MR request received</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <p class="dwp-timeline__content">Claimant disputes daily living rate. Entitlement MR registered.</p>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">15 February 2024</p>
+                  <h3 class="dwp-timeline__heading">Additional evidence requested</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">18 March 2024</p>
+                  <h3 class="dwp-timeline__heading">MR decision — Upheld</h3>
+                  <p class="dwp-timeline__by-line">by M.Jones</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--blue">Decision</strong></div>
+                  <p class="dwp-timeline__content">Original decision upheld. No change to award.</p>
+                  <a href="#" class="dwp-timeline__link">View MR decision letter<span class="govuk-visually-hidden"> 18 March 2024</span></a>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj1-heading-3">
+                Journey: Appeal
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              8 April 2024 – ongoing &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--orange" style="font-size:12px;">Current — awaiting tribunal</strong>
+            </div>
+          </div>
+          <div id="accordion-lj1-content-3" class="govuk-accordion__section-content">
+            <div class="dwp-timeline">
+              <ol class="dwp-timeline__items">
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">8 April 2024</p>
+                  <h3 class="dwp-timeline__heading">Appeal lodged</h3>
+                  <p class="dwp-timeline__by-line">by Claimant</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <p class="dwp-timeline__content">Disputes MR decision of 18 March 2024.</p>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">22 April 2024</p>
+                  <h3 class="dwp-timeline__heading">Appeal acknowledged by tribunal</h3>
+                  <p class="dwp-timeline__by-line">by System</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                </li>
+              </ol>
+            </div>
+            <div class="govuk-inset-text">Tribunal date not yet scheduled. Payments continue at current rate.</div>
+          </div>
+        </div>
+
+      </div><!-- end accordion LJ1 -->
+
+      <!-- Linked Journey 2 -->
+      <div class="app-lj-section">
+        <h2 class="app-lj-section__title">Linked Journey 2 — New application (started during appeal)</h2>
+        <strong class="govuk-tag govuk-tag--blue">Awaiting decision</strong>
+      </div>
+
+      <div class="govuk-accordion app-timeline-accordion" data-module="govuk-accordion" id="accordion-lj2">
+
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj2-heading-1">
+                Journey: Application
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              14 April 2026 – ongoing &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--orange" style="font-size:12px;">Current — awaiting decision</strong>
+            </div>
+          </div>
+          <div id="accordion-lj2-content-1" class="govuk-accordion__section-content">
+            <div class="dwp-timeline">
+              <ol class="dwp-timeline__items">
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">14 April 2026</p>
+                  <h3 class="dwp-timeline__heading">Registration completed</h3>
+                  <p class="dwp-timeline__by-line">by System</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">28 April 2026</p>
+                  <h3 class="dwp-timeline__heading">Evidence received</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">19 May 2026</p>
+                  <h3 class="dwp-timeline__heading">Assessment completed</h3>
+                  <p class="dwp-timeline__by-line">by Capita</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <p class="dwp-timeline__content">Decision expected by 14 July 2026.</p>
+                </li>
+              </ol>
+            </div>
+            <div class="govuk-inset-text">If this application is successful, payments will not be backdated while Linked Journey 1 appeal is ongoing.</div>
+          </div>
+        </div>
+
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj2-heading-2">
+                Journey: Decision — outcome TBC
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              Expected by July 2026 &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--grey" style="font-size:12px;">Not yet started</strong>
+            </div>
+          </div>
+          <div id="accordion-lj2-content-2" class="govuk-accordion__section-content">
+            <p class="govuk-body govuk-hint">No events recorded yet.</p>
+          </div>
+        </div>
+
+      </div><!-- end accordion LJ2 -->
+
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="app-footer__inner">
+      <span>Department for Work and Pensions · PIP Case Management · For internal use only</span>
+      <span class="app-version-badge">v0.3</span>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MOCKUP 3 — Timeline with Application journey expanded
+════════════════════════════════════════════════════════ -->
+<div class="app-page" id="page-timeline-detail">
+
+  <header class="dwp-header">
+    <div class="dwp-header__content">
+      <div class="dwp-header__service-name">
+        <a href="#" class="dwp-header__link">PIP Case Management</a>
+      </div>
+      <div class="dwp-header__nav">
+        <span><span class="dwp-header__user-tag">Staff</span> S.Patel</span>
+        <a href="#">Sign out</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="dwp-quick-reference" aria-label="Case information">
+    <dl class="dwp-quick-reference__block">
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+      <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">National Insurance number:</dt>
+      <dd class="dwp-quick-reference__secondary">NI: <strong>NA 11 22 33 C</strong></dd>
+      <dt class="dwp-quick-reference__label govuk-visually-hidden">Case reference:</dt>
+      <dd class="dwp-quick-reference__secondary">Case ref: <strong>PIP-2023-004821</strong></dd>
+    </dl>
+  </section>
+
+  <div class="app-width-container">
+    <div class="app-main">
+
+      <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Home</a></li>
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Jeff Bridges — Case record</a></li>
+          <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Full case timeline</a></li>
+          <li class="govuk-breadcrumbs__list-item">Linked Journey 1</li>
+        </ol>
+      </nav>
+
+      <h1 class="govuk-heading-l">Full case timeline</h1>
+      <p class="govuk-body-l">Linked Journey 1 — Application journey expanded below.</p>
+
+      <div class="app-lj-section">
+        <h2 class="app-lj-section__title">Linked Journey 1 — Original application</h2>
+        <strong class="govuk-tag govuk-tag--orange">Appeal in progress</strong>
+      </div>
+
+      <div class="govuk-notification-banner" role="region" aria-labelledby="nb-tl2-award" data-module="govuk-notification-banner" style="margin-bottom:20px;">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="nb-tl2-award">Award in payment</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-body">Payments have been made since 15 January 2024 and continue throughout MR and appeal.</p>
+        </div>
+      </div>
+
+      <!-- Accordion with Application section open -->
+      <div class="govuk-accordion app-timeline-accordion" data-module="govuk-accordion" id="accordion-lj1-detail">
+
+        <!-- Application — open -->
+        <div class="govuk-accordion__section govuk-accordion__section--expanded">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj1d-heading-1">
+                Journey: Application
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              1 December 2023 – 15 January 2024 &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--green" style="font-size:12px;">Awarded</strong>
+            </div>
+          </div>
+          <div id="accordion-lj1d-content-1" class="govuk-accordion__section-content">
+            <div class="dwp-timeline">
+              <ol class="dwp-timeline__items">
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">1 December 2023</p>
+                  <h3 class="dwp-timeline__heading">Registration completed</h3>
+                  <p class="dwp-timeline__by-line">by System</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <p class="dwp-timeline__content">Claimant registration completed online. Name, DOB, NI number and address collected.</p>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">4 December 2023</p>
+                  <h3 class="dwp-timeline__heading">PIP2 form sent to claimant</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+                  <p class="dwp-timeline__content">Health information form sent. Return deadline: 18 December 2023.</p>
+                  <a href="#" class="dwp-timeline__link">View letter<span class="govuk-visually-hidden"> sent 4 December 2023</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">12 December 2023</p>
+                  <h3 class="dwp-timeline__heading">Inbound call — PIP2 form query</h3>
+                  <p class="dwp-timeline__by-line">by S.Patel</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Contact</strong></div>
+                  <p class="dwp-timeline__content">Claimant called with query about PIP2 form. Advised on completion. Duration: 8 mins.</p>
+                  <a href="#" class="dwp-timeline__link">View call transcript<span class="govuk-visually-hidden"> 12 December 2023</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">17 December 2023</p>
+                  <h3 class="dwp-timeline__heading">PIP2 form returned by post</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+                  <p class="dwp-timeline__content">Form scanned and uploaded.</p>
+                  <a href="#" class="dwp-timeline__link">View document<span class="govuk-visually-hidden"> received 17 December 2023</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">2 January 2024</p>
+                  <h3 class="dwp-timeline__heading">Referred to Capita for assessment</h3>
+                  <p class="dwp-timeline__by-line">by System</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <p class="dwp-timeline__content">Assessment pack sent to Capita.</p>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">10 January 2024</p>
+                  <h3 class="dwp-timeline__heading">Face-to-face assessment completed</h3>
+                  <p class="dwp-timeline__by-line">by Capita</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                  <a href="#" class="dwp-timeline__link">View assessment report<span class="govuk-visually-hidden"> 10 January 2024</span></a>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">13 January 2024</p>
+                  <h3 class="dwp-timeline__heading">Pre-decision checks completed</h3>
+                  <p class="dwp-timeline__by-line">by R.Ahmed</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+                </li>
+                <li class="dwp-timeline__item">
+                  <p class="dwp-timeline__datetime">15 January 2024</p>
+                  <h3 class="dwp-timeline__heading">Decision — Awarded</h3>
+                  <p class="dwp-timeline__by-line">by M.Jones</p>
+                  <div class="dwp-timeline__event-type"><strong class="govuk-tag govuk-tag--blue">Decision</strong></div>
+                  <p class="dwp-timeline__content">Daily living: Standard rate. Mobility: Enhanced rate. Award period: 15 Jan 2024 – 15 Jan 2029.</p>
+                  <a href="#" class="dwp-timeline__link">View decision letter<span class="govuk-visually-hidden"> 15 January 2024</span></a>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- MR — collapsed -->
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj1d-heading-2">
+                Journey: Mandatory Reconsideration
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              2 February 2024 – 18 March 2024 &nbsp;·&nbsp; Entitlement MR &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--yellow" style="font-size:12px;">Upheld</strong>
+            </div>
+          </div>
+          <div id="accordion-lj1d-content-2" class="govuk-accordion__section-content">
+            <p class="govuk-hint govuk-body">Expand to view 3 events.</p>
+          </div>
+        </div>
+
+        <!-- Appeal — collapsed -->
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-lj1d-heading-3">
+                Journey: Appeal
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body">
+              8 April 2024 – ongoing &nbsp;·&nbsp; <strong class="govuk-tag govuk-tag--orange" style="font-size:12px;">Current — awaiting tribunal</strong>
+            </div>
+          </div>
+          <div id="accordion-lj1d-content-3" class="govuk-accordion__section-content">
+            <p class="govuk-hint govuk-body">Expand to view 2 events.</p>
+          </div>
+        </div>
+
+      </div><!-- end accordion -->
+
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="app-footer__inner">
+      <span>Department for Work and Pensions · PIP Case Management · For internal use only</span>
+      <span class="app-version-badge">v0.3</span>
+    </div>
+  </footer>
+</div>
+
+
+<!-- Page navigation -->
+<div class="app-page-nav">
+  <button onclick="showPage('page-record', this)" class="active">1 — Case record</button>
+  <button onclick="showPage('page-timeline', this)">2 — Timeline</button>
+  <button onclick="showPage('page-timeline-detail', this)">3 — Timeline expanded</button>
+</div>
+
+<script src="https://unpkg.com/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.js"></script>
+<script>
+  window.GOVUKFrontend.initAll()
+
+  function showPage(id, btn) {
+    document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.app-page-nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>

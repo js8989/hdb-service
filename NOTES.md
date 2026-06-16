@@ -3,6 +3,22 @@
 
 ---
 
+## Instructions for Claude — please read first
+
+1. **Ask Jack for the date and time at the start of every session.** Say something like: *"What's today's date and time? I'll use it for the dev diary."* Don't assume or guess.
+
+2. **At the end of every session**, before wrapping up, ask Jack for the date and time again so you have an accurate end time. Then add a dev diary entry to the Dev Diary section at the bottom of this file covering what was built or discussed in the session.
+
+3. **Follow the end-of-session marker convention** (established in Session 3):
+   - Write your dev diary entry below the prompt line at the bottom of the Dev Diary section
+   - Then move the `<!-- END OF SESSION X -->` comment and the prompt line to sit *after* your entry
+   - Update the session number in the marker to match your session
+   - Do not edit anything above the most recent `<!-- END OF SESSION X -->` line
+
+4. **Keep the dev diary human-readable and casual** — written as if Jack is describing what he did, not a technical changelog.
+
+---
+
 ## What this project is
 
 A prototype of a UK government digital benefit service, simulating PIP (Personal Independence Payment) but called **Health and Disability Benefit (HDB)**. Built in plain HTML files with a Google Sheet as a database backend.
@@ -28,6 +44,7 @@ All files are in `/Users/home/Desktop/HDB Service/`
 - `mockups/PIP-Mockup-2-Timeline-Overview.png` — mockup: full case timeline (collapsed)
 - `mockups/PIP-Mockup-3-Timeline-Drilled-In.png` — mockup: timeline with application journey expanded
 - `Update Screens.command` — double-clickable file on Desktop to regenerate all screenshots
+- `mockups/devlog_mockup.html` — mockup for Jack's Dev Diary website (black background, burger menu, timeline feed)
 
 GitHub repo: https://github.com/js8989/hdb-service
 
@@ -212,3 +229,31 @@ Three PNG mockups created (in /mockups/ folder):
 - Citizen journey: black header (#0b0c0c), GOV.UK green buttons (#00703c)
 - Font: Noto Sans
 - All screens follow GOV.UK patterns: error messages in red, focus yellow, etc.
+
+---
+
+## Dev diary
+
+*A human-readable log of what we built each session. Will eventually become a small website (devlog_mockup.html has the design).*
+
+---
+
+**Session 1** — *Friday, 5 June 2026*
+The big founding session — everything before 16 June. Started the project from scratch. Built two core HTML files: a citizen-facing registration journey (`govuk_hdb_full_journey.html`, 17 screens RG-01 to RG-12) and an agent-facing case management tool (`govuk_hdb_agent_tool.html`). Both styled in the GOV.UK design system. Connected a Google Sheet via Google Apps Script as a lightweight database backend. Set up a GitHub repo. Built an automated Python/Playwright screenshot pipeline with a double-clickable Desktop shortcut to regenerate all PNGs in one go. Introduced screen codes (RG-xx, AT-xx). Built an interactive zoom/pan flow map of all 20 screens with dynamically drawn arrows. Redesigned the address page (RG-05) with postcode + house number lookup, fuzzy matching, and radio button selection. Added an optional account creation flow (RG-08 to RG-12) with email, password, and passkey. Added a green prototype bar to every page footer. Had a deep dive into the full PIP case lifecycle — established the Linked Journey / Journey / Sub-journey / Events terminology hierarchy. Created 3 PNG mockups for a new agent tool case record and timeline design. Ran out of context window and created this NOTES.md to carry knowledge forward.
+
+---
+
+**Session 2** — *6 June & 8 June 2026*
+Explored GOV.UK design system compliance for the agent tool mockups. Introduced mockup versioning (v0.x = iteration, v1.0 = final). Built v0.2 with proper GOV.UK components. Built a `govuk_component_showcase.html` reference file showing all 34 GOV.UK components. Scanned DWP, HMRC, MOJ, Home Office and 8 other UK government design systems — found cross-govt precedent for all our custom patterns (DWP Timeline, MOJ Identity Bar etc.). Built v0.3 using only standard components — felt too weak visually. Agreed v0.4 will be a compromise: v0.2 visual design justified by cross-govt precedent rather than replaced by it. Also created the Dev Diary concept and designed `devlog_mockup.html`.
+
+Key decisions:
+- Custom components are justifiable by cross-govt precedent, not violations
+- v0.4 = v0.2 design language + proper markup where possible
+
+<!-- END OF SESSION 2 — do not edit above this line -->
+
+---
+
+*⬇ Next session: add your dev diary entry below this line, then move the end-of-session marker to after your entry.*
+
+---

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PIP Mockups v0.2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans', Arial, sans-serif; background: white; }
+.page { display: none; width: 1280px; background: white; }
+.page.active { display: block; }
+
+/* ── Shared header ── */
+.agent-header { background: #003078; padding: 10px 0; border-bottom: 10px solid #1d70b8; }
+.agent-header__inner { max-width: 1100px; margin: 0 auto; padding: 0 30px; display: flex; align-items: center; justify-content: space-between; }
+.agent-header__left { display: flex; align-items: center; gap: 12px; }
+.govuk-crown { width: 36px; height: 28px; fill: white; }
+.agent-header__title { color: white; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.agent-header__service { color: #bfd7ff; font-size: 13px; border-left: 1px solid rgba(255,255,255,0.3); padding-left: 12px; margin-left: 4px; }
+.agent-header__right { color: #bfd7ff; font-size: 14px; display: flex; align-items: center; gap: 20px; }
+.agent-header__right a { color: #bfd7ff; text-decoration: underline; cursor: pointer; }
+.staff-banner { background: #1d70b8; padding: 6px 0; }
+.staff-banner__inner { max-width: 1100px; margin: 0 auto; padding: 0 30px; font-size: 13px; color: white; display: flex; align-items: center; gap: 8px; }
+.staff-tag { background: white; color: #1d70b8; font-weight: 700; font-size: 11px; padding: 2px 7px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── Claimant bar ── */
+.claimant-bar { background: #f3f2f1; border-bottom: 1px solid #b1b4b6; padding: 16px 0; }
+.claimant-bar__inner { max-width: 1100px; margin: 0 auto; padding: 0 30px; display: flex; align-items: center; justify-content: space-between; }
+.claimant-bar__name { font-size: 26px; font-weight: 700; color: #0b0c0c; }
+.claimant-bar__meta { font-size: 14px; color: #505a5f; margin-top: 4px; display: flex; gap: 24px; }
+.claimant-bar__actions { display: flex; gap: 12px; }
+
+/* ── Main ── */
+.main { max-width: 1100px; margin: 0 auto; padding: 28px 30px 80px; }
+
+/* ── Section headings ── */
+.section-head { font-size: 20px; font-weight: 700; color: #0b0c0c; margin: 32px 0 14px; padding-bottom: 10px; border-bottom: 2px solid #1d70b8; display: flex; align-items: center; justify-content: space-between; }
+.section-head a { font-size: 14px; font-weight: 400; color: #1d70b8; text-decoration: underline; }
+.section-head:first-of-type { margin-top: 0; }
+
+/* ── Status badge (custom — flagged) ── */
+.status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.badge-appeal  { background: #fff7bf; color: #594d00; }
+.badge-active  { background: #d4edda; color: #155724; }
+.badge-awaiting{ background: #d4e8ff; color: #003078; }
+.badge-payment { background: #e8f5e9; color: #1b5e20; }
+
+/* ── Linked journey cards (custom — flagged) ── */
+.lj-card { border: 1px solid #b1b4b6; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
+.lj-card__header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+.lj-header-lj1 { background: #1d70b8; }
+.lj-header-lj2 { background: #003078; }
+.lj-card__tag  { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.75); margin-bottom: 3px; }
+.lj-card__title{ font-size: 17px; font-weight: 700; color: white; }
+.lj-card__body { padding: 18px 20px; background: white; }
+
+/* Journey pills inside card (custom — flagged) */
+.journey-pills { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.jp { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 3px; white-space: nowrap; }
+.jp-done   { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+.jp-active { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+.jp-future { background: #f3f2f1; color: #505a5f; border: 1px solid #b1b4b6; }
+.jp-arrow  { color: #b1b4b6; font-size: 14px; }
+
+.lj-detail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 24px; font-size: 14px; margin-bottom: 14px; }
+.lj-detail dt { font-weight: 700; color: #505a5f; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+.lj-detail dd { color: #0b0c0c; }
+.lj-card__link { font-size: 14px; color: #1d70b8; text-decoration: underline; cursor: pointer; }
+
+/* ── Footer ── */
+.agent-footer { background: #f3f2f1; border-top: 1px solid #b1b4b6; padding: 16px 0; margin-top: 60px; }
+.agent-footer__inner { max-width: 1100px; margin: 0 auto; padding: 0 30px; font-size: 13px; color: #505a5f; display: flex; justify-content: space-between; align-items: center; }
+.version-badge { font-size: 12px; font-weight: 700; color: #003078; background: #d4e8ff; padding: 2px 10px; border: 1px solid #9ec8f0; }
+
+/* ══════════════════════════════════════════
+   TIMELINE (custom — flagged)
+══════════════════════════════════════════ */
+.tl-lj-head { display: flex; align-items: center; gap: 14px; margin: 36px 0 18px; padding-bottom: 12px; border-bottom: 2px solid #e0e0e0; }
+.tl-lj-head:first-of-type { margin-top: 0; }
+.tl-lj-badge { font-size: 11px; font-weight: 700; padding: 5px 14px; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; color: white; }
+.tl-lj1 { background: #1d70b8; }
+.tl-lj2 { background: #003078; }
+.tl-lj-title { font-size: 17px; font-weight: 700; color: #0b0c0c; flex: 1; }
+
+.tl-journey-row { display: flex; gap: 0; margin-bottom: 2px; position: relative; }
+.tl-journey-row::before { content:''; position:absolute; left:139px; top:44px; bottom:-2px; width:2px; background:#e0e8f0; z-index:0; }
+.tl-journey-row:last-child::before { display:none; }
+
+.tl-date-col { width:140px; flex-shrink:0; padding: 16px 16px 16px 0; text-align:right; font-size:13px; color:#505a5f; line-height:1.4; }
+.tl-dot-col  { width:20px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; padding-top:16px; position:relative; z-index:1; }
+.tl-dot { width:16px; height:16px; border-radius:50%; margin-top:2px; }
+.dot-done   { background:#00703c; }
+.dot-active { background:#f47738; }
+.dot-future { background:white; border:2px solid #b1b4b6; }
+
+.tl-body { flex:1; padding:10px 0 10px 20px; }
+
+.tl-milestone { background:#f8f9fc; border:1px solid #d8e0f0; border-radius:4px; padding:12px 16px; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; cursor:pointer; }
+.tl-milestone:hover { border-color:#1d70b8; background:#edf2fb; }
+.tl-milestone.open  { border-color:#1d70b8; background:#edf2fb; border-radius:4px 4px 0 0; border-bottom:none; }
+.tl-milestone.current { border-color:#f47738; background:#fff8f4; }
+.tl-milestone.current:hover { border-color:#e05f00; }
+
+.tl-m-left  { display:flex; align-items:flex-start; gap:12px; flex:1; }
+.tl-m-icon  { font-size:18px; flex-shrink:0; margin-top:1px; }
+.tl-m-text  { font-size:15px; font-weight:700; color:#0b0c0c; line-height:1.3; }
+.tl-m-text.orange { color:#f47738; }
+.tl-m-sub   { font-size:13px; color:#505a5f; margin-top:3px; }
+.tl-m-right { flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
+.tl-expand  { font-size:20px; color:#505a5f; line-height:1; }
+.tl-expand.rotated { transform:rotate(90deg); display:inline-block; }
+
+.tl-status-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+.tl-status-done    { color:#00703c; }
+.tl-status-active  { color:#f47738; }
+.tl-status-future  { color:#505a5f; }
+.tl-status-current { font-size:12px; font-weight:700; color:#f47738; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+
+.tl-accordion { border:1px solid #1d70b8; border-top:none; border-radius:0 0 4px 4px; background:white; margin-bottom:2px; }
+.tl-event { display:flex; align-items:flex-start; gap:16px; padding:12px 16px; border-bottom:1px solid #f0f0f0; font-size:14px; }
+.tl-event:last-child { border-bottom:none; }
+.tl-event__date { color:#505a5f; white-space:nowrap; flex-shrink:0; width:90px; font-size:13px; }
+.tl-event__tag  { flex-shrink:0; width:90px; }
+.tl-event__desc { flex:1; color:#0b0c0c; line-height:1.5; }
+.tl-event__desc a { color:#1d70b8; text-decoration:underline; font-size:13px; margin-left:6px; }
+.tl-event__agent { color:#505a5f; font-size:12px; white-space:nowrap; flex-shrink:0; }
+
+/* Outcome / appeal inline boxes (custom — flagged) */
+.inline-outcome { background:#e8f5e9; border:1px solid #a5d6a7; border-radius:3px; padding:6px 10px; font-size:13px; }
+.inline-outcome__label { font-weight:700; color:#1b5e20; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px; }
+.inline-appeal { background:#fff7bf; border:1px solid #ffc107; border-radius:3px; padding:6px 10px; font-size:13px; }
+.inline-appeal__label { font-weight:700; color:#856404; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px; }
+.inline-payment { background:#d4e8ff; border:1px solid #9ec8f0; border-radius:3px; padding:4px 10px; font-size:12px; color:#003078; font-weight:700; display:inline-block; margin-bottom:16px; }
+
+/* ══════════════════════════════════════════
+   GOV.UK DESIGN SYSTEM COMPONENTS
+   — applied in v0.2
+══════════════════════════════════════════ */
+
+/* govuk-breadcrumbs */
+.govuk-breadcrumbs { font-size: 14px; margin-bottom: 20px; color: #505a5f; }
+.govuk-breadcrumbs__list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; padding: 0; margin: 0; }
+.govuk-breadcrumbs__list-item { display: flex; align-items: center; }
+.govuk-breadcrumbs__list-item + .govuk-breadcrumbs__list-item::before {
+  content: '';
+  display: block;
+  width: 6px; height: 6px;
+  border-right: 2px solid #505a5f;
+  border-top: 2px solid #505a5f;
+  transform: rotate(45deg);
+  margin: 0 10px;
+}
+.govuk-breadcrumbs__link { color: #1d70b8; text-decoration: underline; }
+
+/* govuk-summary-list */
+.govuk-summary-list {
+  font-size: 16px; font-weight: 400; line-height: 1.25; color: #0b0c0c;
+  margin: 0 0 20px; display: table; width: 100%; table-layout: fixed; border-collapse: collapse;
+}
+.govuk-summary-list__row { display: table-row; border-bottom: 1px solid #b1b4b6; }
+.govuk-summary-list__row:last-child { border-bottom: none; }
+.govuk-summary-list__key,
+.govuk-summary-list__value,
+.govuk-summary-list__actions { display: table-cell; padding: 10px 20px 10px 0; vertical-align: top; }
+.govuk-summary-list__key { font-weight: 700; width: 35%; }
+.govuk-summary-list__value { width: 45%; }
+.govuk-summary-list__actions { text-align: right; width: 20%; }
+.govuk-link { color: #1d70b8; text-decoration: underline; }
+
+/* govuk-tag */
+.govuk-tag {
+  display: inline-block; font-family: 'Noto Sans', Arial, sans-serif;
+  font-size: 14px; font-weight: 700; line-height: 1; letter-spacing: 1px;
+  text-transform: uppercase; padding: 4px 8px 3px; color: #fff;
+  background-color: #1d70b8; text-decoration: none;
+}
+.govuk-tag--grey    { background: #505a5f; color: #fff; }
+.govuk-tag--green   { background: #00703c; color: #fff; }
+.govuk-tag--blue    { background: #1d70b8; color: #fff; }
+.govuk-tag--yellow  { background: #fdd835; color: #0b0c0c; }
+.govuk-tag--orange  { background: #f47738; color: #fff; }
+.govuk-tag--red     { background: #d4351c; color: #fff; }
+.govuk-tag--purple  { background: #4c2c92; color: #fff; }
+.govuk-tag--teal    { background: #10403c; color: #fff; }
+
+/* govuk-button */
+.govuk-button {
+  font-family: 'Noto Sans', Arial, sans-serif; font-size: 16px; font-weight: 700; line-height: 1.1875;
+  display: inline-block; position: relative; padding: 8px 10px 7px;
+  border: 2px solid transparent; color: #fff; background-color: #00703c;
+  box-shadow: 0 2px 0 #002d18; text-align: center; cursor: pointer;
+  text-decoration: none; -webkit-appearance: none; margin-bottom: 0;
+}
+.govuk-button--secondary {
+  background-color: #f3f2f1; box-shadow: 0 2px 0 #929191; color: #0b0c0c;
+}
+.govuk-button:hover { background-color: #005a30; }
+.govuk-button--secondary:hover { background-color: #dbdad9; }
+
+/* govuk-inset-text */
+.govuk-inset-text {
+  font-size: 16px; line-height: 1.25; color: #0b0c0c;
+  padding: 15px; margin: 20px 0; border-left: 10px solid #b1b4b6;
+}
+
+/* ── Review star — subtle marker for custom components ── */
+.review-wrap { position: relative; }
+.review-star {
+  position: absolute; top: 8px; right: 8px; z-index: 100;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #f47738; color: white; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: default; box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  line-height: 1;
+}
+.review-star .review-tooltip {
+  display: none; position: absolute; top: 32px; right: 0;
+  background: #0b0c0c; color: white; font-size: 12px; font-weight: 400;
+  padding: 8px 12px; width: 280px; line-height: 1.4; z-index: 200;
+}
+.review-star:hover .review-tooltip { display: block; }
+
+/* ── Page nav ── */
+.page-nav { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 8px; z-index: 9999; }
+.page-nav button { background: #003078; color: white; border: none; padding: 8px 14px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.page-nav button.active { background: #1d70b8; }
+.page-nav button:hover { background: #1d70b8; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     MOCKUP 1 — PIP Case Record
+════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-record">
+
+  <div class="review-wrap">
+    <div class="review-star">★<span class="review-tooltip">Custom component — blue staff header has no GOV.UK design system equivalent. The standard GOV.UK header is black. Needs design system discussion.</span></div>
+    <header class="agent-header"><div class="agent-header__inner">
+      <div class="agent-header__left">
+        <svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+        <span class="agent-header__title">GOV.UK</span>
+        <span class="agent-header__service">PIP Case Management</span>
+      </div>
+      <div class="agent-header__right"><span>S.Patel</span><a>Sign out</a></div>
+    </div></header>
+    <div class="staff-banner"><div class="staff-banner__inner"><span class="staff-tag">Staff</span><span>Signed in as: s.patel — DWP PIP Case Management</span></div></div>
+  </div>
+
+  <div class="review-wrap">
+    <div class="review-star">★<span class="review-tooltip">Custom component — persistent claimant identity bar has no GOV.UK design system equivalent. Needs design system discussion.</span></div>
+    <div class="claimant-bar"><div class="claimant-bar__inner">
+      <div>
+        <div class="claimant-bar__name">Jeff Bridges</div>
+        <div class="claimant-bar__meta">
+          <span>NI: <strong>NA 11 22 33 C</strong></span>
+          <span>DOB: <strong>14 August 1996</strong></span>
+          <span>Age: <strong>29</strong></span>
+          <span>Case ref: <strong>PIP-2023-004821</strong></span>
+        </div>
+      </div>
+      <div class="claimant-bar__actions">
+        <button class="govuk-button govuk-button--secondary">Add case note</button>
+        <button class="govuk-button">Take action</button>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="main">
+
+    <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Home</a></li>
+        <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Search</a></li>
+        <li class="govuk-breadcrumbs__list-item">Jeff Bridges — Case record</li>
+      </ol>
+    </nav>
+
+    <div class="section-head">Case status <a>View full timeline →</a></div>
+
+    <!-- Linked Journey 1 -->
+    <div class="review-wrap">
+      <div class="review-star">★<span class="review-tooltip">Custom component — Linked Journey status card (coloured header, journey pills, detail grid) has no GOV.UK equivalent. Closest is govuk-summary-card but it doesn't support this layout. Needs design system discussion.</span></div>
+      <div class="lj-card">
+        <div class="lj-card__header lj-header-lj1">
+          <div>
+            <div class="lj-card__tag">Linked Journey 1</div>
+            <div class="lj-card__title">Application → MR → Appeal</div>
+          </div>
+          <span class="status-badge badge-appeal">⚠ Appeal in progress</span>
+        </div>
+        <div class="lj-card__body">
+          <div class="journey-pills">
+            <span class="jp jp-done">✓ Application</span>
+            <span class="jp-arrow">›</span>
+            <span class="jp jp-done">✓ Mandatory Reconsideration</span>
+            <span class="jp-arrow">›</span>
+            <span class="jp jp-active">⏳ Appeal</span>
+          </div>
+          <dl class="lj-detail">
+            <div><dt>Application started</dt><dd>1 December 2023</dd></div>
+            <div><dt>Application decision</dt><dd>15 January 2024</dd></div>
+            <div><dt>Current award</dt><dd>Daily living: Standard<br>Mobility: Enhanced</dd></div>
+            <div><dt>MR requested</dt><dd>2 February 2024</dd></div>
+            <div><dt>MR type</dt><dd>Entitlement — disputes daily living rate</dd></div>
+            <div><dt>MR decision</dt><dd>18 March 2024 — Upheld</dd></div>
+            <div><dt>Appeal lodged</dt><dd>8 April 2024</dd></div>
+            <div><dt>Tribunal date</dt><dd>Not yet scheduled</dd></div>
+            <div><dt>Award in payment</dt><dd>Yes — since 15 Jan 2024</dd></div>
+          </dl>
+          <a class="lj-card__link">View Linked Journey 1 timeline →</a>
+          <div class="govuk-inset-text"><strong>Note:</strong> If appeal is successful, increased payments will be backdated to 15 January 2024. Current payments continue at existing rate.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linked Journey 2 -->
+    <div class="review-wrap">
+      <div class="review-star">★<span class="review-tooltip">Custom component — same as above. Linked Journey status card needs design system discussion.</span></div>
+      <div class="lj-card">
+        <div class="lj-card__header lj-header-lj2">
+          <div>
+            <div class="lj-card__tag">Linked Journey 2 — started during appeal</div>
+            <div class="lj-card__title">New application</div>
+          </div>
+          <span class="status-badge badge-awaiting">⏳ Awaiting decision</span>
+        </div>
+        <div class="lj-card__body">
+          <div class="journey-pills">
+            <span class="jp jp-done">✓ Application</span>
+            <span class="jp-arrow">›</span>
+            <span class="jp jp-active">⏳ Awaiting decision</span>
+            <span class="jp-arrow">›</span>
+            <span class="jp jp-future">Outcome</span>
+          </div>
+          <dl class="lj-detail">
+            <div><dt>Application started</dt><dd>14 April 2026</dd></div>
+            <div><dt>Evidence received</dt><dd>28 April 2026</dd></div>
+            <div><dt>Assessment completed</dt><dd>19 May 2026</dd></div>
+            <div><dt>Decision expected</dt><dd>By 14 July 2026</dd></div>
+            <div><dt>Award in payment</dt><dd>N/A — awaiting outcome</dd></div>
+            <div><dt>&nbsp;</dt><dd>&nbsp;</dd></div>
+          </dl>
+          <a class="lj-card__link">View Linked Journey 2 timeline →</a>
+          <div class="govuk-inset-text"><strong>Note:</strong> If this application is successful, payments will not be backdated while Linked Journey 1 appeal is ongoing.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal details — govuk-summary-list -->
+    <div class="section-head">Personal details <a>Edit</a></div>
+    <dl class="govuk-summary-list" style="max-width:700px;">
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Full name</dt><dd class="govuk-summary-list__value">Jeffrey Thomas Bridges</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Date of birth</dt><dd class="govuk-summary-list__value">14 August 1996</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">National Insurance number</dt><dd class="govuk-summary-list__value">NA 11 22 33 C</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Home address</dt><dd class="govuk-summary-list__value">14 St James Road, Barrack Park, Newcastle upon Tyne, NE1 4ST</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Mobile</dt><dd class="govuk-summary-list__value">07889 121 219</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Email</dt><dd class="govuk-summary-list__value">jeff@email.com</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Communication needs</dt><dd class="govuk-summary-list__value">None recorded</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Appointee / representative</dt><dd class="govuk-summary-list__value">None</dd></div>
+    </dl>
+
+    <!-- Eligibility-relevant — govuk-summary-list -->
+    <div class="section-head">Eligibility-relevant information <a>View full details</a></div>
+    <dl class="govuk-summary-list" style="max-width:700px;">
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Primary condition</dt><dd class="govuk-summary-list__value">Fibromyalgia</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Secondary conditions</dt><dd class="govuk-summary-list__value">Chronic fatigue syndrome, Anxiety</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Daily living component</dt><dd class="govuk-summary-list__value">Standard rate</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Mobility component</dt><dd class="govuk-summary-list__value">Enhanced rate</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Employment status</dt><dd class="govuk-summary-list__value">Not in employment</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Residency</dt><dd class="govuk-summary-list__value">England — verified</dd></div>
+      <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Health professionals</dt><dd class="govuk-summary-list__value">Dr A. Khan (GP) — Newcastle upon Tyne</dd></div>
+    </dl>
+
+  </div>
+  <footer class="agent-footer"><div class="agent-footer__inner">
+    <span>Department for Work and Pensions · PIP Case Management · For internal use only</span>
+    <span class="version-badge">v0.2</span>
+  </div></footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MOCKUP 2 — Full case timeline (all collapsed)
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-timeline">
+
+  <div class="review-wrap">
+    <div class="review-star">★<span class="review-tooltip">Custom component — blue staff header and staff identity banner have no GOV.UK design system equivalents. Needs design system discussion.</span></div>
+    <header class="agent-header"><div class="agent-header__inner">
+      <div class="agent-header__left">
+        <svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+        <span class="agent-header__title">GOV.UK</span>
+        <span class="agent-header__service">PIP Case Management</span>
+      </div>
+      <div class="agent-header__right"><span>S.Patel</span><a>Sign out</a></div>
+    </div></header>
+    <div class="staff-banner"><div class="staff-banner__inner"><span class="staff-tag">Staff</span><span>Signed in as: s.patel — DWP PIP Case Management</span></div></div>
+  </div>
+
+  <div class="review-wrap">
+    <div class="review-star">★<span class="review-tooltip">Custom component — persistent claimant identity bar has no GOV.UK design system equivalent. Needs design system discussion.</span></div>
+    <div class="claimant-bar"><div class="claimant-bar__inner">
+      <div>
+        <div class="claimant-bar__name">Jeff Bridges</div>
+        <div class="claimant-bar__meta">
+          <span>NI: <strong>NA 11 22 33 C</strong></span>
+          <span>Case ref: <strong>PIP-2023-004821</strong></span>
+        </div>
+      </div>
+      <div class="claimant-bar__actions">
+        <button class="govuk-button govuk-button--secondary">Add case note</button>
+        <button class="govuk-button">Take action</button>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="main">
+
+    <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Home</a></li>
+        <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Jeff Bridges — Case record</a></li>
+        <li class="govuk-breadcrumbs__list-item">Full case timeline</li>
+      </ol>
+    </nav>
+
+    <h1 style="font-size:28px;font-weight:700;color:#0b0c0c;margin-bottom:8px;">Full case timeline</h1>
+    <p style="font-size:16px;color:#505a5f;margin-bottom:28px;">Click any journey to expand its sub-journeys and events.</p>
+
+    <!-- Linked Journey 1 -->
+    <div class="review-wrap">
+      <div class="review-star">★<span class="review-tooltip">Custom component — Linked Journey section header with coloured badge has no GOV.UK equivalent. Needs design system discussion.</span></div>
+      <div class="tl-lj-head">
+        <span class="tl-lj-badge tl-lj1">Linked Journey 1</span>
+        <span class="tl-lj-title">Original application — started 1 December 2023</span>
+        <span class="status-badge badge-appeal">⚠ Appeal in progress</span>
+      </div>
+    </div>
+
+    <div class="review-wrap" style="display:inline-block; margin-bottom:16px;">
+      <div class="review-star">★<span class="review-tooltip">Custom component — inline payment/outcome indicator. No GOV.UK equivalent fits this inline use. Needs design system discussion.</span></div>
+      <span class="inline-payment">💳 Award in payment since 15 Jan 2024 — continuing throughout MR and appeal</span>
+    </div>
+
+    <!-- Timeline rows -->
+    <div class="review-wrap">
+      <div class="review-star" style="top:12px;">★<span class="review-tooltip">Custom component — dot-and-line chronological timeline layout. No GOV.UK design system equivalent exists. This is the strongest case for a new user-research-backed pattern.</span></div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col">1 Dec 2023<br><span style="font-size:12px;">→ 15 Jan 2024</span></div>
+        <div class="tl-dot-col"><div class="tl-dot dot-done"></div></div>
+        <div class="tl-body">
+          <div class="tl-milestone">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">📋</span>
+              <div>
+                <div class="tl-m-text">Journey: Application</div>
+                <div class="tl-m-sub">4 sub-journeys · Registration, Evidence, Assessment, Decision</div>
+              </div>
+            </div>
+            <div class="tl-m-right">
+              <span class="tl-status-label tl-status-done">✓ Complete</span>
+              <span class="tl-expand">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col">2 Feb 2024<br><span style="font-size:12px;">→ 18 Mar 2024</span></div>
+        <div class="tl-dot-col"><div class="tl-dot dot-done"></div></div>
+        <div class="tl-body">
+          <div class="tl-milestone">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">📝</span>
+              <div>
+                <div class="tl-m-text">Journey: Mandatory Reconsideration</div>
+                <div class="tl-m-sub">Type: Entitlement · Disputes decision of 15 Jan 2024 · 3 sub-journeys</div>
+              </div>
+            </div>
+            <div class="tl-m-right">
+              <div class="inline-outcome"><div class="inline-outcome__label">MR outcome</div>Upheld — no change to award</div>
+              <span class="tl-expand">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col">8 Apr 2024<br><span style="font-size:12px;color:#f47738;">Ongoing</span></div>
+        <div class="tl-dot-col"><div class="tl-dot dot-active"></div></div>
+        <div class="tl-body">
+          <div class="tl-status-current">▶ Current journey</div>
+          <div class="tl-milestone current">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">🏛️</span>
+              <div>
+                <div class="tl-m-text orange">Journey: Appeal</div>
+                <div class="tl-m-sub">Disputes MR decision of 18 Mar 2024 · 2 sub-journeys so far · Tribunal not yet scheduled</div>
+              </div>
+            </div>
+            <div class="tl-m-right">
+              <div class="inline-appeal"><div class="inline-appeal__label">Appeal status</div>Lodged — awaiting tribunal</div>
+              <span class="tl-expand">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linked Journey 2 -->
+    <div class="review-wrap">
+      <div class="review-star">★<span class="review-tooltip">Custom component — Linked Journey section header. Same as above. Needs design system discussion.</span></div>
+      <div class="tl-lj-head">
+        <span class="tl-lj-badge tl-lj2">Linked Journey 2</span>
+        <span class="tl-lj-title">New application (linked — started during appeal) · 14 April 2026</span>
+        <span class="status-badge badge-awaiting">⏳ Awaiting decision</span>
+      </div>
+    </div>
+
+    <div class="review-wrap">
+      <div class="review-star" style="top:12px;">★<span class="review-tooltip">Custom component — dot-and-line timeline. Same as above.</span></div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col">14 Apr 2026<br><span style="font-size:12px;color:#f47738;">Ongoing</span></div>
+        <div class="tl-dot-col"><div class="tl-dot dot-active"></div></div>
+        <div class="tl-body">
+          <div class="tl-status-current">▶ Current journey</div>
+          <div class="tl-milestone current">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">📋</span>
+              <div>
+                <div class="tl-m-text orange">Journey: Application</div>
+                <div class="tl-m-sub">3 sub-journeys complete · Registration, Evidence, Assessment · Awaiting decision</div>
+              </div>
+            </div>
+            <div class="tl-m-right">
+              <span class="tl-status-label tl-status-active">In progress</span>
+              <span class="tl-expand">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col" style="opacity:0.5;">Expected<br>Jul 2026</div>
+        <div class="tl-dot-col"><div class="tl-dot dot-future"></div></div>
+        <div class="tl-body">
+          <div class="tl-milestone" style="opacity:0.5;cursor:default;">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">⚖️</span>
+              <div>
+                <div class="tl-m-text">Journey: Decision — outcome TBC</div>
+                <div class="tl-m-sub">If positive: no backdating while LJ1 appeal ongoing</div>
+              </div>
+            </div>
+            <div class="tl-m-right"><span class="tl-status-label tl-status-future">Upcoming</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="agent-footer"><div class="agent-footer__inner">
+    <span>Department for Work and Pensions · PIP Case Management · For internal use only</span>
+    <span class="version-badge">v0.2</span>
+  </div></footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MOCKUP 3 — Timeline: Application journey expanded
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-timeline-detail">
+
+  <div class="review-wrap">
+    <div class="review-star">★<span class="review-tooltip">Custom component — blue staff header and staff identity banner have no GOV.UK design system equivalents. Needs design system discussion.</span></div>
+    <header class="agent-header"><div class="agent-header__inner">
+      <div class="agent-header__left">
+        <svg class="govuk-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97"><path d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zm51.1-3c1.5 3.5 5.7 5.2 9.1 3.8 3.6-1.4 5.3-5.4 3.8-9-1.4-3.5-5.3-5.2-8.9-3.8-3.6 1.3-5.3 5.3-4 9zM66.1 62.5H33.3L19.8 39.4c-5.4 2.2-11.5-.6-12.6-6.3-1-5.6 3.3-11 9-11.4 5.7-.4 10.7 4.2 10.7 9.9 0 .9-.1 1.7-.3 2.5L45.1 55.4c3.4-2.2 7.8-2.2 11.2 0l18.5-21.3c-.2-.8-.3-1.6-.3-2.5 0-5.7 5-10.3 10.7-9.9 5.7.4 10 5.8 9 11.4-1.1 5.7-7.2 8.5-12.6 6.3L67.9 55.4h.3l-.3-.4.2.3v.3L56.3 73.2H33.9L22.8 55.8H11.6l.1 3h11.2L33.3 75.7h22.9l11.5-18.9.3-.2.1-.1z"/></svg>
+        <span class="agent-header__title">GOV.UK</span>
+        <span class="agent-header__service">PIP Case Management</span>
+      </div>
+      <div class="agent-header__right"><span>S.Patel</span><a>Sign out</a></div>
+    </div></header>
+    <div class="staff-banner"><div class="staff-banner__inner"><span class="staff-tag">Staff</span><span>Signed in as: s.patel — DWP PIP Case Management</span></div></div>
+  </div>
+
+  <div class="review-wrap">
+    <div class="review-star">★<span class="review-tooltip">Custom component — persistent claimant identity bar has no GOV.UK design system equivalent. Needs design system discussion.</span></div>
+    <div class="claimant-bar"><div class="claimant-bar__inner">
+      <div>
+        <div class="claimant-bar__name">Jeff Bridges</div>
+        <div class="claimant-bar__meta">
+          <span>NI: <strong>NA 11 22 33 C</strong></span>
+          <span>Case ref: <strong>PIP-2023-004821</strong></span>
+        </div>
+      </div>
+      <div class="claimant-bar__actions">
+        <button class="govuk-button govuk-button--secondary">Add case note</button>
+        <button class="govuk-button">Take action</button>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="main">
+
+    <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Home</a></li>
+        <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Jeff Bridges — Case record</a></li>
+        <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Full case timeline</a></li>
+        <li class="govuk-breadcrumbs__list-item">Linked Journey 1 — Application journey</li>
+      </ol>
+    </nav>
+
+    <h1 style="font-size:28px;font-weight:700;color:#0b0c0c;margin-bottom:8px;">Full case timeline</h1>
+    <p style="font-size:16px;color:#505a5f;margin-bottom:28px;">Linked Journey 1 · Application journey expanded. Click to collapse.</p>
+
+    <div class="review-wrap">
+      <div class="review-star">★<span class="review-tooltip">Custom component — Linked Journey section header. Needs design system discussion.</span></div>
+      <div class="tl-lj-head">
+        <span class="tl-lj-badge tl-lj1">Linked Journey 1</span>
+        <span class="tl-lj-title">Original application — started 1 December 2023</span>
+      </div>
+    </div>
+
+    <div class="review-wrap" style="display:inline-block; margin-bottom:16px;">
+      <div class="review-star">★<span class="review-tooltip">Custom component — inline payment indicator. No GOV.UK equivalent fits this inline use. Needs design system discussion.</span></div>
+      <span class="inline-payment">💳 Award in payment since 15 Jan 2024 — continuing throughout MR and appeal</span>
+    </div>
+
+    <!-- Timeline with Application journey open -->
+    <div class="review-wrap">
+      <div class="review-star" style="top:12px;">★<span class="review-tooltip">Custom component — dot-and-line timeline and sub-journey headers inside expanded accordion. No GOV.UK equivalent. Strongest case for a new user-research-backed pattern.</span></div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col">1 Dec 2023<br><span style="font-size:12px;">→ 15 Jan 2024</span></div>
+        <div class="tl-dot-col"><div class="tl-dot dot-done"></div></div>
+        <div class="tl-body">
+          <div class="tl-milestone open">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">📋</span>
+              <div>
+                <div class="tl-m-text" style="color:#1d70b8;">Journey: Application</div>
+                <div class="tl-m-sub">4 sub-journeys · Click to collapse</div>
+              </div>
+            </div>
+            <div class="tl-m-right">
+              <span class="tl-status-label tl-status-done">✓ Complete</span>
+              <span class="tl-expand rotated">›</span>
+            </div>
+          </div>
+          <div class="tl-accordion">
+
+            <div style="padding:8px 16px 4px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#1d70b8; background:#f4f7fc; border-bottom:1px solid #e0e8f0;">Sub-journey: Registration</div>
+            <div class="tl-event">
+              <div class="tl-event__date">1 Dec 2023</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+              <div class="tl-event__desc">Registration completed online. Name, DOB, NI number and address collected.<a>View</a></div>
+              <div class="tl-event__agent">System</div>
+            </div>
+
+            <div style="padding:8px 16px 4px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#1d70b8; background:#f4f7fc; border-bottom:1px solid #e0e8f0; border-top:1px solid #e0e8f0;">Sub-journey: Evidence submission</div>
+            <div class="tl-event">
+              <div class="tl-event__date">4 Dec 2023</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+              <div class="tl-event__desc">PIP2 health information form sent to claimant. Return deadline: 18 Dec 2023.<a>View letter</a></div>
+              <div class="tl-event__agent">R.Ahmed</div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-event__date">12 Dec 2023</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--grey">Contact</strong></div>
+              <div class="tl-event__desc">Inbound call — query about PIP2 form. Claimant advised on completion. Duration: 8 mins.<a>View transcript</a></div>
+              <div class="tl-event__agent">S.Patel</div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-event__date">17 Dec 2023</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--green">Evidence</strong></div>
+              <div class="tl-event__desc">PIP2 form returned by post. Scanned and uploaded.<a>View document</a></div>
+              <div class="tl-event__agent">R.Ahmed</div>
+            </div>
+
+            <div style="padding:8px 16px 4px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#1d70b8; background:#f4f7fc; border-bottom:1px solid #e0e8f0; border-top:1px solid #e0e8f0;">Sub-journey: Assessment</div>
+            <div class="tl-event">
+              <div class="tl-event__date">2 Jan 2024</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+              <div class="tl-event__desc">Referred to assessment provider (Capita). Assessment pack sent.</div>
+              <div class="tl-event__agent">System</div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-event__date">10 Jan 2024</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+              <div class="tl-event__desc">Face-to-face assessment completed. Report received from Capita.<a>View report</a></div>
+              <div class="tl-event__agent">Capita</div>
+            </div>
+
+            <div style="padding:8px 16px 4px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#1d70b8; background:#f4f7fc; border-bottom:1px solid #e0e8f0; border-top:1px solid #e0e8f0;">Sub-journey: Decision</div>
+            <div class="tl-event">
+              <div class="tl-event__date">13 Jan 2024</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--grey">Admin</strong></div>
+              <div class="tl-event__desc">Pre-decision checks completed.</div>
+              <div class="tl-event__agent">R.Ahmed</div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-event__date">15 Jan 2024</div>
+              <div class="tl-event__tag"><strong class="govuk-tag govuk-tag--blue">Decision</strong></div>
+              <div class="tl-event__desc"><strong>Decision made — Awarded.</strong> Daily living: Standard rate. Mobility: Enhanced rate. Award period: 15 Jan 2024 – 15 Jan 2029.<a>View decision letter</a></div>
+              <div class="tl-event__agent">M.Jones</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col">2 Feb 2024<br><span style="font-size:12px;">→ 18 Mar 2024</span></div>
+        <div class="tl-dot-col"><div class="tl-dot dot-done"></div></div>
+        <div class="tl-body">
+          <div class="tl-milestone">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">📝</span>
+              <div>
+                <div class="tl-m-text">Journey: Mandatory Reconsideration</div>
+                <div class="tl-m-sub">Entitlement MR · Disputes decision of 15 Jan 2024 · 3 sub-journeys</div>
+              </div>
+            </div>
+            <div class="tl-m-right">
+              <div class="inline-outcome"><div class="inline-outcome__label">MR outcome</div>Upheld — no change</div>
+              <span class="tl-expand">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-journey-row">
+        <div class="tl-date-col">8 Apr 2024<br><span style="font-size:12px;color:#f47738;">Ongoing</span></div>
+        <div class="tl-dot-col"><div class="tl-dot dot-active"></div></div>
+        <div class="tl-body">
+          <div class="tl-status-current">▶ Current journey</div>
+          <div class="tl-milestone current">
+            <div class="tl-m-left">
+              <span class="tl-m-icon">🏛️</span>
+              <div>
+                <div class="tl-m-text orange">Journey: Appeal</div>
+                <div class="tl-m-sub">Disputes MR decision of 18 Mar 2024 · Tribunal not yet scheduled</div>
+              </div>
+            </div>
+            <div class="tl-m-right">
+              <div class="inline-appeal"><div class="inline-appeal__label">Status</div>Awaiting tribunal</div>
+              <span class="tl-expand">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="agent-footer"><div class="agent-footer__inner">
+    <span>Department for Work and Pensions · PIP Case Management · For internal use only</span>
+    <span class="version-badge">v0.2</span>
+  </div></footer>
+</div>
+
+<!-- Page navigation -->
+<div class="page-nav">
+  <button onclick="showPage('page-record', this)" class="active">1 — Case record</button>
+  <button onclick="showPage('page-timeline', this)">2 — Timeline</button>
+  <button onclick="showPage('page-timeline-detail', this)">3 — Timeline expanded</button>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
