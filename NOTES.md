@@ -39,7 +39,10 @@ Live site: https://js8989.github.io/hdb-service
 - `govuk_hdb_full_journey.html` — citizen-facing registration and application journey
 - `govuk_hdb_agent_tool.html` — agent-facing case management tool
 - `flow-map.html` — interactive visual flow map of all screens (zoom/pan)
-- `govuk_component_showcase.html` — all 34 GOV.UK components for reference
+- `govuk_component_showcase.html` — multi-org component showcase: 110+ components across GOV.UK, DWP, MOJ, NHS and DfE
+- `dwp-frontend.css` — DWP Frontend CSS (compiled from SCSS via sass npm package, Session 4)
+- `moj-frontend.css` — MOJ Frontend CSS (copied from npm package, Session 4)
+- `nhs-frontend.css` — NHS Frontend CSS (copied from npm package, Session 4)
 - `screenshot_screens.py` — Python script to auto-generate PNG screenshots of every screen
 - `screens/` — folder containing all PNG screenshots (auto-generated)
 - `mockups/pip_mockups.html` — standalone HTML mockups for PIP case record and timeline designs
@@ -228,8 +231,12 @@ Three PNG mockups created (in /mockups/ folder):
 - Playwright Chromium at: `/Users/home/Library/Caches/ms-playwright/`
 - Run screenshots: `python3 "/Users/home/Desktop/HDB Service/screenshot_screens.py"`
 - Or double-click "Update Screens.command" on Desktop
-- Git configured, pushing to GitHub via web upload (no CLI auth set up)
-- Node.js not installed
+- Git configured and authenticated with GitHub — Claude can push directly via CLI (set up in Session 3)
+- Node.js installed (via .pkg installer from nodejs.org) — installed Session 4, June 2026
+- npm available alongside Node.js
+- sass npm package installed locally at `/tmp/dwp-pkg/node_modules/.bin/sass` — used to compile DWP SCSS into `dwp-frontend.css`
+- MOJ Frontend CSS copied from npm package to `moj-frontend.css` (pre-compiled, no SCSS step needed)
+- NHS Frontend CSS copied from npm package to `nhs-frontend.css` (pre-compiled, no SCSS step needed)
 - Homebrew not installed
 
 ---
@@ -275,6 +282,40 @@ Key decisions:
 - Prototype password stored in NOTES.md (see File structure section above)
 
 <!-- END OF SESSION 3 — do not edit above this line -->
+
+---
+
+**Session 4** — *17 June 2026, ~5pm–7:40pm*
+Long session with a lot covered across two main areas: password security and the component showcase.
+
+**Password fix:** The prototype password protection was broken — pressing Cancel on the `prompt()` dialog or entering the wrong password was letting users straight through. Root cause was that the script ran before `<body>` existed in some files, so `document.body.innerHTML` replacement silently failed. Fixed across all three password-protected prototypes (`govuk_hdb_full_journey.html`, `govuk_hdb_agent_tool.html`, `flow-map.html`) using a new approach: SHA-256 hashed overlay div that covers the whole page, removed only on correct password. Hash of current password `hdb-proto-2026!*!` is `382ad70eaa9292d3ce5176937ac29276cef939415721417e9f639dfdb575b535`. The component showcase (`govuk_component_showcase.html`) has no password — it's a reference tool and doesn't need one.
+
+**Hosting switch:** Netlify hit 75% of free-tier bandwidth credits, so switched both sites to GitHub Pages. Both repos (hdb-service and jacks-dev-diary) had to be made public for GitHub Pages to work on the free plan. URLs updated in `index.html` and `My Website/index.html`. GitHub Pages URLs: `https://js8989.github.io/hdb-service` and `https://js8989.github.io/jacks-dev-diary`.
+
+**Component showcase expansion:** Expanded `govuk_component_showcase.html` from 34 GOV.UK components to 110+ across 5 orgs. Each org uses its own real CSS file. Added org-prefix codes (GOV-01, DWP-01, MOJ-01, NHS-01, DFE-01) and a sticky filter bar at the top to filter by org. Black label bars on all cards; white `border-bottom` on card labels to distinguish label from any black-background components.
+
+Orgs added:
+- **DWP** (DWP-01 to DWP-08): Uses `dwp-frontend.css` compiled from DWP's npm package SCSS via sass. 8 components: Header, Footer, Step nav, Pagination, Quick reference, Timeline (custom pattern), Task nav, Key details bar (retired).
+- **MOJ** (MOJ-01 to MOJ-32): Uses `moj-frontend.css` (pre-compiled, from `@ministryofjustice/frontend` npm). 32 components including: Add another, Alert, Badge, Button menu, Card, Filter, Identity bar, Timeline, Pagination, Search, Side nav, Sortable table, Multi select, Date picker, Progress tracker, Sub nav, Ticket panel, Primary nav, Header, Modal dialog, Notification badge, Copy button, New features banner, Organisation switcher, Page header actions, Multi file upload, Messages, Scrollable pane, Interruption card, Timeout warning, API error, Numeric data.
+- **NHS** (NHS-01 to NHS-33): Uses `nhs-frontend.css` (pre-compiled, from `nhsuk-frontend` npm). 33 components including: Action link, Back link, Breadcrumbs, Buttons, Card, Contents list, Details, Error message, Error summary, Expander, Footer, Header, Hint text, Images, Inset text, Panel, Radios, Skip link, Summary list, Table, Tabs, Tag, Task list, Checkboxes, Character count, Date input, Password input, Search input, Select, Text input, Textarea, Pagination, Warning callout.
+- **DfE** (DFE-01 to DFE-03): No dedicated CSS file (DfE builds on GOV.UK Frontend). 3 components: Card, Filter, Header + vertical navigation.
+
+Key technical notes for showcase:
+- `crypto.subtle` (SHA-256) only works on HTTPS, not `file://` URLs — that's why showcase has no password (password overlay + crypto = grey screen on file:// because crypto fails silently and page never reveals)
+- Headers and footers for all orgs written manually WITHOUT width container classes (no `govuk-width-container`, `nhsuk-width-container` etc.) to prevent overflow from card boundaries
+- The `transform: scale(0.5)` trick was used for some wide GOV.UK components (GOV-07 cookie banner, GOV-15 footer) — works well but needs explicit height calculation
+- MOJ components with no HTML in docs (skipped): Calendar, Feedback banner, Contextual date, Banner, Inset text
+- NHS review date component is deprecated — skipped
+- Minor visual glitches remain in some cards — noted for a future session to tidy
+
+**Node.js install:** Installed Node.js via .pkg from nodejs.org so we could access npm packages for DWP/MOJ/NHS CSS. Had to install sass locally (not globally, to avoid sudo issues): `cd /tmp/dwp-pkg && npm install sass`.
+
+**Known issues to fix next session:**
+- Some component cards have minor visual glitches (Jack noted but didn't specify — review needed)
+- DWP CSS may need updating if DWP Frontend releases a new version
+- MOJ components: some JS-dependent ones (date picker, multi-select) won't be interactive without MOJ Frontend JS being loaded
+
+<!-- END OF SESSION 4 — do not edit above this line -->
 
 ---
 

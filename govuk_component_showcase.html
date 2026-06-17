@@ -84,38 +84,6 @@
 </style>
 </head>
 <body class="govuk-template__body">
-<script>
-  (function() {
-    var HASH = '382ad70eaa9292d3ce5176937ac29276cef939415721417e9f639dfdb575b535';
-    var overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:sans-serif;';
-    overlay.innerHTML = '<div style="max-width:400px;width:100%;padding:40px;border:1px solid #b1b4b6;">'
-      + '<h1 style="font-size:24px;font-weight:700;margin:0 0 16px;">Enter password</h1>'
-      + '<p style="margin:0 0 16px;color:#505a5f;">This prototype is password protected.</p>'
-      + '<div id="pw-error" style="display:none;color:#d4351c;font-weight:700;margin-bottom:12px;">Incorrect password</div>'
-      + '<input id="pw-input" type="password" style="width:100%;padding:8px;font-size:16px;border:2px solid #0b0c0c;margin-bottom:16px;box-sizing:border-box;" placeholder="Password" />'
-      + '<button id="pw-submit" style="background:#00703c;color:#fff;border:none;padding:10px 20px;font-size:16px;font-weight:700;cursor:pointer;">Continue</button>'
-      + '</div>';
-    document.body.appendChild(overlay);
-
-    function check() {
-      var val = document.getElementById('pw-input').value;
-      crypto.subtle.digest('SHA-256', new TextEncoder().encode(val)).then(function(buf) {
-        var hex = Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
-        if (hex === HASH) {
-          overlay.remove();
-        } else {
-          document.getElementById('pw-error').style.display = 'block';
-          document.getElementById('pw-input').value = '';
-          document.getElementById('pw-input').focus();
-        }
-      });
-    }
-
-    document.getElementById('pw-submit').addEventListener('click', check);
-    document.getElementById('pw-input').addEventListener('keydown', function(e){ if (e.key === 'Enter') check(); });
-  })();
-</script>
 
 <div class="showcase-header">
   Government Design Systems — Component Showcase
