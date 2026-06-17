@@ -1,5 +1,6 @@
 
 <style>
+  body { display: none; }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans', sans-serif; }
   .page { display: none; }
   .page.active { display: block; }
@@ -68,8 +69,11 @@
 <script>
   (function() {
     var pwd = prompt("Enter password to access this prototype:");
-    if (pwd !== "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
-      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password.</p></div>";
+    if (pwd === "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
+      document.body.style.display = 'block';
+    } else {
+      document.body.style.display = 'block';
+      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password. <a href=''>Try again</a></p></div>";
     }
   })();
 </script>

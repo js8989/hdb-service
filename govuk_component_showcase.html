@@ -6,7 +6,7 @@
 <title>GOV.UK Design System — All 34 Components</title>
 <link rel="stylesheet" href="https://unpkg.com/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.css">
 <style>
-  body { background: #f3f2f1; font-family: 'GDS Transport', Arial, sans-serif; }
+  body { display: none; background: #f3f2f1; font-family: 'GDS Transport', Arial, sans-serif; }
   .showcase-header {
     background: #0b0c0c; color: white; padding: 20px 40px;
     font-size: 22px; font-weight: 700;
@@ -54,8 +54,11 @@
 <script>
   (function() {
     var pwd = prompt("Enter password to access this prototype:");
-    if (pwd !== "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
-      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password.</p></div>";
+    if (pwd === "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
+      document.body.style.display = 'block';
+    } else {
+      document.body.style.display = 'block';
+      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password. <a href=''>Try again</a></p></div>";
     }
   })();
 </script>

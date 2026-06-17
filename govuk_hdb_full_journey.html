@@ -1,5 +1,6 @@
 
 <style>
+  body { display: none; }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans', sans-serif; }
   .page { display: none; }
   .page.active { display: block; }
@@ -92,14 +93,6 @@
   .ni-no-link:hover { color: #003078; }
   @media (max-width: 640px) { .govuk-start-grid { grid-template-columns: 1fr; } .govuk-h1 { font-size: 26px; } .govuk-ni-boxes { gap: 4px; } .govuk-ni-box { width: 52px; font-size: 18px; } }
 </style>
-<script>
-  (function() {
-    var pwd = prompt("Enter password to access this prototype:");
-    if (pwd !== "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
-      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password.</p></div>";
-    }
-  })();
-</script>
 
 <!-- PAGE 0: Start -->
 <div class="page active" id="page-start">
@@ -957,3 +950,14 @@ function togglePassword(fieldId, btn) {
     alert('Something went wrong. Please try again.');
   });
 }</script>
+<script>
+  (function() {
+    var pwd = prompt("Enter password to access this prototype:");
+    if (pwd === "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
+      document.body.style.display = 'block';
+    } else {
+      document.body.style.display = 'block';
+      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password. <a href=''>Try again</a></p></div>";
+    }
+  })();
+</script>

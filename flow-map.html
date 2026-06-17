@@ -5,7 +5,7 @@
 <title>HDB Service – Screen Flow Map</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: #dde3ea; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; height: 100vh; }
+body { display: none; background: #dde3ea; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; height: 100vh; }
 
 #toolbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -81,8 +81,11 @@ body { background: #dde3ea; font-family: 'Segoe UI', Arial, sans-serif; overflow
 <script>
   (function() {
     var pwd = prompt("Enter password to access this prototype:");
-    if (pwd !== "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
-      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password.</p></div>";
+    if (pwd === "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
+      document.body.style.display = 'block';
+    } else {
+      document.body.style.display = 'block';
+      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password. <a href=''>Try again</a></p></div>";
     }
   })();
 </script>
