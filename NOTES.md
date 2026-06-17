@@ -285,7 +285,7 @@ Key decisions:
 
 ---
 
-**Session 4** — *17 June 2026, ~5pm–7:40pm*
+**Session 4** — *17 June 2026, ~5pm–8:38pm*
 Long session with a lot covered across two main areas: password security and the component showcase.
 
 **Password fix:** The prototype password protection was broken — pressing Cancel on the `prompt()` dialog or entering the wrong password was letting users straight through. Root cause was that the script ran before `<body>` existed in some files, so `document.body.innerHTML` replacement silently failed. Fixed across all three password-protected prototypes (`govuk_hdb_full_journey.html`, `govuk_hdb_agent_tool.html`, `flow-map.html`) using a new approach: SHA-256 hashed overlay div that covers the whole page, removed only on correct password. Hash of current password `hdb-proto-2026!*!` is `382ad70eaa9292d3ce5176937ac29276cef939415721417e9f639dfdb575b535`. The component showcase (`govuk_component_showcase.html`) has no password — it's a reference tool and doesn't need one.
@@ -314,6 +314,14 @@ Key technical notes for showcase:
 - Some component cards have minor visual glitches (Jack noted but didn't specify — review needed)
 - DWP CSS may need updating if DWP Frontend releases a new version
 - MOJ components: some JS-dependent ones (date picker, multi-select) won't be interactive without MOJ Frontend JS being loaded
+
+**Evening continuation (~8pm–8:38pm):**
+- Added a JDD nav bar (fixed, 36px, black #111) to all 4 prototype pages — left link goes to diary, right link goes back to prototypes landing. On the flow map, the existing blue toolbar was shifted down from top:0 to top:36px; viewport adjusted to top:88px. Filter bar in showcase changed from sticky top:0 to top:36px.
+- Rewrote all 4 dev diary entries (Days 1–4) to sound more like Jack and less like a technical changelog.
+- Removed all PIP / Personal Independence Payment references from user-facing pages — replaced with "health-based benefit" or "HDB" where needed.
+- Removed all DWP references from user-facing pages: agent tool banner "DWP HDB Case Management" → "HDB Case Management"; NI number hint "letters from DWP or HMRC" → "letters from HMRC or other government departments"; landing page description updated.
+- Split prototypes landing page (index.html) into two sections: "Prototypes" (registration journey + agent tool) and "Documentation" (flow map + component showcase).
+- Custom domain discussion: buying a domain (~£10–15/yr from Namecheap/Google Domains) would enable a nicer URL. GitHub Pages supports custom domains for free once pointed. Alternative: rename jacks-dev-diary repo to `js8989.github.io` to serve diary at the root URL with no path (GitHub user site feature — only one repo can do this).
 
 <!-- END OF SESSION 4 — do not edit above this line -->
 
