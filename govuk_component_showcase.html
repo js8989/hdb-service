@@ -3,15 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GOV.UK Design System — All 34 Components</title>
+<title>Government Design Systems — Component Showcase</title>
 <link rel="stylesheet" href="https://unpkg.com/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.css">
+<link rel="stylesheet" href="dwp-frontend.css">
+<link rel="stylesheet" href="moj-frontend.css">
+<link rel="stylesheet" href="nhs-frontend.css">
 <style>
-  body { display: none; background: #f3f2f1; font-family: 'GDS Transport', Arial, sans-serif; }
+  body { background: #f3f2f1; font-family: 'GDS Transport', Arial, sans-serif; }
   .showcase-header {
     background: #0b0c0c; color: white; padding: 20px 40px;
     font-size: 22px; font-weight: 700;
   }
   .showcase-header p { font-size: 14px; font-weight: 400; color: #bfc1c3; margin-top: 4px; }
+
+  /* Filter bar */
+  .filter-bar {
+    background: #fff; border-bottom: 1px solid #b1b4b6;
+    padding: 12px 40px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .filter-bar__label { font-size: 14px; font-weight: 700; margin-right: 4px; color: #0b0c0c; }
+  .filter-btn {
+    border: 2px solid #b1b4b6; background: white; padding: 4px 12px;
+    font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 2px; color: #0b0c0c;
+  }
+  .filter-btn:hover { background: #f3f2f1; }
+  .filter-btn.active { background: #0b0c0c; color: white; border-color: #0b0c0c; }
+
+  /* Org section headings */
+  .org-section {
+    grid-column: 1 / -1;
+    padding: 8px 0 0;
+    border-top: 3px solid #0b0c0c;
+    margin-top: 8px;
+  }
+  .org-section__title { font-size: 18px; font-weight: 700; color: #0b0c0c; margin: 0; }
+  .org-section__subtitle { font-size: 13px; color: #505a5f; margin: 2px 0 0; }
+
   .showcase-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
@@ -29,7 +57,9 @@
     background: #0b0c0c; color: white;
     padding: 10px 16px;
     display: flex; align-items: baseline; gap: 10px;
+    border-bottom: 2px solid white;
   }
+  .component-card__label--dwp { background: #0b0c0c; }
   .component-card__number {
     font-size: 11px; font-weight: 700; color: #aeb0b2;
     text-transform: uppercase; letter-spacing: 1px;
@@ -48,6 +78,9 @@
   .component-card__body .govuk-skip-link { position: static; display: inline-block; }
   .component-card__body .govuk-cookie-banner { margin: -24px; }
   .component-card__body .govuk-exit-this-page { position: static; }
+  /* DWP card overrides */
+  .component-card__body .dwp-header { margin: -24px; }
+  .component-card__body .dwp-footer { margin: -24px; }
 </style>
 </head>
 <body class="govuk-template__body">
@@ -85,16 +118,32 @@
 </script>
 
 <div class="showcase-header">
-  GOV.UK Design System — All 34 Components
-  <p>Every component from design-system.service.gov.uk/components — rendered using real GOV.UK Frontend CSS · Hover over the orange ★ markers in v0.2 to see which of these could replace custom elements</p>
+  Government Design Systems — Component Showcase
+  <p>Components from GOV.UK, DWP, MOJ, NHS and DfE — rendered using each org's real CSS</p>
 </div>
 
-<div class="showcase-grid">
+<div class="filter-bar">
+  <span class="filter-bar__label">Filter:</span>
+  <button class="filter-btn active" onclick="filterOrg('all')">All</button>
+  <button class="filter-btn" onclick="filterOrg('gov')">GOV.UK</button>
+  <button class="filter-btn" onclick="filterOrg('dwp')">DWP</button>
+  <button class="filter-btn" onclick="filterOrg('moj')">MOJ</button>
+  <button class="filter-btn" onclick="filterOrg('nhs')">NHS</button>
+  <button class="filter-btn" onclick="filterOrg('dfe')">DfE</button>
+</div>
+
+<div class="showcase-grid" id="showcase-grid">
+
+  <!-- GOV.UK section -->
+  <div class="org-section" data-org="gov">
+    <p class="org-section__title">GOV.UK Design System</p>
+    <p class="org-section__subtitle">design-system.service.gov.uk — 34 components</p>
+  </div>
 
   <!-- 1. Accordion -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">01</span>
+      <span class="component-card__number">GOV-01</span>
       <span class="component-card__name">Accordion</span>
     </div>
     <div class="component-card__body">
@@ -124,9 +173,9 @@
   </div>
 
   <!-- 2. Back link -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">02</span>
+      <span class="component-card__number">GOV-02</span>
       <span class="component-card__name">Back link</span>
     </div>
     <div class="component-card__body">
@@ -135,9 +184,9 @@
   </div>
 
   <!-- 3. Breadcrumbs -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">03</span>
+      <span class="component-card__number">GOV-03</span>
       <span class="component-card__name">Breadcrumbs</span>
     </div>
     <div class="component-card__body">
@@ -152,9 +201,9 @@
   </div>
 
   <!-- 4. Button -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">04</span>
+      <span class="component-card__number">GOV-04</span>
       <span class="component-card__name">Button</span>
     </div>
     <div class="component-card__body" style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start;">
@@ -165,9 +214,9 @@
   </div>
 
   <!-- 5. Character count -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">05</span>
+      <span class="component-card__number">GOV-05</span>
       <span class="component-card__name">Character count</span>
     </div>
     <div class="component-card__body">
@@ -181,9 +230,9 @@
   </div>
 
   <!-- 6. Checkboxes -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">06</span>
+      <span class="component-card__number">GOV-06</span>
       <span class="component-card__name">Checkboxes</span>
     </div>
     <div class="component-card__body">
@@ -210,9 +259,9 @@
   </div>
 
   <!-- 7. Cookie banner -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">07</span>
+      <span class="component-card__number">GOV-07</span>
       <span class="component-card__name">Cookie banner</span>
     </div>
     <div class="component-card__body" style="padding:0; overflow:hidden; height:140px;">
@@ -238,9 +287,9 @@
   </div>
 
   <!-- 8. Date input -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">08</span>
+      <span class="component-card__number">GOV-08</span>
       <span class="component-card__name">Date input</span>
     </div>
     <div class="component-card__body">
@@ -274,9 +323,9 @@
   </div>
 
   <!-- 9. Details -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">09</span>
+      <span class="component-card__number">GOV-09</span>
       <span class="component-card__name">Details</span>
     </div>
     <div class="component-card__body">
@@ -292,9 +341,9 @@
   </div>
 
   <!-- 10. Error message -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">10</span>
+      <span class="component-card__number">GOV-10</span>
       <span class="component-card__name">Error message</span>
     </div>
     <div class="component-card__body">
@@ -309,9 +358,9 @@
   </div>
 
   <!-- 11. Error summary -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">11</span>
+      <span class="component-card__number">GOV-11</span>
       <span class="component-card__name">Error summary</span>
     </div>
     <div class="component-card__body">
@@ -330,9 +379,9 @@
   </div>
 
   <!-- 12. Exit this page -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">12</span>
+      <span class="component-card__number">GOV-12</span>
       <span class="component-card__name">Exit this page</span>
     </div>
     <div class="component-card__body">
@@ -344,9 +393,9 @@
   </div>
 
   <!-- 13. Fieldset -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">13</span>
+      <span class="component-card__number">GOV-13</span>
       <span class="component-card__name">Fieldset</span>
     </div>
     <div class="component-card__body">
@@ -363,9 +412,9 @@
   </div>
 
   <!-- 14. File upload -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">14</span>
+      <span class="component-card__number">GOV-14</span>
       <span class="component-card__name">File upload</span>
     </div>
     <div class="component-card__body">
@@ -377,9 +426,9 @@
   </div>
 
   <!-- 15. GOV.UK footer -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">15</span>
+      <span class="component-card__number">GOV-15</span>
       <span class="component-card__name">GOV.UK footer</span>
     </div>
     <div class="component-card__body" style="padding:0; background:#f3f2f1; overflow:hidden; height:80px;">
@@ -405,9 +454,9 @@
   </div>
 
   <!-- 16. GOV.UK header -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">16</span>
+      <span class="component-card__number">GOV-16</span>
       <span class="component-card__name">GOV.UK header</span>
     </div>
     <div class="component-card__body" style="padding:0;">
@@ -430,9 +479,9 @@
   </div>
 
   <!-- 17. Inset text -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">17</span>
+      <span class="component-card__number">GOV-17</span>
       <span class="component-card__name">Inset text</span>
     </div>
     <div class="component-card__body">
@@ -443,9 +492,9 @@
   </div>
 
   <!-- 18. Notification banner -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">18</span>
+      <span class="component-card__number">GOV-18</span>
       <span class="component-card__name">Notification banner</span>
     </div>
     <div class="component-card__body" style="display:flex;flex-direction:column;gap:16px;">
@@ -469,9 +518,9 @@
   </div>
 
   <!-- 19. Pagination -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">19</span>
+      <span class="component-card__number">GOV-19</span>
       <span class="component-card__name">Pagination</span>
     </div>
     <div class="component-card__body">
@@ -492,9 +541,9 @@
   </div>
 
   <!-- 20. Panel -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">20</span>
+      <span class="component-card__number">GOV-20</span>
       <span class="component-card__name">Panel</span>
     </div>
     <div class="component-card__body">
@@ -506,9 +555,9 @@
   </div>
 
   <!-- 21. Password input -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">21</span>
+      <span class="component-card__number">GOV-21</span>
       <span class="component-card__name">Password input</span>
     </div>
     <div class="component-card__body">
@@ -523,9 +572,9 @@
   </div>
 
   <!-- 22. Phase banner -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">22</span>
+      <span class="component-card__number">GOV-22</span>
       <span class="component-card__name">Phase banner</span>
     </div>
     <div class="component-card__body">
@@ -539,9 +588,9 @@
   </div>
 
   <!-- 23. Radios -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">23</span>
+      <span class="component-card__number">GOV-23</span>
       <span class="component-card__name">Radios</span>
     </div>
     <div class="component-card__body">
@@ -568,9 +617,9 @@
   </div>
 
   <!-- 24. Select -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">24</span>
+      <span class="component-card__number">GOV-24</span>
       <span class="component-card__name">Select</span>
     </div>
     <div class="component-card__body">
@@ -587,9 +636,9 @@
   </div>
 
   <!-- 25. Service navigation -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">25</span>
+      <span class="component-card__number">GOV-25</span>
       <span class="component-card__name">Service navigation</span>
     </div>
     <div class="component-card__body" style="padding:0;">
@@ -615,9 +664,9 @@
   </div>
 
   <!-- 26. Skip link -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">26</span>
+      <span class="component-card__number">GOV-26</span>
       <span class="component-card__name">Skip link</span>
     </div>
     <div class="component-card__body">
@@ -627,9 +676,9 @@
   </div>
 
   <!-- 27. Summary list -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">27</span>
+      <span class="component-card__number">GOV-27</span>
       <span class="component-card__name">Summary list</span>
     </div>
     <div class="component-card__body">
@@ -675,9 +724,9 @@
   </div>
 
   <!-- 28. Table -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">28</span>
+      <span class="component-card__number">GOV-28</span>
       <span class="component-card__name">Table</span>
     </div>
     <div class="component-card__body">
@@ -707,9 +756,9 @@
   </div>
 
   <!-- 29. Tabs -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">29</span>
+      <span class="component-card__number">GOV-29</span>
       <span class="component-card__name">Tabs</span>
     </div>
     <div class="component-card__body">
@@ -740,9 +789,9 @@
   </div>
 
   <!-- 30. Tag -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">30</span>
+      <span class="component-card__number">GOV-30</span>
       <span class="component-card__name">Tag</span>
     </div>
     <div class="component-card__body" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;">
@@ -760,9 +809,9 @@
   </div>
 
   <!-- 31. Task list -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">31</span>
+      <span class="component-card__number">GOV-31</span>
       <span class="component-card__name">Task list</span>
     </div>
     <div class="component-card__body">
@@ -796,9 +845,9 @@
   </div>
 
   <!-- 32. Text input -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">32</span>
+      <span class="component-card__number">GOV-32</span>
       <span class="component-card__name">Text input</span>
     </div>
     <div class="component-card__body">
@@ -810,9 +859,9 @@
   </div>
 
   <!-- 33. Textarea -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">33</span>
+      <span class="component-card__number">GOV-33</span>
       <span class="component-card__name">Textarea</span>
     </div>
     <div class="component-card__body">
@@ -825,9 +874,9 @@
   </div>
 
   <!-- 34. Warning text -->
-  <div class="component-card">
+  <div class="component-card" data-org="gov">
     <div class="component-card__label">
-      <span class="component-card__number">34</span>
+      <span class="component-card__number">GOV-34</span>
       <span class="component-card__name">Warning text</span>
     </div>
     <div class="component-card__body">
@@ -841,11 +890,1732 @@
     </div>
   </div>
 
+  <!-- DWP section -->
+  <div class="org-section" data-org="dwp">
+    <p class="org-section__title">DWP Design System</p>
+    <p class="org-section__subtitle">design-system.dwp.gov.uk — 8 components</p>
+  </div>
+
+  <!-- DWP-01. Horizontal navigation -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-01</span>
+      <span class="component-card__name">Horizontal navigation</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="dwp-horizontal-navigation" aria-label="Horizontal">
+        <ul class="dwp-horizontal-navigation__list">
+          <li class="dwp-horizontal-navigation__item dwp-horizontal-navigation__item--selected">
+            <a href="#" class="dwp-horizontal-navigation__link" aria-current="true">Overview</a>
+          </li>
+          <li class="dwp-horizontal-navigation__item">
+            <a href="#" class="dwp-horizontal-navigation__link">Timeline</a>
+          </li>
+          <li class="dwp-horizontal-navigation__item">
+            <a href="#" class="dwp-horizontal-navigation__link">Documents</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- DWP-02. Internal service header -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-02</span>
+      <span class="component-card__name">Internal service header</span>
+    </div>
+    <div class="component-card__body" style="padding:0; background:#0b0c0c;">
+      <div style="padding:10px 16px;">
+        <span class="dwp-header__service-name">
+          <a href="#" class="dwp-header__link" style="color:white; text-decoration:none;">HDB Case Manager</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DWP-03. Internal service footer -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-03</span>
+      <span class="component-card__name">Internal service footer</span>
+    </div>
+    <div class="component-card__body" style="padding:16px; background:#f3f2f1;">
+      <ul class="dwp-footer__inline-list" style="margin:0; padding:0;">
+        <li class="dwp-footer__inline-list-item"><a class="dwp-footer__link" href="#">Accessibility statement</a></li>
+        <li class="dwp-footer__inline-list-item"><a class="dwp-footer__link" href="#">Privacy</a></li>
+        <li class="dwp-footer__inline-list-item"><a class="dwp-footer__link" href="#">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DWP-04. Language toggle -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-04</span>
+      <span class="component-card__name">Language toggle</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="dwp-language-toggle" aria-label="Language toggle">
+        <ul class="dwp-language-toggle__list">
+          <li class="dwp-language-toggle__list-item" aria-current="true">English</li>
+          <li class="dwp-language-toggle__list-item">
+            <a href="#" hreflang="cy" lang="cy" rel="alternate" class="govuk-link" aria-label="Newid yr iaith ir Gymraeg">Cymraeg</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- DWP-05. Quick reference -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-05</span>
+      <span class="component-card__name">Quick reference</span>
+    </div>
+    <div class="component-card__body">
+      <section class="dwp-quick-reference" aria-label="Case information">
+        <dl class="dwp-quick-reference__block">
+          <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+          <dd class="dwp-quick-reference__primary">Jane Doe</dd>
+          <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">NI number:</dt>
+          <dd class="dwp-quick-reference__secondary">QQ 12 34 56 X</dd>
+        </dl>
+      </section>
+    </div>
+  </div>
+
+  <!-- DWP-06. Side navigation -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-06</span>
+      <span class="component-card__name">Side navigation</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="dwp-side-navigation" aria-label="Side">
+        <ul class="dwp-side-navigation__list">
+          <li class="dwp-side-navigation__item dwp-side-navigation__item--selected">
+            <a href="#" class="dwp-side-navigation__link dwp-side-navigation__link--selected" aria-current="true">Overview</a>
+          </li>
+          <li class="dwp-side-navigation__item">
+            <a href="#" class="dwp-side-navigation__link">Timeline</a>
+          </li>
+          <li class="dwp-side-navigation__item">
+            <a href="#" class="dwp-side-navigation__link">Documents</a>
+          </li>
+          <li class="dwp-side-navigation__item">
+            <a href="#" class="dwp-side-navigation__link">Payments</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- DWP-07. Timeline -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-07</span>
+      <span class="component-card__name">Timeline</span>
+    </div>
+    <div class="component-card__body">
+      <div class="dwp-timeline">
+        <ol class="dwp-timeline__items">
+          <li class="dwp-timeline__item">
+            <p class="dwp-timeline__datetime">17 June 2026 at 9:00am</p>
+            <h2 class="dwp-timeline__heading">Application received</h2>
+          </li>
+          <li class="dwp-timeline__item">
+            <p class="dwp-timeline__datetime">16 June 2026 at 2:30pm</p>
+            <h2 class="dwp-timeline__heading">Telephone call made</h2>
+            <p class="dwp-timeline__by-line">by Jane Doe</p>
+            <p class="dwp-timeline__content">Called claimant to request supporting evidence</p>
+          </li>
+          <li class="dwp-timeline__item">
+            <p class="dwp-timeline__datetime">10 June 2026 at 11:15am</p>
+            <h2 class="dwp-timeline__heading">HDB2 form sent to claimant</h2>
+            <p class="dwp-timeline__by-line">by System</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- DWP-08. Key details bar (retired) -->
+  <div class="component-card" data-org="dwp">
+    <div class="component-card__label component-card__label--dwp">
+      <span class="component-card__number">DWP-08</span>
+      <span class="component-card__name">Key details bar <span style="font-size:11px;font-weight:400;opacity:0.7;">(retired)</span></span>
+    </div>
+    <div class="component-card__body" style="color:#505a5f;font-size:15px;">
+      This component has been retired by DWP. It has been replaced by the Quick reference component (DWP-05).
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ MOJ SECTION ═══════════════════════════════ -->
+  <div class="org-section" data-org="moj">
+    <p class="org-section__title">Ministry of Justice Design System</p>
+    <p class="org-section__subtitle">design-patterns.service.justice.gov.uk — 32 components</p>
+  </div>
+
+  <!-- MOJ-01: Add another -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-01</span>
+      <span class="component-card__name">Add another</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-add-another" data-module="moj-add-another">
+        <div class="moj-add-another__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="moj-name-1">Full name</label>
+            <input class="govuk-input govuk-input--width-20" id="moj-name-1" name="name[1]" type="text">
+          </div>
+          <button class="govuk-button govuk-button--warning moj-add-another__remove-button" type="button">Remove</button>
+        </div>
+        <button class="govuk-button govuk-button--secondary moj-add-another__add-button" type="button">Add another person</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-02: Alert -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-02</span>
+      <span class="component-card__name">Alert</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-alert moj-alert--information" role="region" aria-label="Information">
+        <p class="govuk-body govuk-!-font-weight-bold">Application received</p>
+        <p class="govuk-body">Your application has been submitted and is being reviewed by a caseworker.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-03: Badge -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-03</span>
+      <span class="component-card__name">Badge</span>
+    </div>
+    <div class="component-card__body" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      <strong class="moj-badge moj-badge--green">Active</strong>
+      <strong class="moj-badge moj-badge--red">Suspended</strong>
+      <strong class="moj-badge moj-badge--blue">In progress</strong>
+      <strong class="moj-badge moj-badge--grey">Closed</strong>
+      <strong class="moj-badge moj-badge--purple">On hold</strong>
+    </div>
+  </div>
+
+  <!-- MOJ-04: Button menu -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-04</span>
+      <span class="component-card__name">Button menu</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-button-menu">
+        <div class="moj-button-menu__wrapper">
+          <button type="button" class="govuk-button moj-button-menu__toggle-button govuk-button--secondary" aria-haspopup="true" aria-expanded="false">
+            Actions <svg class="moj-button-menu__toggle-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 14L3 6h14l-7 8z"/></svg>
+          </button>
+          <div class="moj-button-menu__items">
+            <button type="button" class="govuk-button govuk-button--secondary moj-button-menu__item">View record</button>
+            <button type="button" class="govuk-button govuk-button--secondary moj-button-menu__item">Add note</button>
+            <button type="button" class="govuk-button govuk-button--warning moj-button-menu__item">Close case</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-05: Card -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-05</span>
+      <span class="component-card__name">Card</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-card moj-card--primary">
+        <div class="moj-card__header">
+          <h2 class="moj-card__title govuk-heading-m"><a class="govuk-link" href="#">Claimant record</a></h2>
+        </div>
+        <div class="moj-card__body">
+          <p class="govuk-body">View case history, notes and all case-related actions for this claimant.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-06: Filter -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-06</span>
+      <span class="component-card__name">Filter</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <div class="moj-filter">
+        <div class="moj-filter__header">
+          <div class="moj-filter__header-title">
+            <h2 class="govuk-heading-m">Filter</h2>
+          </div>
+          <div class="moj-filter__header-action">
+            <a href="#" class="govuk-link">Clear filters</a>
+          </div>
+        </div>
+        <div class="moj-filter__content">
+          <div class="moj-filter__options">
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Status</legend>
+                <div class="govuk-checkboxes govuk-checkboxes--small">
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="moj-filter-1" type="checkbox" value="active">
+                    <label class="govuk-label govuk-checkboxes__label" for="moj-filter-1">Active</label>
+                  </div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="moj-filter-2" type="checkbox" value="closed">
+                    <label class="govuk-label govuk-checkboxes__label" for="moj-filter-2">Closed</label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-07: Identity bar -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-07</span>
+      <span class="component-card__name">Identity bar</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <div class="moj-identity-bar">
+        <div class="moj-identity-bar__container govuk-width-container">
+          <div class="moj-identity-bar__details">
+            <span class="moj-identity-bar__title">John Smith</span>
+            <span class="govuk-body moj-identity-bar__metadata">Date of birth: 12 March 1979 · NI: QQ 12 34 56 C</span>
+          </div>
+          <div class="moj-identity-bar__actions">
+            <a href="#" class="govuk-button govuk-button--secondary govuk-button--small">View full record</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-08: Timeline -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-08</span>
+      <span class="component-card__name">Timeline</span>
+    </div>
+    <div class="component-card__body">
+      <ol class="moj-timeline">
+        <li class="moj-timeline__item">
+          <div class="moj-timeline__header">
+            <h2 class="moj-timeline__title">Decision made</h2>
+          </div>
+          <p class="moj-timeline__date"><time datetime="2026-05-12">12 May 2026</time></p>
+          <div class="moj-timeline__description"><p class="govuk-body">Application approved. Award letter sent to claimant.</p></div>
+        </li>
+        <li class="moj-timeline__item">
+          <div class="moj-timeline__header">
+            <h2 class="moj-timeline__title">Application submitted</h2>
+          </div>
+          <p class="moj-timeline__date"><time datetime="2026-04-03">3 April 2026</time></p>
+          <div class="moj-timeline__description"><p class="govuk-body">Citizen submitted their application online.</p></div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- MOJ-09: Pagination -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-09</span>
+      <span class="component-card__name">Pagination</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="moj-pagination" aria-label="Pagination">
+        <p class="moj-pagination__results">Showing <b>1</b> to <b>25</b> of <b>143</b> results</p>
+        <ul class="moj-pagination__list">
+          <li class="moj-pagination__item moj-pagination__item--prev">
+            <a class="moj-pagination__link" href="#"><span class="moj-pagination__link-title">Previous</span></a>
+          </li>
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria-label="Page 1" aria-current="page">1</a></li>
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria-label="Page 2">2</a></li>
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria-label="Page 3">3</a></li>
+          <li class="moj-pagination__item moj-pagination__item--next">
+            <a class="moj-pagination__link" href="#"><span class="moj-pagination__link-title">Next</span></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- MOJ-10: Search -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-10</span>
+      <span class="component-card__name">Search</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-search">
+        <div class="govuk-form-group">
+          <label class="govuk-label moj-search__label govuk-!-font-weight-bold" for="moj-search">Find a case</label>
+          <div class="moj-search__input-wrapper">
+            <input class="govuk-input moj-search__input" id="moj-search" name="search" type="search" autocomplete="off">
+            <button class="govuk-button moj-search__button" type="submit">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-11: Side navigation -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-11</span>
+      <span class="component-card__name">Side navigation</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="moj-side-navigation" aria-label="Side navigation">
+        <ul class="moj-side-navigation__list">
+          <li class="moj-side-navigation__item moj-side-navigation__item--active">
+            <a class="moj-side-navigation__link" href="#" aria-current="location">Case record</a>
+          </li>
+          <li class="moj-side-navigation__item">
+            <a class="moj-side-navigation__link" href="#">Timeline</a>
+          </li>
+          <li class="moj-side-navigation__item">
+            <a class="moj-side-navigation__link" href="#">Documents</a>
+          </li>
+          <li class="moj-side-navigation__item">
+            <a class="moj-side-navigation__link" href="#">Notes</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- MOJ-12: Sortable table -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-12</span>
+      <span class="component-card__name">Sortable table</span>
+    </div>
+    <div class="component-card__body">
+      <table class="govuk-table moj-sortable-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header" aria-sort="ascending"><button type="button" class="moj-tableheader">Name</button></th>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" class="moj-tableheader">Date</button></th>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><button type="button" class="moj-tableheader">Status</button></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Smith, John</td>
+            <td class="govuk-table__cell">12 May 2026</td>
+            <td class="govuk-table__cell">Active</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Jones, Mary</td>
+            <td class="govuk-table__cell">3 April 2026</td>
+            <td class="govuk-table__cell">Closed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MOJ-13: Multi select -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-13</span>
+      <span class="component-card__name">Multi select</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-multi-select" data-module="moj-multi-select" data-multi-select-checkbox="#moj-select-all">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header govuk-table__header--checkbox">
+                <div class="govuk-checkboxes__item govuk-checkboxes--small">
+                  <input class="govuk-checkboxes__input" id="moj-select-all" type="checkbox">
+                  <label class="govuk-label govuk-checkboxes__label" for="moj-select-all">Select all</label>
+                </div>
+              </td>
+              <th scope="col" class="govuk-table__header">Name</th>
+              <th scope="col" class="govuk-table__header">Status</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-table__cell--checkbox">
+                <div class="govuk-checkboxes__item govuk-checkboxes--small">
+                  <input class="govuk-checkboxes__input" id="ms-row-1" type="checkbox">
+                  <label class="govuk-label govuk-checkboxes__label" for="ms-row-1"><span class="govuk-visually-hidden">Select Smith, John</span></label>
+                </div>
+              </td>
+              <td class="govuk-table__cell">Smith, John</td>
+              <td class="govuk-table__cell">Active</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-table__cell--checkbox">
+                <div class="govuk-checkboxes__item govuk-checkboxes--small">
+                  <input class="govuk-checkboxes__input" id="ms-row-2" type="checkbox">
+                  <label class="govuk-label govuk-checkboxes__label" for="ms-row-2"><span class="govuk-visually-hidden">Select Jones, Mary</span></label>
+                </div>
+              </td>
+              <td class="govuk-table__cell">Jones, Mary</td>
+              <td class="govuk-table__cell">Closed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-14: Date picker -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-14</span>
+      <span class="component-card__name">Date picker</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-datepicker" data-module="moj-date-picker" data-min-date="01/01/1900" data-max-date="today">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="moj-dob">Date of birth</label>
+          <div class="govuk-hint" id="moj-dob-hint">For example, 27 3 2007</div>
+          <input class="govuk-input moj-js-datepicker-input govuk-input--width-10" id="moj-dob" name="dob" type="text" autocomplete="off" aria-describedby="moj-dob-hint">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-15: Progress tracker -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-15</span>
+      <span class="component-card__name">Progress tracker</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-progress-tracker">
+        <ol class="moj-progress-tracker__steps">
+          <li class="moj-progress-tracker__step moj-progress-tracker__step--complete">
+            <span class="moj-progress-tracker__icon"></span>
+            <span class="moj-progress-tracker__label"><strong>Registration</strong><span class="moj-progress-tracker__label-hint">Completed</span></span>
+          </li>
+          <li class="moj-progress-tracker__step moj-progress-tracker__step--active">
+            <span class="moj-progress-tracker__icon"></span>
+            <span class="moj-progress-tracker__label"><strong>Assessment</strong><span class="moj-progress-tracker__label-hint">In progress</span></span>
+          </li>
+          <li class="moj-progress-tracker__step">
+            <span class="moj-progress-tracker__icon"></span>
+            <span class="moj-progress-tracker__label"><strong>Decision</strong></span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-16: Sub navigation -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-16</span>
+      <span class="component-card__name">Sub navigation</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <nav class="moj-sub-navigation" aria-label="Sub navigation">
+        <ul class="moj-sub-navigation__list">
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" href="#" aria-current="page">Overview</a>
+          </li>
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" href="#">Timeline</a>
+          </li>
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" href="#">Documents</a>
+          </li>
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" href="#">Decisions</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- MOJ-17: Ticket panel -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-17</span>
+      <span class="component-card__name">Ticket panel</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-ticket-panel">
+        <div class="moj-ticket-panel__content">
+          <h2 class="govuk-heading-s">Case reference: HDB-2026-0034</h2>
+          <p class="govuk-body">Application received 3 April 2026 · Decision pending</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-18: Primary navigation -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-18</span>
+      <span class="component-card__name">Primary navigation</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <nav class="moj-primary-navigation" aria-label="Primary navigation">
+        <div class="moj-primary-navigation__container">
+          <div class="moj-primary-navigation__nav">
+            <ul class="moj-primary-navigation__list">
+              <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" href="#" aria-current="page">Cases</a>
+              </li>
+              <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" href="#">Tasks</a>
+              </li>
+              <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" href="#">Reports</a>
+              </li>
+            </ul>
+          </div>
+          <div class="moj-primary-navigation__search">
+            <div class="moj-search moj-search--inline">
+              <input class="govuk-input moj-search__input" type="search" placeholder="Search" aria-label="Search">
+              <button class="moj-search__button govuk-button" type="submit">Search</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- MOJ-19: Header -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-19</span>
+      <span class="component-card__name">Header</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <header class="moj-header" role="banner">
+        <div style="padding: 10px 16px; display:flex; align-items:center; justify-content:space-between;">
+          <div class="moj-header__logo">
+            <a class="moj-header__link moj-header__link--organisation-name" href="#" style="color:white; text-decoration:none; font-weight:700; font-size:18px;">HDB Case Manager</a>
+          </div>
+          <div class="moj-header__user-nav">
+            <ul style="list-style:none; margin:0; padding:0; display:flex; gap:16px;">
+              <li><a class="moj-header__link" href="#" style="color:white; font-size:14px;">Agent: J. Smith</a></li>
+              <li><a class="moj-header__link" href="#" style="color:white; font-size:14px;">Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <!-- MOJ-20: Modal dialog -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-20</span>
+      <span class="component-card__name">Modal dialog</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-modal" style="position:relative; border: 1px solid #b1b4b6; padding: 24px; max-width: 400px;">
+        <div class="moj-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="moj-modal-title">
+          <h2 class="govuk-heading-m" id="moj-modal-title">Confirm close case</h2>
+          <p class="govuk-body">Are you sure you want to close this case? This cannot be undone.</p>
+          <div class="govuk-button-group">
+            <button class="govuk-button govuk-button--warning" type="button">Close case</button>
+            <a class="govuk-link" href="#">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-21: Notification badge -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-21</span>
+      <span class="component-card__name">Notification badge</span>
+    </div>
+    <div class="component-card__body" style="display:flex; gap:24px; align-items:center;">
+      <div>
+        Tasks
+        <span class="moj-notification-badge">3</span>
+      </div>
+      <div>
+        Messages
+        <span class="moj-notification-badge moj-notification-badge--small">12</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-22: Copy button -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-22</span>
+      <span class="component-card__name">Copy button</span>
+    </div>
+    <div class="component-card__body">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <code class="govuk-body" style="background:#f3f2f1; padding:8px 12px; font-family:monospace;">HDB-2026-0034</code>
+        <button class="moj-copy-button" data-module="moj-copy-button" data-target="HDB-2026-0034" type="button">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-23: New features banner -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-23</span>
+      <span class="component-card__name">New features banner</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <div class="moj-new-features-banner" data-module="moj-new-features-banner">
+        <div class="moj-new-features-banner__content">
+          <h2 class="moj-new-features-banner__title">New feature: bulk case assignment</h2>
+          <p class="govuk-body moj-new-features-banner__description">You can now assign multiple cases at once from the case list. <a href="#" class="govuk-link">Find out more</a></p>
+          <button class="govuk-button govuk-button--secondary govuk-button--small moj-new-features-banner__dismiss" type="button">Dismiss</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-24: Organisation switcher -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-24</span>
+      <span class="component-card__name">Organisation switcher</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-organisation-switcher" data-module="moj-organisation-switcher">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-!-font-weight-bold" for="moj-org-switcher">Change organisation</label>
+          <select class="govuk-select" id="moj-org-switcher" name="organisation">
+            <option value="1" selected>DWP — Health Assessment</option>
+            <option value="2">DWP — Standard Claims</option>
+            <option value="3">HMCTS — Appeals</option>
+          </select>
+        </div>
+        <button class="govuk-button govuk-button--secondary" type="submit">Switch</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-25: Page header actions -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-25</span>
+      <span class="component-card__name">Page header actions</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-page-header-actions">
+        <div class="moj-page-header-actions__title">
+          <h1 class="govuk-heading-l">Cases</h1>
+        </div>
+        <div class="moj-page-header-actions__actions">
+          <div class="moj-button-menu">
+            <div class="moj-button-menu__wrapper">
+              <a href="#" class="govuk-button moj-button-menu__toggle-button" role="button">New case</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-26: Multi file upload -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-26</span>
+      <span class="component-card__name">Multi file upload</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-multi-file-upload" data-module="moj-multi-file-upload">
+        <div class="moj-multi-file__uploaded-files">
+          <p class="govuk-body">Files added (1)</p>
+          <table class="govuk-table">
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">medical-evidence.pdf</td>
+                <td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag govuk-tag--green">Uploaded</strong></td>
+                <td class="govuk-table__cell govuk-table__cell--numeric"><a href="#" class="govuk-link">Remove</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="moj-file-upload">Upload a file</label>
+          <input class="govuk-file-upload" id="moj-file-upload" name="documents" type="file">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-27: Messages -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-27</span>
+      <span class="component-card__name">Messages</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-messages">
+        <ul class="moj-messages__list">
+          <li class="moj-message">
+            <div class="moj-message__content">
+              <span class="moj-message__sender">System</span>
+              <span class="moj-message__time">12 May 2026, 09:41am</span>
+              <p class="moj-message__text">Your application has been approved. You will receive your award letter within 5 working days.</p>
+            </div>
+          </li>
+          <li class="moj-message moj-message--user">
+            <div class="moj-message__content">
+              <span class="moj-message__sender">J. Smith (Agent)</span>
+              <span class="moj-message__time">11 May 2026, 2:15pm</span>
+              <p class="moj-message__text">Assessment completed and submitted for decision.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-28: Scrollable pane -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-28</span>
+      <span class="component-card__name">Scrollable pane</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <div class="moj-scrollable-pane">
+        <div class="moj-scrollable-pane__wrapper" style="max-height: 120px; overflow-y: auto; padding: 16px;">
+          <p class="govuk-body">Personal Independence Payment (PIP) is a benefit that helps with some of the extra costs caused by long-term illness, disability or mental health condition.</p>
+          <p class="govuk-body">PIP is paid at two rates — a daily living component and a mobility component. Each component has two rates: standard and enhanced.</p>
+          <p class="govuk-body">To qualify for PIP you must be aged 16 or over and not have reached State Pension age.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-29: Interruption card -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-29</span>
+      <span class="component-card__name">Interruption card</span>
+    </div>
+    <div class="component-card__body" style="padding:0; background:#1d70b8;">
+      <div class="moj-interruption-card">
+        <div style="padding:24px; color:white;">
+          <h2 class="govuk-heading-l" style="color:white;">Before you continue</h2>
+          <p class="govuk-body" style="color:white;">You need to confirm that the claimant's contact details are up to date before proceeding with the assessment.</p>
+          <a href="#" class="govuk-button" style="background:white; color:#1d70b8;">Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-30: Timeout warning -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-30</span>
+      <span class="component-card__name">Timeout warning</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-timeout-warning" data-module="moj-timeout-warning" style="border: 1px solid #b1b4b6; padding: 20px; background: white;">
+        <h2 class="govuk-heading-m">Your session will expire soon</h2>
+        <p class="govuk-body">You will be signed out in <span class="moj-timeout-warning__countdown"><strong>5 minutes</strong></span> due to inactivity.</p>
+        <div class="govuk-button-group">
+          <button class="govuk-button" type="button">Stay signed in</button>
+          <a href="#" class="govuk-link">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-31: API error -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-31</span>
+      <span class="component-card__name">API error</span>
+    </div>
+    <div class="component-card__body">
+      <div class="moj-api-error" role="alert">
+        <div class="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+              <p class="govuk-body">The address lookup service is unavailable. Try again in a few minutes, or enter the address manually.</p>
+              <p class="govuk-body govuk-!-font-size-14" style="color:#505a5f;">Error code: 503 — Service temporarily unavailable</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOJ-32: Numeric data -->
+  <div class="component-card" data-org="moj">
+    <div class="component-card__label">
+      <span class="component-card__number">MOJ-32</span>
+      <span class="component-card__name">Numeric data</span>
+    </div>
+    <div class="component-card__body" style="display:flex; gap:32px; flex-wrap:wrap;">
+      <div class="moj-numeric-data">
+        <span class="moj-numeric-data__value">1,432</span>
+        <span class="moj-numeric-data__label">Active cases</span>
+      </div>
+      <div class="moj-numeric-data">
+        <span class="moj-numeric-data__value">287</span>
+        <span class="moj-numeric-data__label">Awaiting decision</span>
+      </div>
+      <div class="moj-numeric-data">
+        <span class="moj-numeric-data__value">48</span>
+        <span class="moj-numeric-data__label">Overdue</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ NHS SECTION ═══════════════════════════════ -->
+  <div class="org-section" data-org="nhs">
+    <p class="org-section__title">NHS Digital Design System</p>
+    <p class="org-section__subtitle">service-manual.nhs.uk/design-system — 33 components</p>
+  </div>
+
+  <!-- NHS-01: Action link -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-01</span>
+      <span class="component-card__name">Action link</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-action-link">
+        <a class="nhsuk-action-link__link" href="#">
+          <svg class="nhsuk-icon nhsuk-icon__arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="36" height="36"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2a10 10 0 0 0-9.95 9h11.64L9.74 7.05a1 1 0 0 1 1.41-1.41l5.66 5.65a1 1 0 0 1 0 1.42l-5.66 5.65a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41L13.69 13H2.05A10 10 0 1 0 12 2z"/></svg>
+          <span class="nhsuk-action-link__text">Find your nearest GP surgery</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-02: Back link -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-02</span>
+      <span class="component-card__name">Back link</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="nhsuk-breadcrumb__back">
+        <a class="nhsuk-back-link__link" href="#">
+          <svg class="nhsuk-icon nhsuk-icon__chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" height="24" width="24"><path d="M8.5 12c0-.3.1-.5.3-.7l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4L10.9 12l4.3 4.3c.4.4.4 1 0 1.4s-1 .4-1.4 0l-5-5c-.2-.2-.3-.4-.3-.7z"/></svg>
+          Go back
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- NHS-03: Breadcrumbs -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-03</span>
+      <span class="component-card__name">Breadcrumbs</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+        <div class="nhsuk-width-container">
+          <ol class="nhsuk-breadcrumb__list">
+            <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="#">Home</a></li>
+            <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="#">Health A to Z</a></li>
+            <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="#">Diabetes</a></li>
+          </ol>
+          <p class="nhsuk-breadcrumb__back"><a class="nhsuk-breadcrumb__backlink" href="#">Back to Diabetes</a></p>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- NHS-04: Buttons -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-04</span>
+      <span class="component-card__name">Buttons</span>
+    </div>
+    <div class="component-card__body" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+      <button class="nhsuk-button" data-module="nhsuk-button" type="button">Save and continue</button>
+      <button class="nhsuk-button nhsuk-button--secondary" data-module="nhsuk-button" type="button">Find my GP</button>
+      <button class="nhsuk-button nhsuk-button--warning" data-module="nhsuk-button" type="button">Delete account</button>
+      <button class="nhsuk-button nhsuk-button--reverse" data-module="nhsuk-button" type="button" style="background:#fff;">Log out</button>
+    </div>
+  </div>
+
+  <!-- NHS-05: Card -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-05</span>
+      <span class="component-card__name">Card</span>
+    </div>
+    <div class="component-card__body">
+      <ul class="nhsuk-grid-row nhsuk-card-group" style="display:flex; gap:16px; list-style:none; padding:0; margin:0;">
+        <li class="nhsuk-grid-column-one-half nhsuk-card-group__item" style="flex:1; padding:0;">
+          <div class="nhsuk-card nhsuk-card--clickable">
+            <div class="nhsuk-card__content">
+              <h2 class="nhsuk-card__heading nhsuk-heading-m"><a class="nhsuk-card__link" href="#">Type 1 diabetes</a></h2>
+              <p class="nhsuk-card__description">Find out about type 1 diabetes, including symptoms, diagnosis and treatment.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nhsuk-grid-column-one-half nhsuk-card-group__item" style="flex:1; padding:0;">
+          <div class="nhsuk-card nhsuk-card--clickable">
+            <div class="nhsuk-card__content">
+              <h2 class="nhsuk-card__heading nhsuk-heading-m"><a class="nhsuk-card__link" href="#">Type 2 diabetes</a></h2>
+              <p class="nhsuk-card__description">Find out about type 2 diabetes, including symptoms, causes and treatment.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- NHS-06: Contents list -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-06</span>
+      <span class="component-card__name">Contents list</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="nhsuk-contents-list" role="navigation" aria-label="Pages in this guide">
+        <h2 class="nhsuk-u-visually-hidden">Contents</h2>
+        <ol class="nhsuk-contents-list__list">
+          <li class="nhsuk-contents-list__item" aria-current="page"><span class="nhsuk-contents-list__current">Overview</span></li>
+          <li class="nhsuk-contents-list__item"><a class="nhsuk-contents-list__link" href="#">Symptoms</a></li>
+          <li class="nhsuk-contents-list__item"><a class="nhsuk-contents-list__link" href="#">Causes</a></li>
+          <li class="nhsuk-contents-list__item"><a class="nhsuk-contents-list__link" href="#">Diagnosis</a></li>
+          <li class="nhsuk-contents-list__item"><a class="nhsuk-contents-list__link" href="#">Treatment</a></li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- NHS-07: Details -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-07</span>
+      <span class="component-card__name">Details</span>
+    </div>
+    <div class="component-card__body">
+      <details class="nhsuk-details">
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">Where can I find my NI number?</span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <p>Your National Insurance number is on your payslip, P60, or a letter from HMRC or the DWP.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- NHS-08: Error message -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-08</span>
+      <span class="component-card__name">Error message</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group nhsuk-form-group--error">
+        <label class="nhsuk-label" for="nhs-error-input">Date of birth</label>
+        <span class="nhsuk-error-message" id="nhs-error-msg">
+          <span class="nhsuk-u-visually-hidden">Error:</span> Enter your date of birth
+        </span>
+        <input class="nhsuk-input nhsuk-input--error nhsuk-input--width-10" id="nhs-error-input" name="dob" type="text" aria-describedby="nhs-error-msg">
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-09: Error summary -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-09</span>
+      <span class="component-card__name">Error summary</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-error-summary" aria-labelledby="nhs-error-summary-title" role="alert" tabindex="-1">
+        <h2 class="nhsuk-error-summary__title" id="nhs-error-summary-title">There is a problem</h2>
+        <div class="nhsuk-error-summary__body">
+          <ul class="nhsuk-list nhsuk-error-summary__list">
+            <li><a href="#">Enter your full name</a></li>
+            <li><a href="#">Enter your date of birth</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-10: Expander -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-10</span>
+      <span class="component-card__name">Expander</span>
+    </div>
+    <div class="component-card__body">
+      <details class="nhsuk-details nhsuk-expander">
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">Opening times</span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <table class="nhsuk-table">
+            <thead class="nhsuk-table__head"><tr><th>Day</th><th>Times</th></tr></thead>
+            <tbody class="nhsuk-table__body">
+              <tr class="nhsuk-table__row"><td class="nhsuk-table__cell">Monday to Friday</td><td class="nhsuk-table__cell">8am to 6:30pm</td></tr>
+              <tr class="nhsuk-table__row"><td class="nhsuk-table__cell">Saturday</td><td class="nhsuk-table__cell">Closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- NHS-11: Footer -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-11</span>
+      <span class="component-card__name">Footer</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <footer role="contentinfo" style="background:#005eb8; padding:16px;">
+        <div>
+          <svg class="nhsuk-logo nhsuk-logo--white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 16" height="40" width="100" aria-label="NHS logo" style="margin-bottom:12px; display:block;">
+            <path fill="#fff" d="M0 0h40v16H0z"/><path fill="#005eb8" d="M3.9 1.5h4.4l2.6 9h.1l1.8-9h3.3l-2.8 13H9L6.6 5.5h-.1l-1.8 9.5H1.1zm18.4 0h3.7L24.6 8h.1L26.4 1.5h3.3L27 14.5h-3.7l-1.8-6.6h-.1l-1.7 6.6H16l2.8-13zm8.4 0h4.5L33 10.3h.1l1.5-8.8H38l-2.8 13h-4.5l-1.5-8.8h-.1L27.4 14.5H24z"/></svg>
+          <ul style="list-style:none; margin:0; padding:0; display:flex; gap:16px; flex-wrap:wrap;">
+            <li><a href="#" style="color:white; font-size:14px;">Accessibility statement</a></li>
+            <li><a href="#" style="color:white; font-size:14px;">Privacy policy</a></li>
+            <li><a href="#" style="color:white; font-size:14px;">Cookies</a></li>
+            <li><a href="#" style="color:white; font-size:14px;">Contact us</a></li>
+          </ul>
+          <p style="color:white; font-size:13px; margin-top:12px;">© Crown copyright</p>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- NHS-12: Header -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-12</span>
+      <span class="component-card__name">Header</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <header class="nhsuk-header" role="banner" style="background:#005eb8;">
+        <div style="padding:10px 16px; display:flex; align-items:center; justify-content:space-between;">
+          <a class="nhsuk-header__link" href="#" aria-label="NHS homepage" style="text-decoration:none;">
+            <svg class="nhsuk-logo nhsuk-logo--white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 16" height="32" width="80" aria-hidden="true"><path fill="#fff" d="M0 0h40v16H0z"/><path fill="#005eb8" d="M3.9 1.5h4.4l2.6 9h.1l1.8-9h3.3l-2.8 13H9L6.6 5.5h-.1l-1.8 9.5H1.1zm18.4 0h3.7L24.6 8h.1L26.4 1.5h3.3L27 14.5h-3.7l-1.8-6.6h-.1l-1.7 6.6H16l2.8-13zm8.4 0h4.5L33 10.3h.1l1.5-8.8H38l-2.8 13h-4.5l-1.5-8.8h-.1L27.4 14.5H24z"/></svg>
+          </a>
+          <div style="color:white; font-weight:700; font-size:18px;">NHS Health Services</div>
+          <nav style="display:flex; gap:16px;">
+            <a href="#" style="color:white; font-size:14px; text-decoration:none;">My account</a>
+            <a href="#" style="color:white; font-size:14px; text-decoration:none;">Sign out</a>
+          </nav>
+        </div>
+        <div style="background:#003087; padding:4px 16px;">
+          <nav aria-label="Primary navigation" style="display:flex; gap:0;">
+            <a href="#" style="color:white; font-size:14px; text-decoration:none; padding:8px 12px; border-bottom:4px solid white;">Health A-Z</a>
+            <a href="#" style="color:white; font-size:14px; text-decoration:none; padding:8px 12px; border-bottom:4px solid transparent;">Live well</a>
+            <a href="#" style="color:white; font-size:14px; text-decoration:none; padding:8px 12px; border-bottom:4px solid transparent;">Care and support</a>
+          </nav>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <!-- NHS-13: Hint text -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-13</span>
+      <span class="component-card__name">Hint text</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group">
+        <label class="nhsuk-label" for="nhs-hint-input">National Insurance number</label>
+        <div class="nhsuk-hint" id="nhs-hint">It's on your National Insurance card, payslip or P60. For example, 'QQ 12 34 56 C'.</div>
+        <input class="nhsuk-input nhsuk-input--width-10" id="nhs-hint-input" name="niNumber" type="text" aria-describedby="nhs-hint">
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-14: Images -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-14</span>
+      <span class="component-card__name">Images</span>
+    </div>
+    <div class="component-card__body">
+      <figure class="nhsuk-image">
+        <img class="nhsuk-image__img" src="https://assets.nhs.uk/prod/images/S_0117_exercise_main_image.width-690.jpg" alt="A person doing light exercise outdoors" style="max-width:100%; height:auto;">
+        <figcaption class="nhsuk-image__caption">
+          Regular exercise can help manage many long-term health conditions.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- NHS-15: Inset text -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-15</span>
+      <span class="component-card__name">Inset text</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-inset-text">
+        <span class="nhsuk-u-visually-hidden">Information: </span>
+        <p>If you have diabetes and you need glasses or contact lenses, you can get free NHS sight tests and discounts on glasses and contact lenses.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-16: Panel -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-16</span>
+      <span class="component-card__name">Panel</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-panel">
+        <h2 class="nhsuk-panel__title">Application complete</h2>
+        <div class="nhsuk-panel__body">
+          Your reference number<br><strong>HDB-2026-0034</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-17: Radios -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-17</span>
+      <span class="component-card__name">Radios</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group">
+        <fieldset class="nhsuk-fieldset">
+          <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+            <h2 class="nhsuk-fieldset__heading">Do you have a GP?</h2>
+          </legend>
+          <div class="nhsuk-radios">
+            <div class="nhsuk-radios__item">
+              <input class="nhsuk-radios__input" id="nhs-radio-1" name="has-gp" type="radio" value="yes">
+              <label class="nhsuk-label nhsuk-radios__label" for="nhs-radio-1">Yes</label>
+            </div>
+            <div class="nhsuk-radios__item">
+              <input class="nhsuk-radios__input" id="nhs-radio-2" name="has-gp" type="radio" value="no">
+              <label class="nhsuk-label nhsuk-radios__label" for="nhs-radio-2">No</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-18: Skip link -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-18</span>
+      <span class="component-card__name">Skip link</span>
+    </div>
+    <div class="component-card__body">
+      <a class="nhsuk-skip-link" href="#nhs-main-content" style="position:static; display:inline-block;">Skip to main content</a>
+    </div>
+  </div>
+
+  <!-- NHS-19: Summary list -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-19</span>
+      <span class="component-card__name">Summary list</span>
+    </div>
+    <div class="component-card__body">
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">Full name</dt>
+          <dd class="nhsuk-summary-list__value">John Smith</dd>
+          <dd class="nhsuk-summary-list__actions"><a class="nhsuk-link" href="#">Change</a></dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">Date of birth</dt>
+          <dd class="nhsuk-summary-list__value">12 March 1979</dd>
+          <dd class="nhsuk-summary-list__actions"><a class="nhsuk-link" href="#">Change</a></dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">NI number</dt>
+          <dd class="nhsuk-summary-list__value">QQ 12 34 56 C</dd>
+          <dd class="nhsuk-summary-list__actions"><a class="nhsuk-link" href="#">Change</a></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- NHS-20: Table -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-20</span>
+      <span class="component-card__name">Table</span>
+    </div>
+    <div class="component-card__body">
+      <table class="nhsuk-table">
+        <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Appointment history</caption>
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th scope="col" class="nhsuk-table__header">Date</th>
+            <th scope="col" class="nhsuk-table__header">Type</th>
+            <th scope="col" class="nhsuk-table__header">Status</th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">12 May 2026</td>
+            <td class="nhsuk-table__cell">GP appointment</td>
+            <td class="nhsuk-table__cell">Attended</td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">3 April 2026</td>
+            <td class="nhsuk-table__cell">Blood test</td>
+            <td class="nhsuk-table__cell">Attended</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NHS-21: Tabs -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-21</span>
+      <span class="component-card__name">Tabs</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <div class="nhsuk-tabs" data-module="nhsuk-tabs">
+        <ul class="nhsuk-tabs__list">
+          <li class="nhsuk-tabs__list-item nhsuk-tabs__list-item--selected">
+            <a class="nhsuk-tabs__tab" href="#nhs-tab-1">Symptoms</a>
+          </li>
+          <li class="nhsuk-tabs__list-item">
+            <a class="nhsuk-tabs__tab" href="#nhs-tab-2">Causes</a>
+          </li>
+          <li class="nhsuk-tabs__list-item">
+            <a class="nhsuk-tabs__tab" href="#nhs-tab-3">Treatment</a>
+          </li>
+        </ul>
+        <div class="nhsuk-tabs__panel" id="nhs-tab-1">
+          <p class="nhsuk-body">Common symptoms include increased thirst and frequent urination.</p>
+        </div>
+        <div class="nhsuk-tabs__panel nhsuk-tabs__panel--hidden" id="nhs-tab-2">
+          <p class="nhsuk-body">Type 2 diabetes is caused by the body not producing enough insulin.</p>
+        </div>
+        <div class="nhsuk-tabs__panel nhsuk-tabs__panel--hidden" id="nhs-tab-3">
+          <p class="nhsuk-body">Treatment includes lifestyle changes, medication and regular monitoring.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-22: Tag -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-22</span>
+      <span class="component-card__name">Tag</span>
+    </div>
+    <div class="component-card__body" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+      <strong class="nhsuk-tag">Active</strong>
+      <strong class="nhsuk-tag nhsuk-tag--blue">In review</strong>
+      <strong class="nhsuk-tag nhsuk-tag--green">Approved</strong>
+      <strong class="nhsuk-tag nhsuk-tag--red">Rejected</strong>
+      <strong class="nhsuk-tag nhsuk-tag--yellow">Pending</strong>
+      <strong class="nhsuk-tag nhsuk-tag--grey">Archived</strong>
+    </div>
+  </div>
+
+  <!-- NHS-23: Task list -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-23</span>
+      <span class="component-card__name">Task list</span>
+    </div>
+    <div class="component-card__body">
+      <ol class="nhsuk-task-list">
+        <li class="nhsuk-task-list__item">
+          <div class="nhsuk-task-list__name-and-hint">
+            <a class="nhsuk-task-list__link" href="#" aria-describedby="nhs-task-1-status">Personal details</a>
+          </div>
+          <div class="nhsuk-task-list__status" id="nhs-task-1-status">
+            <strong class="nhsuk-tag">Completed</strong>
+          </div>
+        </li>
+        <li class="nhsuk-task-list__item">
+          <div class="nhsuk-task-list__name-and-hint">
+            <a class="nhsuk-task-list__link" href="#" aria-describedby="nhs-task-2-status">Medical conditions</a>
+          </div>
+          <div class="nhsuk-task-list__status" id="nhs-task-2-status">
+            <strong class="nhsuk-tag nhsuk-tag--blue">In progress</strong>
+          </div>
+        </li>
+        <li class="nhsuk-task-list__item">
+          <div class="nhsuk-task-list__name-and-hint">
+            <span class="nhsuk-task-list__link-disabled" aria-describedby="nhs-task-3-status">Supporting documents</span>
+          </div>
+          <div class="nhsuk-task-list__status nhsuk-task-list__status--cannot-start-yet" id="nhs-task-3-status">
+            Cannot start yet
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- NHS-24: Checkboxes -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-24</span>
+      <span class="component-card__name">Checkboxes</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group">
+        <fieldset class="nhsuk-fieldset" aria-describedby="nhs-checkboxes-hint">
+          <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+            <h2 class="nhsuk-fieldset__heading">How do you want to be contacted?</h2>
+          </legend>
+          <div class="nhsuk-hint" id="nhs-checkboxes-hint">Select all that apply</div>
+          <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes">
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="nhs-contact-1" name="contact" type="checkbox" value="email">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="nhs-contact-1">Email</label>
+            </div>
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="nhs-contact-2" name="contact" type="checkbox" value="phone">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="nhs-contact-2">Phone</label>
+            </div>
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="nhs-contact-3" name="contact" type="checkbox" value="text">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="nhs-contact-3">Text message</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-25: Character count -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-25</span>
+      <span class="component-card__name">Character count</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group nhsuk-character-count" data-module="nhsuk-character-count" data-maxlength="200">
+        <label class="nhsuk-label" for="nhs-char-count">Describe how your condition affects you</label>
+        <div class="nhsuk-hint" id="nhs-char-count-hint">For example, if you use a wheelchair or have difficulty getting dressed</div>
+        <textarea class="nhsuk-textarea nhsuk-js-character-count" id="nhs-char-count" name="conditions" rows="4" aria-describedby="nhs-char-count-info nhs-char-count-hint"></textarea>
+        <div class="nhsuk-hint nhsuk-character-count__message" id="nhs-char-count-info">You can enter up to 200 characters</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-26: Date input -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-26</span>
+      <span class="component-card__name">Date input</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group">
+        <fieldset class="nhsuk-fieldset" role="group" aria-describedby="nhs-dob-hint">
+          <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+            <h2 class="nhsuk-fieldset__heading">Date of birth</h2>
+          </legend>
+          <div class="nhsuk-hint" id="nhs-dob-hint">For example, 15 3 1984</div>
+          <div class="nhsuk-date-input" id="nhs-dob">
+            <div class="nhsuk-date-input__item">
+              <div class="nhsuk-form-group">
+                <label class="nhsuk-label nhsuk-date-input__label" for="nhs-dob-day">Day</label>
+                <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="nhs-dob-day" name="dob[day]" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="nhsuk-date-input__item">
+              <div class="nhsuk-form-group">
+                <label class="nhsuk-label nhsuk-date-input__label" for="nhs-dob-month">Month</label>
+                <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="nhs-dob-month" name="dob[month]" type="text" inputmode="numeric">
+              </div>
+            </div>
+            <div class="nhsuk-date-input__item">
+              <div class="nhsuk-form-group">
+                <label class="nhsuk-label nhsuk-date-input__label" for="nhs-dob-year">Year</label>
+                <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="nhs-dob-year" name="dob[year]" type="text" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-27: Password input -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-27</span>
+      <span class="component-card__name">Password input</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group nhsuk-password-input" data-module="nhsuk-password-input">
+        <label class="nhsuk-label" for="nhs-password">Password</label>
+        <div class="nhsuk-input-wrapper">
+          <input class="nhsuk-input nhsuk-password-input__input nhsuk-js-password-input-input" id="nhs-password" name="password" type="password" spellcheck="false" autocomplete="current-password" autocapitalize="none">
+          <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-password-input__toggle nhsuk-js-password-input-toggle" data-module="nhsuk-button" type="button" aria-label="Show password" aria-controls="nhs-password">Show</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-28: Search input -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-28</span>
+      <span class="component-card__name">Search input</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group nhsuk-search-input">
+        <label class="nhsuk-label nhsuk-label--s" for="nhs-search">Search NHS website</label>
+        <div class="nhsuk-input-wrapper nhsuk-search-input__wrapper">
+          <input class="nhsuk-input nhsuk-search-input__input nhsuk-input--width-10" id="nhs-search" name="search" type="search" autocomplete="off">
+          <button class="nhsuk-button nhsuk-button--icon nhsuk-button--small nhsuk-search-input__button" type="submit" aria-label="Search">
+            <svg class="nhsuk-icon nhsuk-icon--search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true"><path d="m20.7 18.9-4.1-4.1a7 7 0 1 0-1.4 1.4l4 4.1a1 1 0 0 0 1.5 0c.4-.4.4-1 0-1.4ZM6 10.6a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-29: Select -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-29</span>
+      <span class="component-card__name">Select</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group">
+        <label class="nhsuk-label" for="nhs-select">Sort results by</label>
+        <select class="nhsuk-select" id="nhs-select" name="sortBy">
+          <option value="recently-published" selected>Recently published</option>
+          <option value="recently-updated">Recently updated</option>
+          <option value="most-views">Most views</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-30: Text input -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-30</span>
+      <span class="component-card__name">Text input</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group">
+        <label class="nhsuk-label nhsuk-label--m" for="nhs-text-input">What is your full name?</label>
+        <input class="nhsuk-input" id="nhs-text-input" name="fullName" type="text" autocomplete="name">
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-31: Textarea -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-31</span>
+      <span class="component-card__name">Textarea</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-form-group">
+        <label class="nhsuk-label nhsuk-label--m" for="nhs-textarea">Describe how your condition affects your daily life</label>
+        <div class="nhsuk-hint" id="nhs-textarea-hint">For example, if you use crutches, sticks, or a walking frame</div>
+        <textarea class="nhsuk-textarea" id="nhs-textarea" name="description" rows="5" aria-describedby="nhs-textarea-hint"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- NHS-32: Pagination -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-32</span>
+      <span class="component-card__name">Pagination</span>
+    </div>
+    <div class="component-card__body">
+      <nav class="nhsuk-pagination nhsuk-pagination--numbered" role="navigation" aria-label="Pagination">
+        <a href="#" class="nhsuk-pagination__previous" rel="prev">
+          <svg class="nhsuk-icon nhsuk-icon--arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true"><path d="M10.7 6.3c.4.4.4 1 0 1.4L7.4 11H19a1 1 0 0 1 0 2H7.4l3.3 3.3c.4.4.4 1 0 1.4a1 1 0 0 1-1.4 0l-5-5A1 1 0 0 1 4 12c0-.3.1-.5.3-.7l5-5a1 1 0 0 1 1.4 0Z"/></svg>
+          <span class="nhsuk-pagination__title">Previous<span class="nhsuk-u-visually-hidden"> page</span></span>
+        </a>
+        <ul class="nhsuk-pagination__list">
+          <li class="nhsuk-pagination__item nhsuk-pagination__item--current">
+            <a class="nhsuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">1</a>
+          </li>
+          <li class="nhsuk-pagination__item"><a class="nhsuk-pagination__link" href="#" aria-label="Page 2">2</a></li>
+          <li class="nhsuk-pagination__item"><a class="nhsuk-pagination__link" href="#" aria-label="Page 3">3</a></li>
+        </ul>
+        <a href="#" class="nhsuk-pagination__next" rel="next">
+          <span class="nhsuk-pagination__title">Next<span class="nhsuk-u-visually-hidden"> page</span></span>
+          <svg class="nhsuk-icon nhsuk-icon--arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true"><path d="m14.7 6.3 5 5c.2.2.3.4.3.7 0 .3-.1.5-.3.7l-5 5a1 1 0 0 1-1.4-1.4l3.3-3.3H5a1 1 0 0 1 0-2h11.6l-3.3-3.3a1 1 0 1 1 1.4-1.4Z"/></svg>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- NHS-33: Warning callout -->
+  <div class="component-card" data-org="nhs">
+    <div class="component-card__label">
+      <span class="component-card__number">NHS-33</span>
+      <span class="component-card__name">Warning callout</span>
+    </div>
+    <div class="component-card__body">
+      <div class="nhsuk-card nhsuk-card--warning">
+        <div class="nhsuk-card__content">
+          <h3 class="nhsuk-card__heading">
+            <span role="text">
+              <span class="nhsuk-u-visually-hidden">Important: </span>School, nursery or work
+            </span>
+          </h3>
+          <p class="nhsuk-card__description">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ DfE SECTION ═══════════════════════════════ -->
+  <div class="org-section" data-org="dfe">
+    <p class="org-section__title">Department for Education Design System</p>
+    <p class="org-section__subtitle">design.education.gov.uk — 3 components (builds on GOV.UK Frontend)</p>
+  </div>
+
+  <!-- DFE-01: Card -->
+  <div class="component-card" data-org="dfe">
+    <div class="component-card__label">
+      <span class="component-card__number">DFE-01</span>
+      <span class="component-card__name">Card</span>
+    </div>
+    <div class="component-card__body">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <div class="dfe-card" style="border:1px solid #b1b4b6; padding:20px; height:100%;">
+            <h3 class="govuk-heading-s" style="margin-bottom:8px;"><a class="govuk-link" href="#">Curriculum guidance</a></h3>
+            <p class="govuk-body-s" style="color:#505a5f; margin-bottom:8px;">Key Stage 4 · Updated 12 May 2026</p>
+            <p class="govuk-body-s">Guidance for schools on delivering the national curriculum for pupils aged 14 to 16.</p>
+          </div>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <div class="dfe-card" style="border:1px solid #b1b4b6; padding:20px; height:100%;">
+            <h3 class="govuk-heading-s" style="margin-bottom:8px;"><a class="govuk-link" href="#">Teacher training</a></h3>
+            <p class="govuk-body-s" style="color:#505a5f; margin-bottom:8px;">Workforce · Updated 3 April 2026</p>
+            <p class="govuk-body-s">Routes into teaching and professional development for qualified teachers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DFE-02: Filter -->
+  <div class="component-card" data-org="dfe">
+    <div class="component-card__label">
+      <span class="component-card__number">DFE-02</span>
+      <span class="component-card__name">Filter</span>
+    </div>
+    <div class="component-card__body">
+      <div class="dfe-filter" style="border-left: 4px solid #003a69; padding-left: 16px;">
+        <h2 class="govuk-heading-s" style="color:#003a69;">Filter results</h2>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Phase</legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="dfe-phase-1" type="checkbox" value="primary">
+                <label class="govuk-label govuk-checkboxes__label" for="dfe-phase-1">Primary</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="dfe-phase-2" type="checkbox" value="secondary">
+                <label class="govuk-label govuk-checkboxes__label" for="dfe-phase-2">Secondary</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="dfe-phase-3" type="checkbox" value="further">
+                <label class="govuk-label govuk-checkboxes__label" for="dfe-phase-3">Further education</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <button class="govuk-button govuk-button--secondary govuk-button--small" type="submit">Apply filters</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DFE-03: Header with vertical navigation -->
+  <div class="component-card" data-org="dfe">
+    <div class="component-card__label">
+      <span class="component-card__number">DFE-03</span>
+      <span class="component-card__name">Header + vertical navigation</span>
+    </div>
+    <div class="component-card__body" style="padding:0;">
+      <header style="background:#003a69; padding:10px 16px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="color:white; font-weight:700; font-size:18px;">DfE — Get Into Teaching</span>
+        <nav style="display:flex; gap:16px;">
+          <a href="#" style="color:white; font-size:14px; text-decoration:none;">Sign in</a>
+        </nav>
+      </header>
+      <div style="display:flex;">
+        <nav style="width:200px; background:#f3f2f1; border-right:1px solid #b1b4b6; padding:16px 0; flex-shrink:0;">
+          <ul style="list-style:none; margin:0; padding:0;">
+            <li style="border-left:4px solid #003a69; background:#fff;">
+              <a href="#" style="display:block; padding:10px 12px; color:#003a69; text-decoration:none; font-size:14px; font-weight:700;">Overview</a>
+            </li>
+            <li style="border-left:4px solid transparent;">
+              <a href="#" style="display:block; padding:10px 12px; color:#1d70b8; text-decoration:none; font-size:14px;">Eligibility</a>
+            </li>
+            <li style="border-left:4px solid transparent;">
+              <a href="#" style="display:block; padding:10px 12px; color:#1d70b8; text-decoration:none; font-size:14px;">Apply</a>
+            </li>
+            <li style="border-left:4px solid transparent;">
+              <a href="#" style="display:block; padding:10px 12px; color:#1d70b8; text-decoration:none; font-size:14px;">Funding</a>
+            </li>
+          </ul>
+        </nav>
+        <div style="padding:16px; flex:1;">
+          <h2 class="govuk-heading-m">Overview</h2>
+          <p class="govuk-body">Train to be a teacher and make a difference to young people's lives.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script src="https://unpkg.com/govuk-frontend@5.4.0/dist/govuk/govuk-frontend.min.js"></script>
 <script>
   window.GOVUKFrontend.initAll()
+</script>
+<script>
+  function filterOrg(org) {
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    document.querySelectorAll('.component-card, .org-section').forEach(function(el) {
+      if (org === 'all' || el.dataset.org === org) {
+        el.style.display = '';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  }
 </script>
 </body>
 </html>
