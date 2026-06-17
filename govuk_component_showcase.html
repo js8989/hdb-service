@@ -9,7 +9,12 @@
 <link rel="stylesheet" href="moj-frontend.css">
 <link rel="stylesheet" href="nhs-frontend.css">
 <style>
-  body { background: #f3f2f1; font-family: 'GDS Transport', Arial, sans-serif; }
+  body { background: #f3f2f1; font-family: 'GDS Transport', Arial, sans-serif; padding-top: 36px; }
+  #jdd-bar { position:fixed;top:0;left:0;right:0;height:36px;background:#111;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  #jdd-bar__title { color:#fff;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:-0.2px; }
+  #jdd-bar__title span { color:#6ee7b7; }
+  #jdd-bar__back { color:#6ee7b7;font-size:13px;text-decoration:none; }
+  #jdd-bar__back:hover { text-decoration:underline; }
   .showcase-header {
     background: #0b0c0c; color: white; padding: 20px 40px;
     font-size: 22px; font-weight: 700;
@@ -20,7 +25,7 @@
   .filter-bar {
     background: #fff; border-bottom: 1px solid #b1b4b6;
     padding: 12px 40px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-    position: sticky; top: 0; z-index: 100;
+    position: sticky; top: 36px; z-index: 100;
   }
   .filter-bar__label { font-size: 14px; font-weight: 700; margin-right: 4px; color: #0b0c0c; }
   .filter-btn {
@@ -84,6 +89,7 @@
 </style>
 </head>
 <body class="govuk-template__body">
+<div id="jdd-bar"><a href="https://js8989.github.io/jacks-dev-diary" id="jdd-bar__title">Jack's <span>Dev Diary</span></a><a href="index.html" id="jdd-bar__back">← Prototypes</a></div>
 
 <div class="showcase-header">
   Government Design Systems — Component Showcase
