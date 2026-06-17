@@ -53,13 +53,34 @@
 <body class="govuk-template__body">
 <script>
   (function() {
-    var pwd = prompt("Enter password to access this prototype:");
-    if (pwd === "wijrebfgwirbgfirw!@\xa3&\xa3&^") {
-      document.body.style.display = 'block';
-    } else {
-      document.body.style.display = 'block';
-      document.body.innerHTML = "<div style='font-family:sans-serif;padding:40px;color:#333'><h2>Access denied</h2><p>Incorrect password. <a href=''>Try again</a></p></div>";
+    var HASH = '382ad70eaa9292d3ce5176937ac29276cef939415721417e9f639dfdb575b535';
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:sans-serif;';
+    overlay.innerHTML = '<div style="max-width:400px;width:100%;padding:40px;border:1px solid #b1b4b6;">'
+      + '<h1 style="font-size:24px;font-weight:700;margin:0 0 16px;">Enter password</h1>'
+      + '<p style="margin:0 0 16px;color:#505a5f;">This prototype is password protected.</p>'
+      + '<div id="pw-error" style="display:none;color:#d4351c;font-weight:700;margin-bottom:12px;">Incorrect password</div>'
+      + '<input id="pw-input" type="password" style="width:100%;padding:8px;font-size:16px;border:2px solid #0b0c0c;margin-bottom:16px;box-sizing:border-box;" placeholder="Password" />'
+      + '<button id="pw-submit" style="background:#00703c;color:#fff;border:none;padding:10px 20px;font-size:16px;font-weight:700;cursor:pointer;">Continue</button>'
+      + '</div>';
+    document.body.appendChild(overlay);
+
+    function check() {
+      var val = document.getElementById('pw-input').value;
+      crypto.subtle.digest('SHA-256', new TextEncoder().encode(val)).then(function(buf) {
+        var hex = Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+        if (hex === HASH) {
+          overlay.remove();
+        } else {
+          document.getElementById('pw-error').style.display = 'block';
+          document.getElementById('pw-input').value = '';
+          document.getElementById('pw-input').focus();
+        }
+      });
     }
+
+    document.getElementById('pw-submit').addEventListener('click', check);
+    document.getElementById('pw-input').addEventListener('keydown', function(e){ if (e.key === 'Enter') check(); });
   })();
 </script>
 
@@ -194,20 +215,22 @@
       <span class="component-card__number">07</span>
       <span class="component-card__name">Cookie banner</span>
     </div>
-    <div class="component-card__body" style="padding:0;">
-      <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on this service">
-        <div class="govuk-cookie-banner__message govuk-width-container">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on this service</h2>
-              <div class="govuk-cookie-banner__content">
-                <p class="govuk-body">We use some essential cookies to make this service work.</p>
+    <div class="component-card__body" style="padding:0; overflow:hidden; height:140px;">
+      <div style="transform: scale(0.5); transform-origin: top left; width: 200%;">
+        <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on this service">
+          <div class="govuk-cookie-banner__message govuk-width-container">
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-two-thirds">
+                <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on this service</h2>
+                <div class="govuk-cookie-banner__content">
+                  <p class="govuk-body">We use some essential cookies to make this service work.</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="govuk-button-group">
-            <button class="govuk-button" type="button">Accept analytics cookies</button>
-            <button class="govuk-button" type="button">Reject analytics cookies</button>
+            <div class="govuk-button-group">
+              <button class="govuk-button" type="button">Accept analytics cookies</button>
+              <button class="govuk-button" type="button">Reject analytics cookies</button>
+            </div>
           </div>
         </div>
       </div>
@@ -359,23 +382,25 @@
       <span class="component-card__number">15</span>
       <span class="component-card__name">GOV.UK footer</span>
     </div>
-    <div class="component-card__body" style="padding:0; background:#f3f2f1;">
-      <footer class="govuk-footer">
-        <div class="govuk-width-container">
-          <div class="govuk-footer__meta">
-            <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-              <ul class="govuk-footer__inline-list">
-                <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Help</a></li>
-                <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Privacy</a></li>
-                <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Cookies</a></li>
-              </ul>
-            </div>
-            <div class="govuk-footer__meta-item">
-              <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+    <div class="component-card__body" style="padding:0; background:#f3f2f1; overflow:hidden; height:80px;">
+      <div style="transform: scale(0.5); transform-origin: top left; width: 200%;">
+        <footer class="govuk-footer">
+          <div class="govuk-width-container">
+            <div class="govuk-footer__meta">
+              <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+                <ul class="govuk-footer__inline-list">
+                  <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Help</a></li>
+                  <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Privacy</a></li>
+                  <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="#">Cookies</a></li>
+                </ul>
+              </div>
+              <div class="govuk-footer__meta-item">
+                <a class="govuk-footer__link govuk-footer__copyright-logo" href="#">© Crown copyright</a>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   </div>
 

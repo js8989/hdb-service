@@ -57,7 +57,8 @@ Live site: https://jacksdevdiary.netlify.app
 - `index.html` — the live dev diary site
 
 ### Prototype password
-All four HDB prototype pages are password protected. Password: `wijrebfgwirbgfirw!@£&£&^`
+All four HDB prototype pages are password protected. Password: `hdb-proto-2026!*!`
+Password is stored as a SHA-256 hash in the HTML files (not plain text).
 
 ---
 
