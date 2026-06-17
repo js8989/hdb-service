@@ -33,7 +33,7 @@ The project has two audiences:
 
 ### HDB Service — `/Users/home/Desktop/HDB Service/`
 GitHub repo: https://github.com/js8989/hdb-service
-Live site: https://jacksdevdiary-hdbservice.netlify.app
+Live site: https://js8989.github.io/hdb-service
 
 - `index.html` — prototypes landing page (links to all 4 prototypes)
 - `govuk_hdb_full_journey.html` — citizen-facing registration and application journey
@@ -52,7 +52,7 @@ Live site: https://jacksdevdiary-hdbservice.netlify.app
 
 ### My Website — `/Users/home/Desktop/My Website/`
 GitHub repo: https://github.com/js8989/jacks-dev-diary
-Live site: https://jacksdevdiary.netlify.app
+Live site: https://js8989.github.io/jacks-dev-diary
 
 - `index.html` — the live dev diary site
 
