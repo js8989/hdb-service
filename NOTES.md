@@ -330,3 +330,14 @@ Key technical notes for showcase:
 *⬇ Next session: add your dev diary entry below this line, then move the end-of-session marker to after your entry.*
 
 ---
+
+**Session 5** — *22 June 2026, ~5:43pm (Crete)*
+Short planning session — no code written. Spent the session on a Miro board sketching out the layout for the new agent tool case record page (AT-04), building on the component shortlist discussed with Claude. The design brings together components from across the design systems into a cohesive page structure: MOJ-19 header at the top, then a dual service navigation (GOV-25) — one strip for main sections (Case record, Timeline, Documents, Notes) and one for sub-sections (Case overview, Personal details, Evidence and Documents, Tasks and Actions). Below that: breadcrumbs, a DWP Quick reference block for the claimant name and NI, and a MOJ badge row showing case status (Active / Suspended / In Progress / Closed / On Hold) plus flag indicators (SREL, Additional Support, Other Flag shown in red; grey "No flags" if none apply). Worked out a colour-coded status system for three separate status types — Award status (Purple = awaiting decision, Green = in award, Orange = not in award, Grey = archived), Dispute status (Green = accepted, Yellow = window open, Orange = in dispute, or none), and Change of Circs status (blue badge if active, or none). The main content area uses a GOV-1 accordion labelled "Live Cases (n)" containing a GOV-27 summary list for personal details and a Linked Journey card showing status + award in payment with timeline links. A right-hand panel shows key dates (date of claim, review date, dispute/change of circs dates) plus current award details and tasks. Archived cases hidden by default with a small blue expand arrow at the bottom.
+
+<!-- END OF SESSION 5 — do not edit above this line -->
+
+---
+
+*⬇ Next session: add your dev diary entry below this line, then move the end-of-session marker to after your entry.*
+
+---
