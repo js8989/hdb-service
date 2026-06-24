@@ -338,6 +338,13 @@ Short planning session — no code written (apart from the diary entry). Spent t
 
 ---
 
+**Session 6** — *24 June 2026, ~3pm (Crete)*
+Short session again; spent the time reviewing and correcting Claude's interpretation of the Miro design before building anything. Looked back at two PDFs: one showing Claude's previous schematic mockup, one showing my intended design. Walked through the page structure top to bottom to get alignment before touching any code. Then built the next version of the HTML mockup of the case overview page (Mockup 4) which is a great iteration; still a few tweaks needed. Left the status field colour/tag logic to cover in the next session. Then beach time.
+
+<!-- END OF SESSION 6 — do not edit above this line -->
+
+---
+
 *⬇ Next session: add your dev diary entry below this line, then move the end-of-session marker to after your entry.*
 
 ---

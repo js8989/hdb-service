@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AT-04 Case Overview — HDB Case Manager</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
+<link rel="stylesheet" href="../moj-frontend.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans', sans-serif; background: #fff; color: #0b0c0c; font-size: 17px; padding-top: 36px; }
+
+  /* ── JDD bar ── */
+  #jdd-bar { position:fixed;top:0;left:0;right:0;height:36px;background:#111;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  #jdd-bar__title { color:#fff;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:-0.2px; }
+  #jdd-bar__title span { color:#6ee7b7; }
+  #jdd-bar__back { color:#6ee7b7;font-size:13px;text-decoration:none; }
+  #jdd-bar__back:hover { text-decoration:underline; }
+
+  /* ── MOJ-19 Header ── */
+  .moj-header { background: #0b0c0c; padding: 12px 0; }
+  .moj-header__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; display: flex; align-items: center; justify-content: space-between; }
+  .moj-header__title { color: #fff; font-size: 24px; font-weight: 700; text-decoration: none; }
+  .moj-header__user { display: flex; align-items: center; gap: 20px; color: #fff; font-size: 16px; }
+  .moj-header__user a { color: #fff; text-decoration: underline; }
+  .moj-header__user a:hover { text-decoration: none; }
+  .moj-header__user span { color: #b1b4b6; }
+
+  /* ── GOV-25 Service navigation ── */
+  .govuk-service-nav { border-bottom: 1px solid #b1b4b6; background: #fff; }
+  .govuk-service-nav__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; display: flex; gap: 0; }
+  .govuk-service-nav__link { display: inline-block; padding: 14px 16px; font-size: 16px; font-weight: 400; color: #0b0c0c; text-decoration: none; border-bottom: 4px solid transparent; }
+  .govuk-service-nav__link:hover { color: #0b0c0c; border-bottom-color: #b1b4b6; }
+  .govuk-service-nav__link--active { font-weight: 700; border-bottom: 4px solid #1d70b8; color: #0b0c0c; }
+
+  /* ── GOV-03 Breadcrumbs ── */
+  .govuk-breadcrumbs { padding: 10px 0; border-bottom: 1px solid #b1b4b6; }
+  .govuk-breadcrumbs__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; }
+  .govuk-breadcrumbs__list { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 14px; }
+  .govuk-breadcrumbs__list-item { display: flex; align-items: center; gap: 4px; color: #505a5f; }
+  .govuk-breadcrumbs__list-item a { color: #1d70b8; text-decoration: underline; }
+  .govuk-breadcrumbs__list-item a:hover { text-decoration: none; }
+  .govuk-breadcrumbs__list-item + .govuk-breadcrumbs__list-item::before { content: '>'; color: #505a5f; margin-right: 4px; }
+
+  /* ── Main content area ── */
+  .govuk-main { max-width: 960px; margin: 0 auto; padding: 24px 15px 60px; }
+
+  /* ── DWP-05 Quick reference + MOJ-03 badges ── */
+  .dwp-quick-reference { background: #f3f2f1; border-left: 4px solid #1d70b8; padding: 16px 20px; margin-bottom: 24px; }
+  .dwp-quick-reference__name { font-size: 24px; font-weight: 700; color: #0b0c0c; margin-bottom: 4px; }
+  .dwp-quick-reference__ni { font-size: 17px; color: #505a5f; margin-bottom: 10px; }
+  .dwp-quick-reference__badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* MOJ-03 red badge */
+  .moj-badge { display: inline-block; font-size: 13px; font-weight: 700; padding: 3px 10px; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 0; }
+  .moj-badge--red { background: #d4351c; color: #fff; }
+
+  /* ── GOV-01 Accordion ── */
+  .govuk-accordion { border-top: 2px solid #b1b4b6; margin-bottom: 40px; }
+  .govuk-accordion__section { border-bottom: 1px solid #b1b4b6; }
+  .govuk-accordion__section-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; cursor: pointer; user-select: none; }
+  .govuk-accordion__section-header:hover .govuk-accordion__section-heading { text-decoration: underline; }
+  .govuk-accordion__section-heading { font-size: 19px; font-weight: 700; color: #0b0c0c; }
+  .govuk-accordion__section-toggle { font-size: 15px; color: #1d70b8; text-decoration: underline; white-space: nowrap; padding-left: 16px; }
+  .govuk-accordion__section-content { padding-bottom: 20px; display: none; }
+  .govuk-accordion__section--expanded .govuk-accordion__section-content { display: block; }
+  .govuk-accordion__section--expanded .govuk-accordion__toggle-text::before { content: 'Hide'; }
+  .govuk-accordion__section:not(.govuk-accordion__section--expanded) .govuk-accordion__toggle-text::before { content: 'Show'; }
+
+  /* ── Linked Journey card (new combined component) ── */
+  .lj-card { border: 1px solid #b1b4b6; margin-bottom: 16px; width: 100%; }
+  .lj-card__header { background: #f3f2f1; border-bottom: 1px solid #b1b4b6; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .lj-card__title { font-size: 17px; font-weight: 700; color: #0b0c0c; }
+  .lj-card__link { font-size: 16px; color: #1d70b8; text-decoration: underline; }
+  .lj-card__link:hover { text-decoration: none; }
+  .lj-card__body { display: grid; grid-template-columns: 1fr 1px 1fr; }
+  .lj-card__divider { background: #0b0c0c; }
+  .lj-card__col { padding: 16px 20px; }
+  .lj-card__field { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-bottom: 1px solid #f0f0f0; padding: 10px 0; font-size: 16px; }
+  .lj-card__field:first-child { padding-top: 0; }
+  .lj-card__field:last-child { border-bottom: none; padding-bottom: 0; }
+  .lj-card__field-key { font-weight: 700; color: #0b0c0c; }
+  .lj-card__field-value { color: #0b0c0c; }
+
+  /* ── Archived cases empty state ── */
+  .archived-empty { color: #505a5f; font-size: 17px; padding: 4px 0 8px; }
+
+  /* ── Footer ── */
+  .govuk-footer { background: #f3f2f1; border-top: 1px solid #b1b4b6; padding: 25px 0; margin-top: 40px; }
+  .govuk-footer__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; font-size: 14px; color: #505a5f; }
+</style>
+</head>
+<body>
+
+<!-- JDD bar -->
+<div id="jdd-bar">
+  <a href="https://js8989.github.io/jacks-dev-diary" id="jdd-bar__title">Jack's <span>Dev Diary</span></a>
+  <a href="../index.html" id="jdd-bar__back">← Prototypes</a>
+</div>
+
+<!-- MOJ-19 Header -->
+<header class="moj-header">
+  <div class="moj-header__inner">
+    <a href="#" class="moj-header__title">HDB Case Manager</a>
+    <div class="moj-header__user">
+      <span>Agent: J. Smith</span>
+      <a href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<!-- GOV-25 Service navigation -->
+<nav class="govuk-service-nav" aria-label="Service navigation">
+  <div class="govuk-service-nav__inner">
+    <a href="#" class="govuk-service-nav__link govuk-service-nav__link--active" aria-current="page">Case overview</a>
+    <a href="#" class="govuk-service-nav__link">Personal details</a>
+    <a href="#" class="govuk-service-nav__link">Evidence and Documents</a>
+    <a href="#" class="govuk-service-nav__link">Tasks and Actions</a>
+  </div>
+</nav>
+
+<!-- GOV-03 Breadcrumbs -->
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <div class="govuk-breadcrumbs__inner">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item"><a href="#">Home</a></li>
+      <li class="govuk-breadcrumbs__list-item"><a href="#">Search results</a></li>
+      <li class="govuk-breadcrumbs__list-item">Claimant record</li>
+    </ol>
+  </div>
+</nav>
+
+<!-- Main content -->
+<main class="govuk-main">
+
+  <!-- DWP-05 Quick reference + MOJ-03 badges -->
+  <div class="dwp-quick-reference">
+    <div class="dwp-quick-reference__name">Jane Doe</div>
+    <div class="dwp-quick-reference__ni">NI number: QQ 12 34 56 X</div>
+    <div class="dwp-quick-reference__badges">
+      <span class="moj-badge moj-badge--red">SREL</span>
+      <span class="moj-badge moj-badge--red">Additional support</span>
+    </div>
+  </div>
+
+  <!-- GOV-01 Accordion -->
+  <div class="govuk-accordion" id="accordion">
+
+    <!-- Section 1: Active Cases -->
+    <div class="govuk-accordion__section govuk-accordion__section--expanded" id="section-active">
+      <div class="govuk-accordion__section-header" onclick="toggleSection('section-active')">
+        <span class="govuk-accordion__section-heading">Active cases (1)</span>
+        <span class="govuk-accordion__section-toggle"><span class="govuk-accordion__toggle-text"></span></span>
+      </div>
+      <div class="govuk-accordion__section-content">
+
+        <!-- Linked Journey 1 card -->
+        <div class="lj-card">
+          <div class="lj-card__header">
+            <span class="lj-card__title">Linked Journey 1</span>
+            <a href="#" class="lj-card__link">View timeline</a>
+          </div>
+          <div class="lj-card__body">
+            <!-- Left column: 6 fields -->
+            <div class="lj-card__col">
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Status</span>
+                <span class="lj-card__field-value">Appeal in progress</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Date of claim</span>
+                <span class="lj-card__field-value">1 December 2023</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Current journey</span>
+                <span class="lj-card__field-value">Appeal</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Next award review date</span>
+                <span class="lj-card__field-value">15 January 2027</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Current dispute status</span>
+                <span class="lj-card__field-value">Appeal lodged — 8 April 2024</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Change request status</span>
+                <span class="lj-card__field-value">None</span>
+              </div>
+            </div>
+            <!-- Black divider -->
+            <div class="lj-card__divider"></div>
+            <!-- Right column: 4 fields -->
+            <div class="lj-card__col">
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Current award details</span>
+                <span class="lj-card__field-value">Daily living: Standard<br>Mobility: Enhanced</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Motability status</span>
+                <span class="lj-card__field-value">Active</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Payability status</span>
+                <span class="lj-card__field-value">In payment — since 15 Jan 2024</span>
+              </div>
+              <div class="lj-card__field">
+                <span class="lj-card__field-key">Current tasks</span>
+                <span class="lj-card__field-value">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 2: Archived cases -->
+    <div class="govuk-accordion__section" id="section-archived">
+      <div class="govuk-accordion__section-header" onclick="toggleSection('section-archived')">
+        <span class="govuk-accordion__section-heading">Archived cases (0)</span>
+        <span class="govuk-accordion__section-toggle"><span class="govuk-accordion__toggle-text"></span></span>
+      </div>
+      <div class="govuk-accordion__section-content">
+        <p class="archived-empty">There are no archived cases.</p>
+      </div>
+    </div>
+
+  </div><!-- /accordion -->
+
+</main>
+
+<!-- Footer -->
+<footer class="govuk-footer">
+  <div class="govuk-footer__inner">
+    HDB Case Manager — For internal use only
+  </div>
+</footer>
+
+<script>
+  function toggleSection(id) {
+    var section = document.getElementById(id);
+    section.classList.toggle('govuk-accordion__section--expanded');
+  }
+</script>
+
+</body>
+</html>
